@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI cost guide: subscriptions vs API</title>
+<meta name="description" content="What Claude and ChatGPT/Codex subscriptions are worth at API prices, how their limits work, what changed in autumn 2026, and the key points from Theo's videos on plan value and AI costs.">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  try { const t = localStorage.getItem("aicg-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">AI cost guide</a>
+  <nav class="topnav" aria-label="Pages"><a href="index.html">API pricing</a><a href="subscriptions.html" aria-current="page">Subscriptions</a></nav>
+  <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
+</header>
+
+<div class="layout" id="top">
+  <nav class="toc" aria-label="Sections">
+    <ol>
+      <li><a href="#basics">What a subscription buys</a></li>
+      <li><a href="#limits">How the limits work</a></li>
+      <li><a href="#claude-plans">Claude plans</a></li>
+      <li><a href="#openai-plans">ChatGPT and Codex plans</a></li>
+      <li><a href="#value">What each plan is worth</a></li>
+      <li><a href="#per-task">Value per task</a></li>
+      <li><a href="#drain">What drains an allowance</a></li>
+      <li><a href="#calculator">Subscription or pay as you go?</a></li>
+      <li><a href="#why-cheap">Why plans are so cheap</a></li>
+      <li><a href="#timeline">What changed this autumn</a></li>
+      <li><a href="#theo-codex">Theo: does the $200 Codex plan suck now?</a></li>
+      <li><a href="#theo-cheaper">Theo: is AI getting cheaper?</a></li>
+      <li><a href="#choosing">Choosing a plan</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <h1>Subscriptions vs paying per token</h1>
+      <p>A $200 plan can cover thousands of dollars of usage at API prices. This page explains what Claude and ChatGPT/Codex plans actually give you, what each tier is worth, why they're priced the way they are, and what changed in autumn 2026. It includes the key points from two of Theo's (t3.gg) videos on the subject.</p>
+      <p class="meta">Researched 20 October 2026. Providers change limits often and publish few numbers, so the dollar values here are third-party measurements and estimates, not promises. New to token pricing? Start with <a href="index.html">API pricing</a>.</p>
+    </div>
+
+    <section id="basics">
+      <h2>What a subscription buys</h2>
+      <p>A subscription doesn't give you a dollar budget. It gives you an <b>allowance</b>: a share of the provider's capacity that refills on a schedule. The provider decides how much of it each request uses, based on the model, the number of tokens and the speed setting.</p>
+      <p>To compare plans, people price the usage a plan allows at API rates. That's its <b>API-equivalent value</b>: what the same tokens would have cost if you'd paid per token. A plan that lets you use $7,000 of tokens a month for $200 is worth 35× its price in those terms.</p>
+      <p>It's a useful yardstick with two big weaknesses:</p>
+      <ul class="plain">
+        <li><b>API prices aren't the provider's cost.</b> They include a large margin, so the provider spends far less than the "value" figure to serve you. See <a href="#why-cheap">why plans are so cheap</a>.</li>
+        <li><b>Dollars don't measure work.</b> A cheaper model can finish the same task for a small fraction of the cost, so a plan worth fewer API dollars can still get more done. See <a href="#per-task">value per task</a>.</li>
+      </ul>
+    </section>
+
+    <section id="limits">
+      <h2>How the limits work</h2>
+      <ul class="plain">
+        <li><b>Two clocks.</b> Most plans have a rolling 5-hour window plus a weekly limit. Claude uses both on every paid plan. ChatGPT Plus has both. ChatGPT Pro currently has no 5-hour window, just a weekly limit.</li>
+        <li><b>Bigger models use it up faster.</b> In Codex, GPT-6 Astra costs 5× as much allowance per token as GPT-6.1 Sol. On Claude Max, Fable models can use at most half of the weekly limit.</li>
+        <li><b>Speed costs extra.</b> In Codex, Fast mode uses included usage at 2.5× the normal rate and Ultrafast at 8×.</li>
+        <li><b>Where you can use it.</b> A Claude subscription works in Anthropic's own apps: Claude, Claude Code and Cowork. Since early 2026, third-party agent tools such as OpenClaw can't sign in with a subscription and need an API key or paid extra usage. Apps that run Claude Code itself, like T3 Code, still use the subscription. A Codex subscription can be used much more widely, according to Theo, as long as you don't use it to serve your own customers.</li>
+        <li><b>Going past the limit.</b> Both providers let you keep working by paying: Claude through extra usage and usage credits, ChatGPT through credits.</li>
+        <li><b>Claude Max's API credits.</b> Max 5x and Max 20x now include $100 and $200 a month of Claude API credit. It covers the API, Console, Managed Agents and the Agent SDK with an API key. It does <em>not</em> cover interactive Claude Code, and unused credit expires each month.</li>
+      </ul>
+    </section>
+
+    <section id="claude-plans">
+      <h2>Claude plans</h2>
+      <div class="table-wrap">
+        <table aria-label="Claude plans">
+          <thead><tr><th>Plan</th><th>Price per month</th><th class="wrap">Usage</th><th class="wrap">Models</th><th class="wrap">Also includes</th></tr></thead>
+          <tbody>
+            <tr><td>Free</td><td>$0</td><td class="wrap">Base level</td><td class="wrap">Sonnet, Haiku</td><td class="wrap">No Claude Code</td></tr>
+            <tr><td>Pro</td><td>$20, or $17 billed yearly</td><td class="wrap">At least 5× Free per 5-hour window, plus a weekly limit</td><td class="wrap">Opus, Sonnet, Haiku. Fable only through paid usage credits</td><td class="wrap">Claude Code</td></tr>
+            <tr><td>Max 5x</td><td>$100</td><td class="wrap">5× Pro per 5-hour window, plus a weekly limit</td><td class="wrap">Opus, Sonnet, Haiku. Fable up to 50% of the weekly limit</td><td class="wrap">Claude Code, $100 of API credit a month</td></tr>
+            <tr><td>Max 20x</td><td>$200</td><td class="wrap">20× Pro per 5-hour window, plus a weekly limit</td><td class="wrap">Opus, Sonnet, Haiku. Fable up to 50% of the weekly limit</td><td class="wrap">Claude Code, $200 of API credit a month</td></tr>
+            <tr><td>Team</td><td>$25 standard, $125 premium per seat ($20 / $100 yearly)</td><td class="wrap">Standard: more than Pro. Premium: 5× standard</td><td class="wrap">Opus, Sonnet, Haiku. Fable on premium seats, up to 50% weekly</td><td class="wrap">Pooled API credit up to $500 a month</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Anthropic publishes the 5-hour multipliers but not the weekly limits, and the weekly gap between tiers is smaller than the names suggest. Wokey's measurements put a Max 20x <b>week</b> at about 9.7× a Pro week, even though a Max 20x 5-hour window is about 15× a Pro window. On 22 September 2026, with the launch of Opus 5.5, Anthropic raised 5-hour limits on Pro, Max and Team.</p>
+    </section>
+
+    <section id="openai-plans">
+      <h2>ChatGPT and Codex plans</h2>
+      <p>Codex comes with your ChatGPT plan.</p>
+      <div class="table-wrap">
+        <table aria-label="ChatGPT and Codex plans">
+          <thead><tr><th>Plan</th><th>Price per month</th><th class="wrap">Usage vs Plus</th><th class="wrap">5-hour window</th><th class="wrap">Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Free</td><td>$0</td><td class="wrap">–</td><td class="wrap">–</td><td class="wrap">GPT-6 Luna in the desktop app</td></tr>
+            <tr><td>Go</td><td>$8</td><td class="wrap">–</td><td class="wrap">–</td><td class="wrap">GPT-6 Luna in the desktop app</td></tr>
+            <tr><td>Plus</td><td>$20</td><td class="wrap">1×</td><td class="wrap">Yes, plus weekly limits</td><td class="wrap">Per 5 hours, roughly 5–45 GPT-6 Astra messages, 15–160 GPT-6.1 Sol or 350–3,000 GPT-6 Luna</td></tr>
+            <tr><td>Pro $100</td><td>$100</td><td class="wrap">5×</td><td class="wrap">No, weekly only</td><td class="wrap">Launched April 2026</td></tr>
+            <tr><td>Pro $200</td><td>$200</td><td class="wrap">10× (was 20×)</td><td class="wrap">No, weekly only</td><td class="wrap">Cut for new subscribers on 29 September. Existing subscribers move to 10× on 30 October</td></tr>
+            <tr><td>Pro $500</td><td>$500</td><td class="wrap">25×</td><td class="wrap">No, weekly only</td><td class="wrap">Added 29 September. The only personal plan with Ultrafast</td></tr>
+            <tr><td>Business</td><td>$25 per user ($20 yearly)</td><td class="wrap">About Plus per seat</td><td class="wrap">Yes</td><td class="wrap">Can add credits</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="font-size:13px">OpenAI's pricing page confirms the prices, the Plus message ranges and Pro's missing 5-hour window. The Pro multipliers come from OpenAI's announcement as reported by the press; the pricing page doesn't list them.</p>
+    </section>
+
+    <section id="value">
+      <h2>What each plan is worth at API prices</h2>
+      <p>Each bar is the plan's monthly API-equivalent value divided by its price, so "36×" means the plan covered 36 dollars of API-priced usage for every dollar paid.</p>
+      <div class="panel">
+        <div class="legend">
+          <span><i class="key-rect" style="background:var(--s1)"></i>Claude (Anthropic)</span>
+          <span><i class="key-rect" style="background:var(--s2)"></i>ChatGPT / Codex (OpenAI)</span>
+        </div>
+        <p class="panel-title">Measured by Wokey and SemiAnalysis</p>
+        <p class="panel-sub">Monthly value at API prices ÷ plan price. Hover a bar for the dollar figure.</p>
+        <div class="bar-rows" id="value-bars"></div>
+        <p class="panel-title" style="margin-top:20px">Theo's own figures, from his videos</p>
+        <p class="panel-sub">His heavy personal usage, before and after OpenAI's October change.</p>
+        <div class="bar-rows" id="theo-bars"></div>
+        <div class="table-wrap">
+          <table aria-label="Plan values at API prices">
+            <thead><tr><th class="wrap">Plan</th><th>Price</th><th>Value per month</th><th>Per $1</th><th class="wrap">Basis</th></tr></thead>
+            <tbody id="value-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <p>What stands out:</p>
+      <ul class="plain">
+        <li><b>Claude plans cover about 35–40× their price</b> at Anthropic's API prices, and the ratio is similar for Pro and Max 20x.</li>
+        <li><b>ChatGPT plans now cover about 13–15× their price</b> when measured in GPT-6 Astra, and since 29 September the three Pro tiers give the same value per dollar. Before the change, the $200 plan gave Theo about 60×.</li>
+        <li><b>Model mix moves the numbers.</b> Plus measured about $253 a month on real, mostly Sol-class traffic, but about $162 on Astra alone. A Claude Max 20x account running only Opus 5.5 measured about $11,700 a month.</li>
+        <li><b>Max 5x and the new Pro $100 and $200 tiers haven't been measured publicly yet.</b></li>
+      </ul>
+    </section>
+
+    <section id="per-task">
+      <h2>Value per task, not per dollar</h2>
+      <p>The "value" figures above count API dollars. What you actually care about is how much work gets done, and that depends heavily on the model.</p>
+      <div class="table-wrap">
+        <table aria-label="API prices of the main subscription models">
+          <thead><tr><th>Model</th><th>Input</th><th>Cache read</th><th>Output</th><th class="wrap">Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Claude Fable 5.1</td><td>$10</td><td>$0.25</td><td>$50</td><td class="wrap">Capped at half the weekly limit on Max</td></tr>
+            <tr><td>Claude Opus 5.5</td><td>$4</td><td>$0.20</td><td>$20</td><td class="wrap">Main model on Claude plans</td></tr>
+            <tr><td>GPT-6 Astra</td><td>$10</td><td>$1.00</td><td>$50</td><td class="wrap">Double above 272k input tokens</td></tr>
+            <tr><td>GPT-6.1 Sol</td><td>$2</td><td>$0.10</td><td>$10</td><td class="wrap">Double above 272k input tokens</td></tr>
+            <tr><td>GPT-6 Luna</td><td>$0.10</td><td>$0.01</td><td>$0.50</td><td class="wrap">Free and Go plans</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="font-size:13px">USD per million tokens, standard speed.</p>
+      <p>Theo's numbers show how big the difference gets:</p>
+      <ul class="plain">
+        <li>On his own Terminal-Bench runs, GPT-6.1 Sol at extra-high effort roughly tied Claude Opus 5.5, at <b>$0.96 per task versus $13.11</b>, about 13× cheaper.</li>
+        <li>In one week, about 1,800 GPT-6 Astra responses cost $534 at API prices, while about 1,500 GPT-6.1 Sol responses with a similar amount of output cost <b>$38.27</b>.</li>
+      </ul>
+      <p>So a Codex plan worth half as many API dollars as before can still finish several times more tasks, if you use Sol instead of Astra. At those per-task costs, $1,000 of allowance covers about 76 Opus 5.5 tasks or about 1,040 Sol tasks. It's one benchmark, so treat the exact ratio as illustrative.</p>
+    </section>
+
+    <section id="drain">
+      <h2>What drains an allowance fastest</h2>
+      <p>OpenAI publishes how much included usage each model and speed consumes. Relative to GPT-6.1 Sol at normal speed:</p>
+      <div class="panel">
+        <div class="bar-rows" id="drain-bars"></div>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0">From the credit rates on OpenAI's Codex pricing page (output tokens; input scales the same way) and the Fast (2.5×) and Ultrafast (8×) multipliers for included usage.</p>
+      </div>
+      <p>Astra on Ultrafast uses the allowance about 40× faster than Sol at normal speed. That's why Theo found he could empty a $500 plan's week in about 2.1 hours of Ultrafast generation. On the API, Ultrafast Astra costs $60 per million input tokens and $300 per million output, and two pull-request reviews cost him about $600.</p>
+      <p>Anthropic doesn't publish weights. Wokey's measurements suggest Opus 5.5 uses about 0.6× as much limit per token as older Opus and Fable models, and Fable is capped at half the weekly limit.</p>
+    </section>
+
+    <section id="calculator">
+      <h2>Subscription or pay as you go?</h2>
+      <p>Enter how much your usage would cost at API prices each month to see which plans would likely cover it. Tools such as ccusage add this up from Claude Code's local logs.</p>
+      <div class="panel">
+        <div class="controls">
+          <label>Your usage at API prices <input type="number" id="calc-usage" value="1500" min="0" max="100000" step="100"> $ per month</label>
+        </div>
+        <div class="table-wrap">
+          <table aria-label="Plans that would cover your usage">
+            <thead><tr><th class="wrap">Option</th><th>Price</th><th>Estimated allowance</th><th class="wrap">Covers your usage?</th><th>You'd pay</th></tr></thead>
+            <tbody id="calc-body"></tbody>
+          </table>
+        </div>
+        <p class="muted" style="font-size:12.5px;margin:0" id="calc-note"></p>
+      </div>
+      <p>Two things the calculator can't show:</p>
+      <ul class="plain">
+        <li><b>Where the usage happens.</b> A Claude subscription only covers Anthropic's apps. Usage in other tools, scripts or your own product needs API billing anyway.</li>
+        <li><b>How evenly you work.</b> Limits reset every 5 hours and every week. Heavy bursts can hit a limit even when your monthly total looks safely covered.</li>
+      </ul>
+    </section>
+
+    <section id="why-cheap">
+      <h2>Why plans are so cheap, and why that's changing</h2>
+      <p>Theo's explanation, from his first video:</p>
+      <ul class="plain">
+        <li><b>API prices are mostly margin.</b> He estimates providers have historically kept around 95% of API revenue over the cost of hardware and energy. On that estimate, serving $100 of tokens costs something like $2–5. In his words, both the subscription number and the API number are "fake."</li>
+        <li><b>The $200 plans are marketing.</b> They were introduced to feel unlimited, back when people sent a handful of prompts a day. As models grew more capable and expensive, neither company wanted its top plan to suddenly feel limited, so the subsidy kept growing. The real money comes from cheaper consumer plans and API sales.</li>
+        <li><b>Competition is squeezing the margin.</b> Anthropic released Fable 5 at $10/$50 per million tokens. Theo says the same model had been planned at $25/$125 as Mythos Preview, and estimates its margin fell from about 95% to 87.5%, which more than halves the profit per token. OpenAI matched Fable's price with GPT-6 Astra. It then priced GPT-6.1 Sol at $2/$10 with $0.10 cache reads, where Theo guesses margins may be closer to 50%.</li>
+        <li><b>So subsidies shrink.</b> Thinner margins leave less room to give usage away. Theo reads Claude's half-limit for Fable and OpenAI's cut to the $200 plan as the start of that. His prediction: plans will cover fewer API dollars over time, but you'll still get more work done on the same plan a year from now, because the models keep getting cheaper and better.</li>
+      </ul>
+      <p class="muted" style="font-size:13px">The margins and planned prices are Theo's estimates, not figures published by Anthropic or OpenAI.</p>
+    </section>
+
+    <section id="timeline">
+      <h2>What changed this autumn</h2>
+      <div class="table-wrap">
+        <table aria-label="Timeline of plan changes">
+          <thead><tr><th>Date (2026)</th><th class="wrap">What happened</th></tr></thead>
+          <tbody>
+            <tr><td>9 April</td><td class="wrap">OpenAI adds a $100 Pro plan at 5× Plus.</td></tr>
+            <tr><td>10 September</td><td class="wrap">OpenAI pauses new $200 Pro sign-ups as demand for GPT-6 Astra strains its compute.</td></tr>
+            <tr><td>22 September</td><td class="wrap">Anthropic launches Opus 5.5 and raises 5-hour limits on Pro, Max and Team.</td></tr>
+            <tr><td>29 September</td><td class="wrap">OpenAI reopens the $200 Pro plan at 10× Plus instead of 20×, worth about half as many API dollars as before. It also adds a $500 plan at 25× Plus with Ultrafast, and Pro plans drop the 5-hour window.</td></tr>
+            <tr><td>5 October</td><td class="wrap">SemiAnalysis publishes controlled measurements of plan values.</td></tr>
+            <tr><td>7 October</td><td class="wrap">Theo: "Does the $200 Codex plan suck now?"</td></tr>
+            <tr><td>12 October</td><td class="wrap">Theo: "I thought AI was gonna get cheaper?"</td></tr>
+            <tr><td>14 October</td><td class="wrap">GPT-5.5 retires from Codex for ChatGPT sign-ins.</td></tr>
+            <tr><td>30 October</td><td class="wrap">Existing $200 Pro subscribers move from 20× to 10× Plus.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Anthropic has also started including monthly API credits with Max and Team plans. Separately, Wokey measured ChatGPT Plus's weekly value falling from about $92 to $58 between early and mid October, with no announcement yet to explain it.</p>
+    </section>
+
+    <section id="theo-codex">
+      <h2>Theo: "Does the $200 Codex plan suck now?"</h2>
+      <p class="muted"><a href="https://www.youtube.com/watch?v=nYA0yASgaZI">Watch on YouTube</a> · 7 October 2026 · 33 minutes. Timestamps link to the moment in the video.</p>
+      <ul class="plain">
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=0s">0:00</a> <b>How the plans got so generous.</b> A few weeks earlier, the $200 Codex plan could cover up to about $12,000 a month at API prices, and the $200 Claude plan about $8,000. Neither company wanted its top plan to stop feeling unlimited when a pricier model came out, so the subsidies kept growing.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=93s">1:33</a> <b>The cut.</b> OpenAI changed how the $200 plan counts usage, halving its dollar value. Theo measured about $570 of API-priced usage in a week, roughly $2,000–2,500 a month, and drained an account in 29 hours of looping. Counting the frequent early resets, he'd previously been getting up to about $24,000 a month, so for heavy Astra use it was close to a 10× drop.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=230s">3:50</a> <b>Both numbers are made up.</b> API prices carry huge margins, so the "value" of a plan says little about what it costs the provider. See <a href="#why-cheap">why plans are so cheap</a>.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=323s">5:23</a> <b>Where each plan works.</b> The Claude subscription only works in Claude Code and things that run it, like T3 Code, which Theo calls the change that annoyed him most. The Codex subscription can be used almost anywhere, short of reselling it to serve other people's traffic.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=416s">6:56</a> <b>Big-model rules differ.</b> Claude limits Fable to half the weekly allowance. OpenAI lets Astra use the whole limit.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=507s">8:27</a> <b>Margin math.</b> Theo argues Fable/Mythos 5 shipped at well under its planned price, cutting Anthropic's profit per token by more than half. He sees that as the start of the end of heavy subsidies, and links the halved profit to the halved Fable allowance.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=782s">13:02</a> <b>GPT-6.1 Sol is priced very low.</b> At $2/$10 per million tokens with $0.10 cache reads, he guesses OpenAI's margin on it is around 50%. The cut to the $200 plan was meant to keep Sol usage from bankrupting the plan while making it feel unlimited again.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1012s">16:52</a> <b>His own usage.</b> About 1,800 Astra responses cost $534 at API prices, while about 1,500 Sol responses with similar output cost $38.27, more than a 10× difference.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1103s">18:23</a> <b>Verdict.</b> For shipping real code, the value of Opus 5.5 on the $200 Claude plan is "impossible to beat". He runs six Claude accounts and has stopped using Fable. He also calls GPT-6.1 Sol the best-value model ever, and says the Codex plan only feels like a rug pull if you insist on Astra.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1240s">20:40</a> <b>Cost per task is what matters.</b> On his Terminal-Bench runs, Sol at extra-high effort tied Opus 5.5 at $0.96 per task versus $13.11. Half the subscription dollars can still mean several times more finished tasks.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1474s">24:34</a> <b>The $500 plan was a mistake of timing.</b> Telling people the 20× plan is now 10×, while offering 25× for 2.5× the price, looked like a squeeze. He says the big plans are marketing rather than the business.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1519s">25:19</a> <b>Ultrafast burns limits.</b> Astra Ultrafast costs $60 in and $300 out per million tokens, up to $120 and $450 with long context. Two pull-request reviews cost about $600. On the $500 plan he gets about $1,000 of Ultrafast per week, roughly 2.1 hours of generation, or about $4,000 a month.</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1886s">31:26</a> <b>How he uses both.</b> Claude writes the code, and Claude calls Codex through T3 Code to review it, since he finds OpenAI's models more thorough reviewers. He also uses Codex for email and computer use. His advice: get the Claude plan to ship serious engineering work, and add Codex if you can.</li>
+      </ul>
+    </section>
+
+    <section id="theo-cheaper">
+      <h2>Theo: "I thought AI was gonna get cheaper?"</h2>
+      <p class="muted"><a href="https://www.youtube.com/watch?v=vRS2leJLAI0">Watch on YouTube</a> · 12 October 2026 · 18 minutes.</p>
+      <p>The question: Sam Altman promised intelligence would get about 10× cheaper every year, yet bills keep climbing. Theo spent around $800–1,000 on AI in all of 2025, and in 2026 he can spend $1,000 in a single day. His answer is that AI did get much cheaper; we're measuring it wrong.</p>
+      <ul class="plain">
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=230s">3:50</a> <b>Top-end token prices did rise.</b> GPT-5 cost $1.25 in and $10 out per million tokens. GPT-6 Astra costs $10 in and $50 out.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=275s">4:35</a> <b>But price per token is the wrong measure.</b> He uses four: price per token, tokens needed per task, cost to reach a given level of intelligence, and what kinds of work the model can do. Cheap, capable models have also arrived at the bottom end, such as GLM 5.3 Flash at $0.15 in and $0.50 out.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=322s">5:22</a> <b>Token efficiency matters.</b> A model that's cheap per token but wordy can lose most of its advantage per task. On the Artificial Analysis index, a Gemini Flash model's 10× price advantage over Astra shrank to under 3× per task, and Sonnet 5 cost more per task than Astra.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=414s">6:54</a> <b>The workload decides which price matters.</b> Reading 800k tokens to categorize them is all input cost. Agentic coding depends on caching, reliability and token efficiency.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=460s">7:40</a> <b>The top costs the most.</b> On the cost-versus-intelligence chart, a few extra points of score can triple the cost per task.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=505s">8:25</a> <b>Fixed capability gets much cheaper.</b> DeepSeek V4 Flash scores about the same as GPT-5 Codex High at about 21× cheaper input and 55× cheaper output. Even assuming it needs 3× more tokens, that's roughly 20× cheaper in a year.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=553s">9:13</a> <b>Every level follows the same curve.</b> Artificial Analysis data shows each new level of capability starting expensive and dropping to cents within months. One level fell from about $15 per task in September 2024 to about $0.16 by February 2025.</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=786s">13:06</a> <b>Bills rise because use rises.</b> Models now take a screenshot of a bug and land the fix, running for hours instead of seconds. Cheaper, better models get used for much more. That's the Jevons paradox: when coal got cheaper, total coal spending went up.</li>
+      </ul>
+      <p>His conclusion: the promised 10× yearly drop happened, and then some, at any fixed level of capability. People spend more because the models can now do far bigger jobs.</p>
+      <p class="muted" style="font-size:13px">Model names and figures in both video summaries are as heard in the videos' auto-generated captions, cross-checked against official prices where possible. Check the videos for exact on-screen numbers.</p>
+    </section>
+
+    <section id="choosing">
+      <h2>Choosing a plan</h2>
+      <ol class="plain">
+        <li><b>Estimate your usage at API prices first.</b> If it's under the plan price, pay as you go. If it's above, a subscription is almost always cheaper.</li>
+        <li><b>Check where you'll use it.</b> If you rely on third-party agent tools, a Claude subscription won't cover them, but API billing or a Codex subscription can.</li>
+        <li><b>Pick the model before the plan.</b> The same allowance does very different amounts of work on Opus 5.5, Fable, Astra or Sol.</li>
+        <li><b>Avoid speed modes on a subscription unless the speed is worth it.</b> Fast uses the allowance 2.5× as fast and Ultrafast 8×.</li>
+        <li><b>Don't assume the multiplier applies to the whole week.</b> A "20×" Claude plan measured about 10× Pro per week.</li>
+        <li><b>Expect the subsidy to shrink.</b> Both companies are already trimming. Judge a plan by tasks finished per month, not by API dollars covered.</li>
+      </ol>
+    </section>
+
+    <section id="sources">
+      <h2>Sources</h2>
+      <ul class="plain">
+        <li>Theo (t3.gg), <a href="https://www.youtube.com/watch?v=nYA0yASgaZI">Does the $200 Codex plan suck now?</a>, 7 October 2026</li>
+        <li>Theo (t3.gg), <a href="https://www.youtube.com/watch?v=vRS2leJLAI0">I thought AI was gonna get cheaper?</a>, 12 October 2026</li>
+        <li>Anthropic, <a href="https://claude.com/pricing">Claude plans and pricing</a></li>
+        <li>Anthropic, <a href="https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-and-team-plans">Monthly API credits for Max and Team plans</a></li>
+        <li>Anthropic, <a href="https://platform.claude.com/docs/en/about-claude/pricing">API pricing</a></li>
+        <li>OpenAI, <a href="https://learn.chatgpt.com/docs/pricing">Codex pricing</a></li>
+        <li>OpenAI, <a href="https://developers.openai.com/api/docs/pricing">API pricing</a></li>
+        <li>Wokey, <a href="https://wokey.ai/claude-usage-limits">Claude usage limits, measured</a> and <a href="https://wokey.ai/codex-usage-limits">Codex usage limits, measured</a> (week of 12–19 October 2026, including SemiAnalysis's 5 October figures)</li>
+        <li>The Decoder, <a href="https://the-decoder.com/openai-reopens-its-200-pro-plan-but-cuts-api-credits-in-half-as-it-nudges-users-toward-pay-per-use/">OpenAI reopens its $200 Pro plan but cuts API credits in half</a></li>
+        <li>OfficeChai, <a href="https://officechai.com/ai/openai-to-decrease-limits-on-pro-plan-from-20-times-to-10-times-of-plus-plan/">OpenAI to decrease limits on Pro plan from 20 times to 10 times of Plus plan</a></li>
+        <li>Kingy AI, <a href="https://kingy.ai/news/chatgpt-pro-200-usage-cut/">OpenAI cuts Pro 200 from 20x to 10x</a></li>
+        <li>Fortune, <a href="https://fortune.com/2026/09/29/openai-takes-on-metas-muse-with-new-dot-agents-and-unveils-a-potential-google-workspace-competitor/">OpenAI unveils a $500 monthly plan</a>, 29 September 2026</li>
+        <li>9to5Mac, <a href="https://9to5mac.com/2026/04/09/openai-introduces-100-month-pro-plan-aimed-at-codex-users-heres-what-it-includes/">OpenAI introduces $100/month Pro plan</a>, 9 April 2026</li>
+        <li>The Next Web, <a href="https://thenextweb.com/news/anthropic-openclaw-claude-subscription-ban-cost">Anthropic blocks OpenClaw from Claude subscriptions</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Researched 20 October 2026. Plan limits change often. Measured values are third-party estimates from real accounts and controlled tests, and Theo's figures reflect his own heavy usage.</p>
+    </footer>
+  </main>
+</div>
+
+<script src="js/charts.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/subscriptions.js"></script>
+</body>
+</html>

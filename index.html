@@ -3,18 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Model cost guide: how AI model pricing works</title>
+<title>AI cost guide: how AI model pricing works</title>
 <meta name="description" content="An interactive guide to how AI model pricing works, using Claude's API prices: tokens, input and output, prompt caching, conversations, agents, compaction and more.">
 <link rel="stylesheet" href="css/styles.css">
 <script>
   // Apply a saved theme before first paint.
-  try { const t = localStorage.getItem("mcg-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  try { const t = localStorage.getItem("aicg-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 </head>
 <body>
 
 <header class="topbar">
-  <a class="brand" href="#top">Model cost guide</a>
+  <a class="brand" href="index.html">AI cost guide</a>
+  <nav class="topnav" aria-label="Pages"><a href="index.html" aria-current="page">API pricing</a><a href="subscriptions.html">Subscriptions</a></nav>
   <label>Model <select id="model-select" aria-label="Model used in every example"></select></label>
   <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
 </header>
@@ -44,6 +45,7 @@
     <div class="hero">
       <h1>How AI model pricing works</h1>
       <p>A practical guide to what you actually pay for when you use a language model, with interactive examples. It uses Claude's API prices, but the same ideas apply to most model providers.</p>
+      <p class="meta">Paying for Claude Pro or Max, or ChatGPT Plus or Pro, instead? See <a href="subscriptions.html">Subscriptions vs API</a>.</p>
       <p class="meta">Prices checked <span id="checked-date"></span> from <a id="source-link" href="#">Anthropic's pricing page</a>. Prices change, so check the source before relying on them. Pick a model at the top and every example updates.</p>
     </div>
 
@@ -403,6 +405,7 @@
 
 <script src="js/pricing.js"></script>
 <script src="js/charts.js"></script>
+<script src="js/theme.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

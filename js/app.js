@@ -9,7 +9,7 @@
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } },
   };
-  let modelId = P.byId(store.get("mcg-model")) ? store.get("mcg-model") : P.DEFAULT_MODEL;
+  let modelId = P.byId(store.get("aicg-model")) ? store.get("aicg-model") : P.DEFAULT_MODEL;
   const model = () => P.byId(modelId);
 
   // ---------- formatting ----------
@@ -90,25 +90,9 @@
     sel.value = modelId;
     sel.addEventListener("change", () => {
       modelId = sel.value;
-      store.set("mcg-model", modelId);
+      store.set("aicg-model", modelId);
       renderAll();
     });
-  }
-
-  function initTheme() {
-    const btn = $("theme-btn");
-    const mq = matchMedia("(prefers-color-scheme: dark)");
-    const isDark = () => (document.documentElement.dataset.theme || (mq.matches ? "dark" : "light")) === "dark";
-    const label = () => { btn.textContent = isDark() ? "Light mode" : "Dark mode"; };
-    btn.addEventListener("click", () => {
-      const next = isDark() ? "light" : "dark";
-      document.documentElement.dataset.theme = next;
-      store.set("mcg-theme", next);
-      label();
-      C.fitStacks();
-    });
-    mq.addEventListener("change", () => { label(); C.fitStacks(); });
-    label();
   }
 
   function initToc() {
@@ -487,7 +471,6 @@
   for (const id of ["checked-date", "footer-date"]) $(id).textContent = P.CHECKED;
   for (const id of ["source-link", "footer-source"]) $(id).href = P.SOURCE;
   initModelSelect();
-  initTheme();
   initToc();
   on(["tok-text"], renderTokens);
   on(["calc-history", "calc-new", "calc-tail", "calc-output", "calc-batch", "calc-fast", "calc-us", "name:calc-state", "name:calc-ttl"], renderCalc);
