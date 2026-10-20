@@ -1,6 +1,9 @@
 # ai-cost-guide
 
-An interactive guide to what AI models actually cost, in two parts:
+An interactive guide to what AI models actually cost, in two parts.
+
+**Live site: https://harry924.github.io/ai-cost-guide/**
+
 
 - **API pricing** (`index.html`): how pay-per-token pricing works, using Claude's API prices. Pick a model at the top and every example updates.
 - **Subscriptions** (`subscriptions.html`): what Claude and ChatGPT/Codex plans are worth at API prices, how their limits work, what changed in autumn 2026, and the key points from two of Theo's (t3.gg) videos on plan value and AI costs.
@@ -27,7 +30,9 @@ The subscriptions page covers:
 
 ## Use it
 
-Open `index.html` in a browser. There's no build step and nothing to install.
+Open the [live site](https://harry924.github.io/ai-cost-guide/), or open `index.html` from this folder. There's no build step and nothing to install.
+
+Use the live site if you zoom in Chrome. For local files, Chrome remembers zoom separately for every file and every `#section` link, so the two pages won't share a zoom level. On the live site it's one zoom for the whole guide.
 
 ## Files
 
