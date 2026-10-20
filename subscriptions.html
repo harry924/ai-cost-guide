@@ -6,15 +6,18 @@
 <title>AI cost guide: subscriptions vs API</title>
 <meta name="description" content="What Claude and ChatGPT/Codex subscriptions are worth at API prices, how their limits work, what changed in autumn 2026, and the key points from Theo's videos on plan value and AI costs.">
 <link rel="stylesheet" href="css/styles.css">
-<script>
-  try { const t = localStorage.getItem("aicg-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
-</script>
+<script src="js/boot.js"></script>
 </head>
 <body>
 
 <header class="topbar">
   <a class="brand" href="index.html">AI cost guide</a>
   <nav class="topnav" aria-label="Pages"><a href="index.html">API pricing</a><a href="subscriptions.html" aria-current="page">Subscriptions</a></nav>
+  <div class="tb-zoom" role="group" aria-label="Page zoom, shared by both pages">
+    <button class="icon-btn" id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out (Ctrl/⌘ −)">−</button>
+    <button class="icon-btn zval" id="zoom-val" type="button" title="Reset zoom to 100% (Ctrl/⌘ 0)">100%</button>
+    <button class="icon-btn" id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in (Ctrl/⌘ +)">+</button>
+  </div>
   <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
 </header>
 
@@ -303,6 +306,7 @@
 
 <script src="js/charts.js"></script>
 <script src="js/theme.js"></script>
+<script src="js/zoom.js"></script>
 <script src="js/subscriptions.js"></script>
 </body>
 </html>

@@ -98,15 +98,23 @@
   function initToc() {
     const links = [...document.querySelectorAll(".toc a")];
     const byId = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
-    const io = new IntersectionObserver(entries => {
+    const onEnter = entries => {
       for (const e of entries) {
         if (!e.isIntersecting) continue;
         links.forEach(a => a.classList.remove("active"));
         const a = byId.get(e.target.id);
         if (a) a.classList.add("active");
       }
-    }, { rootMargin: "-80px 0px -70% 0px" });
-    document.querySelectorAll("main section").forEach(s => io.observe(s));
+    };
+    let io = null;
+    const observe = () => {
+      if (io) io.disconnect();
+      const top = Math.round(80 * (window.AICG_ZOOM || 1)); // the top bar grows with the guide's zoom
+      io = new IntersectionObserver(onEnter, { rootMargin: `-${top}px 0px -70% 0px` });
+      document.querySelectorAll("main section").forEach(s => io.observe(s));
+    };
+    observe();
+    window.addEventListener("aicg-zoom", observe);
   }
 
   // ---------- price list ----------

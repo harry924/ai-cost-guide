@@ -17,7 +17,11 @@
     return e;
   }
 
-  // Tooltip. Rows: { color, value, name }. Text goes in with textContent only.
+  // The guide's own zoom (js/boot.js). Pointer and getBoundingClientRect coordinates are zoomed;
+  // chart layout and style.left/top are not, so convert by dividing by it.
+  const zoom = () => window.AICG_ZOOM || 1;
+
+  // Tooltip. Rows: { color, value, name }. Text goes in with textContent only. x, y: pointer coordinates.
   let tipEl = null;
   function showTip(title, rows, x, y) {
     if (!tipEl) {
@@ -40,8 +44,8 @@
     if (left + b.width > window.innerWidth - 6) left = x - b.width - 14;
     if (left < 6) left = 6;
     if (top < 6) top = y + 18;
-    tipEl.style.left = `${left}px`;
-    tipEl.style.top = `${top}px`;
+    tipEl.style.left = `${left / zoom()}px`;
+    tipEl.style.top = `${top / zoom()}px`;
   }
   function hideTip() {
     if (tipEl) tipEl.style.display = "none";
@@ -173,11 +177,11 @@
     };
     const kAt = cx => {
       const r = svg.getBoundingClientRect();
-      return Math.min(o.n, Math.max(1, Math.round(((cx - r.left - m.l) / iw) * (o.n - 1)) + 1));
+      return Math.min(o.n, Math.max(1, Math.round((((cx - r.left) / zoom() - m.l) / iw) * (o.n - 1)) + 1));
     };
     const anchor = k => {
       const r = svg.getBoundingClientRect();
-      return [r.left + x(k), r.top + m.t];
+      return [r.left + x(k) * zoom(), r.top + m.t * zoom()];
     };
     svg.addEventListener("pointermove", e => show(kAt(e.clientX), e.clientX, e.clientY));
     svg.addEventListener("pointerleave", hide);

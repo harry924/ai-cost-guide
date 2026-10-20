@@ -110,6 +110,11 @@ select, input[type="number"], textarea {
 }
 select { padding: 5px 8px; font-size: 13px; }
 select:focus, input:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--ring); outline-offset: 1px; }
+/* The guide's own zoom control (js/zoom.js) */
+.tb-zoom { display: inline-flex; align-items: center; gap: 4px; }
+.tb-zoom .icon-btn { min-width: 32px; padding: 5px 8px; text-align: center; font-variant-numeric: tabular-nums; }
+.tb-zoom .zval { min-width: 56px; }
+html.le560 .tb-zoom { display: none; }
 .icon-btn {
   font: inherit; font-size: 13px; color: var(--ink-2); background: var(--surface);
   border: 1px solid var(--axis); border-radius: 8px; padding: 5px 10px; cursor: pointer;
@@ -122,14 +127,11 @@ select:focus, input:focus, textarea:focus, button:focus-visible { outline: 2px s
 .toc a { display: block; padding: 4px 10px; border-radius: 6px; color: var(--ink-2); text-decoration: none; }
 .toc a:hover { background: var(--sunken); color: var(--ink); }
 .toc a.active { background: var(--sunken); color: var(--ink); font-weight: 600; }
-@media (max-width: 1080px) {
-  .layout { grid-template-columns: minmax(0, 780px); gap: 0; }
-  .toc { display: none; }
-}
-@media (max-width: 560px) {
-  .layout { padding: 20px 16px 48px; }
-  .topbar { padding: 10px 16px; }
-}
+/* Width rules use zoom-aware classes set by js/boot.js instead of media queries. */
+html.le1080 .layout { grid-template-columns: minmax(0, 780px); gap: 0; }
+html.le1080 .toc { display: none; }
+html.le560 .layout { padding: 20px 16px 48px; }
+html.le560 .topbar { padding: 10px 16px; }
 
 /* Text */
 .hero h1 { font-size: 32px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -0.01em; }
@@ -206,11 +208,9 @@ ul.plain li, ol.plain li { margin-bottom: 4px; }
 .seg:hover, .seg:focus-visible { filter: brightness(1.15); }
 .seg:focus-visible { box-shadow: 0 0 0 2px var(--ring); }
 .seg-label { padding: 0 6px; pointer-events: none; }
-@media (max-width: 560px) {
-  .bar-row { grid-template-columns: 1fr 64px; }
-  .bar-row .name { grid-column: 1 / 3; }
-  .bar-row .note { grid-column: 1 / 3; }
-}
+html.le560 .bar-row { grid-template-columns: 1fr 64px; }
+html.le560 .bar-row .name { grid-column: 1 / 3; }
+html.le560 .bar-row .note { grid-column: 1 / 3; }
 
 /* Calculator result */
 .result { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 4px 0 12px; }
@@ -225,10 +225,8 @@ ul.plain li, ol.plain li { margin-bottom: 4px; }
 .mult-note { font-size: 12.5px; color: var(--muted); min-height: 38px; }
 .mult-vals { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 12.5px; margin: 4px 0; font-variant-numeric: tabular-nums; }
 .mult-vals span { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
-@media (max-width: 640px) {
-  .multiples { grid-template-columns: 1fr; }
-  .mult-note { min-height: 0; }
-}
+html.le640 .multiples { grid-template-columns: 1fr; }
+html.le640 .mult-note { min-height: 0; }
 .plot { width: 100%; }
 .plot svg { display: block; overflow: visible; outline: none; }
 .plot svg:focus-visible { box-shadow: 0 0 0 2px var(--ring); border-radius: 4px; }
@@ -264,10 +262,8 @@ textarea { width: 100%; min-height: 96px; padding: 10px 12px; resize: vertical; 
 dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 8px 18px; margin: 0; }
 dl.glossary dt { font-weight: 600; }
 dl.glossary dd { margin: 0; color: var(--ink-2); }
-@media (max-width: 560px) {
-  dl.glossary { grid-template-columns: 1fr; gap: 2px; }
-  dl.glossary dd { margin-bottom: 10px; }
-}
+html.le560 dl.glossary { grid-template-columns: 1fr; gap: 2px; }
+html.le560 dl.glossary dd { margin-bottom: 10px; }
 
 /* Tooltip */
 .tip {

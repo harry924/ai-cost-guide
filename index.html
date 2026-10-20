@@ -6,10 +6,7 @@
 <title>AI cost guide: how AI model pricing works</title>
 <meta name="description" content="An interactive guide to how AI model pricing works, using Claude's API prices: tokens, input and output, prompt caching, conversations, agents, compaction and more.">
 <link rel="stylesheet" href="css/styles.css">
-<script>
-  // Apply a saved theme before first paint.
-  try { const t = localStorage.getItem("aicg-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
-</script>
+<script src="js/boot.js"></script>
 </head>
 <body>
 
@@ -17,6 +14,11 @@
   <a class="brand" href="index.html">AI cost guide</a>
   <nav class="topnav" aria-label="Pages"><a href="index.html" aria-current="page">API pricing</a><a href="subscriptions.html">Subscriptions</a></nav>
   <label>Model <select id="model-select" aria-label="Model used in every example"></select></label>
+  <div class="tb-zoom" role="group" aria-label="Page zoom, shared by both pages">
+    <button class="icon-btn" id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out (Ctrl/⌘ −)">−</button>
+    <button class="icon-btn zval" id="zoom-val" type="button" title="Reset zoom to 100% (Ctrl/⌘ 0)">100%</button>
+    <button class="icon-btn" id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in (Ctrl/⌘ +)">+</button>
+  </div>
   <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
 </header>
 
@@ -406,6 +408,7 @@
 <script src="js/pricing.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/theme.js"></script>
+<script src="js/zoom.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

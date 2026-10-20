@@ -32,7 +32,7 @@ The subscriptions page covers:
 
 Open the [live site](https://harry924.github.io/ai-cost-guide/), or open `index.html` from this folder. There's no build step and nothing to install.
 
-Use the live site if you zoom in Chrome. For local files, Chrome remembers zoom separately for every file and every `#section` link, so the two pages won't share a zoom level. On the live site it's one zoom for the whole guide.
+Zoom with `Ctrl/⌘ +` and `Ctrl/⌘ −`, or the −/100%/+ buttons in the top bar. The guide keeps its own zoom, shared by both pages and every open tab, because Chrome saves its zoom separately for every local file and every `#section` link. `Ctrl/⌘ 0` resets both the guide's zoom and Chrome's.
 
 ## Files
 
@@ -44,6 +44,8 @@ Use the live site if you zoom in Chrome. For local files, Chrome remembers zoom 
 | `js/app.js` | Calculators and charts on the API pricing page |
 | `js/subscriptions.js` | Plan data, charts and calculator on the subscriptions page |
 | `js/charts.js` | Bar charts, line charts and tooltips |
+| `js/boot.js` | Applies the saved theme and zoom before the page draws, and sets the zoom-aware width classes the layout uses |
+| `js/zoom.js` | The guide's own zoom: buttons and keyboard shortcuts |
 | `js/theme.js` | Light and dark mode |
 | `css/styles.css` | Styles |
 | `tests/check.js` | Checks the cost math against worked examples |
