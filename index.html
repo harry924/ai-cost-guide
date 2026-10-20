@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model cost guide: how AI model pricing works</title>
+<meta name="description" content="An interactive guide to how AI model pricing works, using Claude's API prices: tokens, input and output, prompt caching, conversations, agents, compaction and more.">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  // Apply a saved theme before first paint.
+  try { const t = localStorage.getItem("mcg-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top">Model cost guide</a>
+  <label>Model <select id="model-select" aria-label="Model used in every example"></select></label>
+  <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
+</header>
+
+<div class="layout" id="top">
+  <nav class="toc" aria-label="Sections">
+    <ol>
+      <li><a href="#tokens">Tokens</a></li>
+      <li><a href="#input-output">Input and output</a></li>
+      <li><a href="#prices">Price list</a></li>
+      <li><a href="#resend">Every request resends everything</a></li>
+      <li><a href="#caching">Prompt caching</a></li>
+      <li><a href="#calculator">Cost of one request</a></li>
+      <li><a href="#cache-length">5-minute or 1-hour cache</a></li>
+      <li><a href="#conversation">Cost over a conversation</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#compaction">Compaction</a></li>
+      <li><a href="#other-costs">Other things that change the price</a></li>
+      <li><a href="#examples">Example workloads</a></li>
+      <li><a href="#usage">Reading the usage numbers</a></li>
+      <li><a href="#save">Ways to spend less</a></li>
+      <li><a href="#glossary">Glossary</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <h1>How AI model pricing works</h1>
+      <p>A practical guide to what you actually pay for when you use a language model, with interactive examples. It uses Claude's API prices, but the same ideas apply to most model providers.</p>
+      <p class="meta">Prices checked <span id="checked-date"></span> from <a id="source-link" href="#">Anthropic's pricing page</a>. Prices change, so check the source before relying on them. Pick a model at the top and every example updates.</p>
+    </div>
+
+    <!-- Tokens -->
+    <section id="tokens">
+      <h2>Tokens: the unit you pay for</h2>
+      <p>Models read and write text in <b>tokens</b>, which are chunks of a few characters. In English, a token is about 4 characters, or roughly three-quarters of a word. Code, other languages and unusual text use more tokens per character.</p>
+      <p>Prices are quoted <b>per million tokens</b>, often written MTok. "$4 / MTok" means $4 for every million tokens, or $0.000004 per token.</p>
+      <p>The same text can be a different number of tokens on different models. Claude models from 4.7 onward use a newer tokenizer that produces about 30% more tokens for the same text than earlier ones. When you compare models, compare the cost of finishing a task, not just the price per token.</p>
+      <div class="panel">
+        <p class="panel-title">Rough token estimate</p>
+        <p class="panel-sub">Paste some text. This divides the character count by 4, which is only a rough guide. For exact numbers, use the API's token-counting endpoint.</p>
+        <textarea id="tok-text" aria-label="Text to estimate">Every request to a language model is billed by the number of tokens it reads and the number of tokens it writes. Reading is cheaper than writing.</textarea>
+        <div class="estimate" id="tok-out" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Input and output -->
+    <section id="input-output">
+      <h2>Input and output</h2>
+      <p>Every request has two sides, and each has its own price.</p>
+      <ul class="plain">
+        <li><b>Input</b> is everything the model reads: the system prompt, the list of tools it can use, the conversation so far, your new message, and the results of any tools it ran, such as files it opened or web pages it fetched.</li>
+        <li><b>Output</b> is everything the model writes: its reply, any tool calls, and its thinking. Thinking is billed as output even when the app hides it from you.</li>
+      </ul>
+      <p>On every Claude model, output costs <b>5× as much per token</b> as input. Writing is more expensive because the model generates output one token at a time, while it can read a whole prompt at once.</p>
+      <p>Tools add input you don't see. The tool definitions are sent with every request, and the API adds a short built-in instruction for tool use (286 tokens on Opus 5.5).</p>
+    </section>
+
+    <!-- Prices -->
+    <section id="prices">
+      <h2>The price list</h2>
+      <p>Each model has one price for output and four for input. The extra input prices come from <a href="#caching">prompt caching</a>, explained below. The highlighted row is the model you picked at the top.</p>
+      <div class="table-wrap">
+        <table aria-label="Claude API prices per million tokens">
+          <thead><tr><th>Model</th><th>Input</th><th>5-min cache write</th><th>1-hour cache write</th><th>Cache read</th><th>Output</th></tr></thead>
+          <tbody id="price-body"></tbody>
+        </table>
+      </div>
+      <p class="muted" style="font-size:13px">USD per million tokens. Claude Haiku 5.5's prices are for prompts up to 100,000 tokens. Longer prompts cost $0.50 input and $2.50 output, with matching cache prices. Fast mode on Opus 5.5 costs $8 input and $40 output, and on Opus 5 and Opus 4.8 it costs $10 and $50.</p>
+    </section>
+
+    <!-- Resend -->
+    <section id="resend">
+      <h2>The model has no memory, so every request resends everything</h2>
+      <p>A model doesn't remember anything between requests. To continue a conversation, the app sends the <b>entire</b> conversation again, plus your new message. Message 30 of a chat costs far more than message 1, even if both are one line long, because message 30 carries the 29 exchanges before it.</p>
+      <div class="panel">
+        <p class="panel-title">What each request sends in a growing chat</p>
+        <p class="panel-sub">10k-token system prompt, 1k-token messages from you, 2k-token replies.</p>
+        <div class="legend">
+          <span><i class="key-rect" style="background:var(--before)"></i>Already sent in an earlier request</span>
+          <span><i class="key-rect" style="background:var(--c-new)"></i>New in this request</span>
+        </div>
+        <div class="bar-rows" id="resend-bars"></div>
+      </div>
+      <p>Without help, you'd pay full input price for the grey part on every request. Prompt caching is what makes that part cheap.</p>
+    </section>
+
+    <!-- Caching -->
+    <section id="caching">
+      <h2>Prompt caching</h2>
+      <p>When a request finishes, the provider can keep its processed form of that request for a while. If the next request starts with exactly the same content, the model reuses that work instead of processing it again. The app still sends the full text every time; what's saved is the model's work on it, which is why reusing it is so cheap.</p>
+      <p>This splits input into three prices. Which one a token gets depends on one question: <b>is it already in the cache?</b></p>
+      <div class="panel">
+        <ul class="rules">
+          <li><i class="key-rect" style="background:var(--c-read)"></i><div><b>Cache read</b> <span class="muted num" data-rate="read"></span><br><span class="ink-2">Already in the cache, because an earlier request saved it and it hasn't expired.</span></div></li>
+          <li><i class="key-rect" style="background:var(--c-write)"></i><div><b>Cache write</b> <span class="muted num" data-rate="w1"></span><br><span class="ink-2">Not in the cache yet: new text, or old text whose cache expired. The model processes it and saves it for next time, which costs more than plain input.</span></div></li>
+          <li><i class="key-rect" style="background:var(--c-normal)"></i><div><b>Normal input</b> <span class="muted num" data-rate="input"></span><br><span class="ink-2">Text after the last cache marker, which the app chose not to save.</span></div></li>
+        </ul>
+      </div>
+      <p>Some details matter:</p>
+      <ul class="plain">
+        <li><b>The match runs from the start.</b> The cache matches the beginning of the request exactly. Change anything early, like the system prompt or the tool list, and everything after the change misses. Adding new messages at the end is fine, which is why conversations cache well.</li>
+        <li><b>The app chooses what to save</b> by placing a cache marker (<code>cache_control</code>). Coding tools like Claude Code put it at the very end of each request, so they save everything and normal input is close to zero.</li>
+        <li><b>Entries expire</b> after 5 minutes or 1 hour, depending on which the app asks for. Every read restarts the timer for free, so a cache that's used often never expires.</li>
+        <li><b>Very short prompts can't be cached.</b> Below a minimum size, caching quietly doesn't happen.</li>
+        <li><b>Caches are private.</b> They're never shared between organizations.</li>
+      </ul>
+      <div class="callout">
+        <strong>The most common mistake</strong>
+        Your new message is never a cache read, because nothing has saved it yet. With caching turned on it's a cache write. The model's previous reply is also written on your next request: it came back as output, so it wasn't part of anything saved before.
+      </div>
+      <div class="panel">
+        <p class="panel-title">One message with a 200k-token history and 10k tokens of new text</p>
+        <p class="panel-sub">1-hour cache. Hover or tab onto a bar segment for details.</p>
+        <div class="bar-rows" id="scenario-bars"></div>
+        <div class="table-wrap">
+          <table aria-label="Token split and cost per scenario">
+            <thead><tr><th>Scenario</th><th>Cache read</th><th>Cache write</th><th>Normal input</th><th>Input cost</th></tr></thead>
+            <tbody id="scenario-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator -->
+    <section id="calculator">
+      <h2>Work out the cost of one request</h2>
+      <p>Put in the sizes and the cache state to see how a single request is billed.</p>
+      <div class="panel">
+        <div class="controls">
+          <label>History <input type="number" id="calc-history" value="130" min="0" max="1000" step="10"> k</label>
+          <label>New input <input type="number" id="calc-new" value="5" min="0" max="1000" step="1"> k</label>
+          <label>Not cached <input type="number" id="calc-tail" value="0" min="0" max="1000" step="1"> k</label>
+          <label>Output <input type="number" id="calc-output" value="3" min="0" max="128" step="1"> k</label>
+        </div>
+        <div class="controls">
+          <fieldset><legend>Cache</legend>
+            <span class="seg-btns">
+              <label><input type="radio" name="calc-state" value="warm" checked><span>Warm</span></label>
+              <label><input type="radio" name="calc-state" value="expired"><span>Expired</span></label>
+              <label><input type="radio" name="calc-state" value="none"><span>Not used</span></label>
+            </span>
+          </fieldset>
+          <fieldset><legend>Length</legend>
+            <span class="seg-btns">
+              <label><input type="radio" name="calc-ttl" value="1h" checked><span>1 hour</span></label>
+              <label><input type="radio" name="calc-ttl" value="5m"><span>5 minutes</span></label>
+            </span>
+          </fieldset>
+        </div>
+        <div class="controls checks">
+          <label><input type="checkbox" id="calc-batch"> Batch API</label>
+          <label><input type="checkbox" id="calc-fast"> Fast mode</label>
+          <label><input type="checkbox" id="calc-us"> US-only inference</label>
+        </div>
+        <div class="result"><span class="big num" id="calc-total"></span><span class="big-label" id="calc-label"></span></div>
+        <div id="calc-bar"></div>
+        <div class="table-wrap">
+          <table aria-label="Cost breakdown">
+            <thead><tr><th>Part</th><th>Tokens</th><th>Price per million</th><th>Cost</th></tr></thead>
+            <tbody id="calc-body"></tbody>
+          </table>
+        </div>
+        <ul class="notes" id="calc-notes"></ul>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0">"History" is what an earlier request already sent. "New input" is your message plus anything else added since then, including the model's last reply. "Not cached" is text placed after the cache marker. "Output" includes thinking.</p>
+      </div>
+    </section>
+
+    <!-- Cache length -->
+    <section id="cache-length">
+      <h2>5-minute or 1-hour cache?</h2>
+      <p>The two options differ in only one way: what a <b>write</b> costs. A 5-minute write costs 1.25× normal input and a 1-hour write costs 2×. Reads cost the same with either. Which one is cheaper depends on how long you wait between requests.</p>
+      <div class="table-wrap">
+        <table aria-label="Cost by gap between messages">
+          <thead><tr><th>Gap before the next message (200k history + 10k new)</th><th>5-minute cache</th><th>1-hour cache</th></tr></thead>
+          <tbody id="gap-body"></tbody>
+        </table>
+      </div>
+      <h3>When does caching pay off?</h3>
+      <p>Saving text costs extra the first time, and each later send is cheap. Caching only pays off if the same text is sent enough times before the cache expires.</p>
+      <div class="table-wrap">
+        <table aria-label="Cost of sending the same million tokens several times">
+          <thead><tr><th>Times the same 1M tokens are sent</th><th>No caching</th><th>5-minute cache</th><th>1-hour cache</th></tr></thead>
+          <tbody id="breakeven-body"></tbody>
+        </table>
+      </div>
+      <p id="breakeven-text"></p>
+      <p>A 1-hour cache suits people, who stop to read and think. Agents usually send their next request within seconds, so a 5-minute cache would do there, except for the occasional long wait. See <a href="#agents">Agents</a>.</p>
+    </section>
+
+    <!-- Conversation -->
+    <section id="conversation">
+      <h2>How cost grows over a conversation</h2>
+      <p>Each line is the running total for one caching option. Each chart is a different reply habit. All four charts use the same scale.</p>
+      <div class="panel">
+        <div class="controls">
+          <label>Starting context <input type="number" id="conv-start" value="20" min="0" max="900" step="5"> k</label>
+          <label>Your message <input type="number" id="conv-user" value="2" min="0.1" max="100" step="1"> k</label>
+          <label>Reply <input type="number" id="conv-reply" value="3" min="0.1" max="100" step="1"> k</label>
+          <label>Messages <input type="number" id="conv-n" value="30" min="2" max="200" step="5"></label>
+        </div>
+        <div class="legend">
+          <span><i class="key-line" style="background:var(--c-h1)"></i>1-hour cache</span>
+          <span><i class="key-line" style="background:var(--c-m5)"></i>5-minute cache</span>
+          <span><i class="key-line" style="background:var(--c-none)"></i>No caching</span>
+        </div>
+        <div class="multiples" id="conv-charts"></div>
+        <h3 id="conv-sum-h" style="font-size:14px"></h3>
+        <div class="table-wrap">
+          <table aria-labelledby="conv-sum-h">
+            <thead><tr><th>How often you reply</th><th>1-hour cache</th><th>5-minute cache</th><th>No caching</th></tr></thead>
+            <tbody id="conv-body"></tbody>
+          </table>
+        </div>
+        <details><summary>Every message, as tables</summary><div id="conv-detail"></div></details>
+      </div>
+      <p class="muted" style="font-size:13px">Assumes one request per message, every message and reply the same size, and the reply staying in the context. Output costs the same on all three lines.</p>
+    </section>
+
+    <!-- Agents -->
+    <section id="agents">
+      <h2>Agents that work for hours</h2>
+      <p>An agent loop sends a new request for every tool call. The model asks for a tool, the tool runs, and its result goes back in the next request. Those requests usually come seconds apart. Each one reads the whole context and restarts the cache timer, so the cache stays warm for hours even though nobody types anything.</p>
+      <p>Two things follow from that:</p>
+      <ul class="plain">
+        <li><b>Caching is what makes agents affordable.</b> Without it, every step pays full input price to reread the whole context.</li>
+        <li><b>Reads become the biggest cost.</b> Each read is cheap, but there are hundreds of them and the context keeps growing.</li>
+      </ul>
+      <p>The cache length matters only for steps with a long wait in between, such as a slow test suite or build, waiting on a sub-agent or background task, or a long generation. The timer counts from the start of a request, so a 4-minute response leaves only 1 minute before a 5-minute cache expires. With a 5-minute cache, each of those waits means rewriting the whole context.</p>
+      <div class="panel">
+        <p class="panel-title">Agent session</p>
+        <p class="panel-sub">Steps without a long wait come 30 seconds apart. Long waits are 20 minutes, spread evenly through the run.</p>
+        <div class="controls">
+          <label>Starting context <input type="number" id="ag-start" value="20" min="0" max="900" step="5"> k</label>
+          <label>Steps <input type="number" id="ag-steps" value="200" min="2" max="2000" step="10"></label>
+          <label>Added per step <input type="number" id="ag-add" value="1.5" min="0" max="100" step="0.5"> k</label>
+          <label>Output per step <input type="number" id="ag-out" value="0.5" min="0" max="64" step="0.5"> k</label>
+          <label>Long waits <input type="number" id="ag-waits" value="0" min="0" max="500" step="1"></label>
+        </div>
+        <div class="legend">
+          <span><i class="key-rect" style="background:var(--c-read)"></i>Cache read</span>
+          <span><i class="key-rect" style="background:var(--c-write)"></i>Cache write</span>
+          <span><i class="key-rect" style="background:var(--c-normal)"></i>Normal input</span>
+          <span><i class="key-rect" style="background:var(--c-output)"></i>Output</span>
+        </div>
+        <div class="bar-rows" id="agent-bars"></div>
+        <div class="table-wrap">
+          <table aria-label="Agent session cost by caching option">
+            <thead><tr><th>Caching</th><th>Cache read</th><th>Cache write</th><th>Normal input</th><th>Output</th><th>Total</th></tr></thead>
+            <tbody id="agent-body"></tbody>
+          </table>
+        </div>
+        <p class="muted" style="font-size:12.5px;margin:0" id="agent-note"></p>
+      </div>
+      <p>Because every step rereads the whole context, the best way to cut an agent's cost is to keep its context small: compact it from time to time, and hand reading-heavy work to sub-agents, which do the reading in their own context and pass back only a summary.</p>
+    </section>
+
+    <!-- Compaction -->
+    <section id="compaction">
+      <h2>Compaction</h2>
+      <p>Compaction replaces a long conversation with a summary written by the model. Later requests carry the short summary instead of the full history, so each one costs much less. It has two costs:</p>
+      <ul class="plain">
+        <li><b>The compaction itself.</b> The model has to read the whole history once and write the summary as output.</li>
+        <li><b>Lost detail.</b> A summary can't keep everything. If you later need an exact error message or line of code from early in the conversation, it may be gone.</li>
+      </ul>
+      <p>Some apps offer to compact when you come back to a long thread after the cache has expired. That's when continuing is most expensive, because the whole history has to be written to the cache again.</p>
+      <div class="panel">
+        <p class="panel-title">Keep the full history or compact first?</p>
+        <p class="panel-sub">1-hour cache. Assumes the compaction request bills the history as a cache write when the cache has expired, which is the most expensive case.</p>
+        <div class="controls">
+          <label>Current context <input type="number" id="cp-history" value="130" min="1" max="1000" step="10"> k</label>
+          <label>After compacting <input type="number" id="cp-after" value="20" min="1" max="500" step="5"> k</label>
+          <label>Summary length <input type="number" id="cp-summary" value="8" min="0" max="64" step="1"> k</label>
+          <label>Messages after <input type="number" id="cp-n" value="10" min="1" max="200" step="1"></label>
+          <label>Your message <input type="number" id="cp-user" value="2" min="0.1" max="100" step="1"> k</label>
+          <label>Reply <input type="number" id="cp-reply" value="3" min="0.1" max="100" step="1"> k</label>
+        </div>
+        <div class="controls">
+          <fieldset><legend>Cache when you return</legend>
+            <span class="seg-btns">
+              <label><input type="radio" name="cp-state" value="expired" checked><span>Expired</span></label>
+              <label><input type="radio" name="cp-state" value="warm"><span>Warm</span></label>
+            </span>
+          </fieldset>
+        </div>
+        <div class="legend">
+          <span><i class="key-line" style="background:var(--c-keep)"></i>Keep the full history</span>
+          <span><i class="key-line" style="background:var(--c-compact)"></i>Compact first</span>
+        </div>
+        <div class="plot" id="cp-chart"></div>
+        <p id="cp-text" style="margin-top:12px"></p>
+      </div>
+    </section>
+
+    <!-- Other costs -->
+    <section id="other-costs">
+      <h2>Other things that change the price</h2>
+      <h3>Batch API: half price if you can wait</h3>
+      <p>Requests sent through the Batch API run in the background instead of immediately, and both input and output cost 50% less. It suits work nobody is waiting on, like classifying a large dataset overnight. The batch discount stacks with prompt caching.</p>
+      <h3>Fast mode: faster output at a premium</h3>
+      <p>Fast mode runs the same model with much faster output for double the price: $8 input and $40 output on Opus 5.5. Cache prices scale up with it. It's only available on some Opus models, through Anthropic's own API, and not with the Batch API.</p>
+      <h3>Long prompts</h3>
+      <p>Claude 4.6 and later models charge the same per-token rate across the whole 1M-token context window, so a 900k-token request costs the same per token as a 9k one. Claude Haiku 5.5 is the exception: once a request's prompt passes 100,000 tokens, including cached parts, the whole request costs 5× more per token.</p>
+      <h3>Where the model runs</h3>
+      <p>Asking for US-only processing (the <code>inference_geo</code> setting) multiplies every price by 1.1. Cloud platforms such as Amazon Bedrock and Google Cloud set their own prices.</p>
+      <h3>Tools</h3>
+      <ul class="plain">
+        <li><b>All tools:</b> tool definitions, tool calls and tool results are billed as ordinary input and output tokens.</li>
+        <li><b>Web search:</b> $10 per 1,000 searches, plus the search results as input tokens. They stay in the context, so later requests read them again.</li>
+        <li><b>Web fetch:</b> no extra charge beyond the tokens of the fetched page. A typical web page is about 2,500 tokens, and a large PDF can be over 100,000.</li>
+        <li><b>Code execution:</b> free when used with web search or web fetch. Otherwise each organization gets 1,550 free hours a month, then it's $0.05 per hour per container.</li>
+      </ul>
+      <h3>Subscriptions vs paying per token</h3>
+      <p>On a subscription plan, such as using Claude Code with a Claude Pro or Max login, you aren't billed per token. Usage counts toward your plan's limits instead. Cost figures shown by the app are estimates at API list prices, which are still a good guide to which requests are heavy. Settings that cost extra, like fast mode, may need extra usage turned on before they actually take effect, so check that a setting applied rather than trusting the menu label.</p>
+    </section>
+
+    <!-- Examples -->
+    <section id="examples">
+      <h2>Example workloads</h2>
+      <p>What some common jobs cost on the model you picked, with and without the trick that suits them.</p>
+      <div class="table-wrap">
+        <table aria-label="Example workload costs">
+          <thead><tr><th class="wrap">Workload</th><th>Plain</th><th>With the trick</th><th>Saving</th></tr></thead>
+          <tbody id="examples-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Usage -->
+    <section id="usage">
+      <h2>Reading the usage numbers</h2>
+      <p>Every API response reports what it used. These fields map directly onto the prices:</p>
+      <pre><code id="usage-json"></code></pre>
+      <ul class="plain" style="margin-top:12px">
+        <li><code>input_tokens</code>: normal input, after the last cache marker.</li>
+        <li><code>cache_creation_input_tokens</code>: cache writes. The <code>cache_creation</code> object splits them into 5-minute and 1-hour writes.</li>
+        <li><code>cache_read_input_tokens</code>: cache reads.</li>
+        <li><code>output_tokens</code>: everything the model wrote, including thinking.</li>
+      </ul>
+      <p>The full prompt size is <code>input_tokens + cache_creation_input_tokens + cache_read_input_tokens</code>. A tiny <code>input_tokens</code> doesn't mean the request was small; the rest came from the cache.</p>
+      <p id="usage-math"></p>
+      <p>If <code>cache_read_input_tokens</code> stays at zero across requests that should share a beginning, something early in the request is changing each time, such as a timestamp in the system prompt or a tool list in a different order.</p>
+    </section>
+
+    <!-- Save -->
+    <section id="save">
+      <h2>Ways to spend less</h2>
+      <ol class="plain">
+        <li><b>Turn on caching</b> for anything sent more than twice, and keep the start of every request identical: system prompt first, then tools, with no timestamps or random IDs near the top.</li>
+        <li><b>Match the cache length to your gaps.</b> Use 5 minutes for steady traffic and fast agent loops, and 1 hour when people pause to read.</li>
+        <li><b>Keep the context small.</b> Every token in it is reread on every request. Start new threads for new topics, compact long ones, and use sub-agents for heavy reading.</li>
+        <li><b>Pick the smallest model that does the job well,</b> and the lowest effort level that keeps quality. Lower effort means less thinking, and thinking is billed as output.</li>
+        <li><b>Use the Batch API</b> for anything that doesn't need an answer right away.</li>
+        <li><b>Watch the usage fields.</b> They're the only reliable sign that caching is working.</li>
+        <li><b>Judge cost per finished task.</b> A cheaper model that needs three attempts isn't cheaper.</li>
+      </ol>
+    </section>
+
+    <!-- Glossary -->
+    <section id="glossary">
+      <h2>Glossary</h2>
+      <dl class="glossary">
+        <dt>Token</dt><dd>A chunk of text, about 4 characters of English. The unit models read, write and bill by.</dd>
+        <dt>MTok</dt><dd>One million tokens. Prices are quoted per MTok.</dd>
+        <dt>Context</dt><dd>Everything sent in one request: system prompt, tools, conversation history and the new message.</dd>
+        <dt>Context window</dt><dd>The most tokens a model can take in one request. 1 million on most current Claude models.</dd>
+        <dt>Input / output</dt><dd>What the model reads / what it writes. Output costs 5× input on Claude models.</dd>
+        <dt>Thinking</dt><dd>Reasoning the model does before answering. Billed as output, even when hidden.</dd>
+        <dt>Prompt caching</dt><dd>Keeping the processed start of a request so the next request that starts the same way costs less.</dd>
+        <dt>Cache marker</dt><dd>The point in a request (<code>cache_control</code>) up to which the provider saves it.</dd>
+        <dt>Cache write</dt><dd>Input that isn't cached yet, processed and saved. 1.25× input for 5 minutes, 2× for 1 hour.</dd>
+        <dt>Cache read</dt><dd>Input that was already cached. 0.1× input on most models, less on some.</dd>
+        <dt>Cache length (TTL)</dt><dd>How long a cache entry lives without being used: 5 minutes or 1 hour. Every read restarts it.</dd>
+        <dt>Compaction</dt><dd>Replacing a long history with a model-written summary to make later requests cheaper.</dd>
+        <dt>Batch API</dt><dd>Requests processed in the background at half price.</dd>
+        <dt>Fast mode</dt><dd>Faster output on some Opus models at double the price.</dd>
+        <dt>Agent loop</dt><dd>A run where the model calls tools again and again, one request per step, without waiting for a person.</dd>
+      </dl>
+    </section>
+
+    <footer>
+      <p>Prices from <a id="footer-source" href="#">Anthropic's pricing page</a>, checked <span id="footer-date"></span>. Examples are simplified models of real usage. They're meant to show how costs behave, not to predict a bill.</p>
+    </footer>
+  </main>
+</div>
+
+<script src="js/pricing.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
