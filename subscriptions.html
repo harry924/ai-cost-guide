@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI cost guide: subscriptions vs API</title>
+<title data-zh="AI 费用指南：订阅套餐与 API 对比">AI cost guide: subscriptions vs API</title>
 <meta name="description" content="What Claude and ChatGPT/Codex subscriptions are worth at API prices, how their limits work, what changed in autumn 2026, and the key points from Theo's videos on plan value and AI costs.">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/boot.js"></script>
@@ -11,57 +11,70 @@
 <body>
 
 <header class="topbar">
-  <a class="brand" href="index.html">AI cost guide</a>
-  <nav class="topnav" aria-label="Pages"><a href="index.html">API pricing</a><a href="subscriptions.html" aria-current="page">Subscriptions</a></nav>
-  <div class="tb-zoom" role="group" aria-label="Page zoom, shared by both pages">
-    <button class="icon-btn" id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out (Ctrl/⌘ −)">−</button>
-    <button class="icon-btn zval" id="zoom-val" type="button" title="Reset zoom to 100% (Ctrl/⌘ 0)">100%</button>
-    <button class="icon-btn" id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in (Ctrl/⌘ +)">+</button>
+  <a class="brand" href="index.html"><span lang="en">AI cost guide</span><span lang="zh-CN">AI 费用指南</span></a>
+  <nav class="topnav" aria-label="Pages" data-zh-aria-label="页面"><a href="index.html"><span lang="en">API pricing</span><span lang="zh-CN">API 定价</span></a><a href="subscriptions.html" aria-current="page"><span lang="en">Subscriptions</span><span lang="zh-CN">订阅套餐</span></a></nav>
+  <div class="tb-zoom" role="group" aria-label="Page zoom, shared by both pages" data-zh-aria-label="页面缩放，两个页面共用">
+    <button class="icon-btn" id="zoom-out" type="button" aria-label="Zoom out" data-zh-aria-label="缩小" title="Zoom out (Ctrl/⌘ −)" data-zh-title="缩小（Ctrl/⌘ −）">−</button>
+    <button class="icon-btn zval" id="zoom-val" type="button" title="Reset zoom to 100% (Ctrl/⌘ 0)" data-zh-title="恢复为 100%（Ctrl/⌘ 0）">100%</button>
+    <button class="icon-btn" id="zoom-in" type="button" aria-label="Zoom in" data-zh-aria-label="放大" title="Zoom in (Ctrl/⌘ +)" data-zh-title="放大（Ctrl/⌘ +）">+</button>
   </div>
+  <button class="icon-btn" id="lang-btn" type="button">中文</button>
   <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
 </header>
 
 <div class="layout" id="top">
-  <nav class="toc" aria-label="Sections">
+  <nav class="toc" aria-label="Sections" data-zh-aria-label="章节">
     <ol>
-      <li><a href="#basics">What a subscription buys</a></li>
-      <li><a href="#limits">How the limits work</a></li>
-      <li><a href="#claude-plans">Claude plans</a></li>
-      <li><a href="#openai-plans">ChatGPT and Codex plans</a></li>
-      <li><a href="#value">What each plan is worth</a></li>
-      <li><a href="#per-task">Value per task</a></li>
-      <li><a href="#drain">What drains an allowance</a></li>
-      <li><a href="#calculator">Subscription or pay as you go?</a></li>
-      <li><a href="#why-cheap">Why plans are so cheap</a></li>
-      <li><a href="#timeline">What changed this autumn</a></li>
-      <li><a href="#theo-codex">Theo: does the $200 Codex plan suck now?</a></li>
-      <li><a href="#theo-cheaper">Theo: is AI getting cheaper?</a></li>
-      <li><a href="#choosing">Choosing a plan</a></li>
-      <li><a href="#sources">Sources</a></li>
+      <li><a href="#basics"><span lang="en">What a subscription buys</span><span lang="zh-CN">订阅买到的是什么</span></a></li>
+      <li><a href="#limits"><span lang="en">How the limits work</span><span lang="zh-CN">限额怎么算</span></a></li>
+      <li><a href="#claude-plans"><span lang="en">Claude plans</span><span lang="zh-CN">Claude 套餐</span></a></li>
+      <li><a href="#openai-plans"><span lang="en">ChatGPT and Codex plans</span><span lang="zh-CN">ChatGPT 和 Codex 套餐</span></a></li>
+      <li><a href="#value"><span lang="en">What each plan is worth</span><span lang="zh-CN">各套餐值多少钱</span></a></li>
+      <li><a href="#per-task"><span lang="en">Value per task</span><span lang="zh-CN">按任务算价值</span></a></li>
+      <li><a href="#drain"><span lang="en">What drains an allowance</span><span lang="zh-CN">什么最耗额度</span></a></li>
+      <li><a href="#calculator"><span lang="en">Subscription or pay as you go?</span><span lang="zh-CN">订阅还是按量付费？</span></a></li>
+      <li><a href="#why-cheap"><span lang="en">Why plans are so cheap</span><span lang="zh-CN">套餐为什么这么便宜</span></a></li>
+      <li><a href="#timeline"><span lang="en">What changed this autumn</span><span lang="zh-CN">今年秋天的变化</span></a></li>
+      <li><a href="#theo-codex"><span lang="en">Theo: does the $200 Codex plan suck now?</span><span lang="zh-CN">Theo：$200 的 Codex 套餐变差了吗？</span></a></li>
+      <li><a href="#theo-cheaper"><span lang="en">Theo: is AI getting cheaper?</span><span lang="zh-CN">Theo：AI 在变便宜吗？</span></a></li>
+      <li><a href="#choosing"><span lang="en">Choosing a plan</span><span lang="zh-CN">如何选套餐</span></a></li>
+      <li><a href="#sources"><span lang="en">Sources</span><span lang="zh-CN">来源</span></a></li>
     </ol>
   </nav>
 
   <main>
     <div class="hero">
-      <h1>Subscriptions vs paying per token</h1>
-      <p>A $200 plan can cover thousands of dollars of usage at API prices. This page explains what Claude and ChatGPT/Codex plans actually give you, what each tier is worth, why they're priced the way they are, and what changed in autumn 2026. It includes the key points from two of Theo's (t3.gg) videos on the subject.</p>
-      <p class="meta">Researched 20 October 2026. Providers change limits often and publish few numbers, so the dollar values here are third-party measurements and estimates, not promises. New to token pricing? Start with <a href="index.html">API pricing</a>.</p>
+      <h1 lang="en">Subscriptions vs paying per token</h1>
+      <h1 lang="zh-CN">订阅套餐 vs 按 token 付费</h1>
+      <p lang="en">A $200 plan can cover thousands of dollars of usage at API prices. This page explains what Claude and ChatGPT/Codex plans actually give you, what each tier is worth, why they're priced the way they are, and what changed in autumn 2026. It includes the key points from two of Theo's (t3.gg) videos on the subject.</p>
+      <p lang="zh-CN">一个 $200 的套餐，按 API 价格算可以覆盖价值数千美元的用量。本页介绍 Claude 和 ChatGPT/Codex 套餐实际给你什么、每一档值多少钱、为什么这样定价，以及 2026 年秋天发生了哪些变化。其中还整理了 Theo（t3.gg）关于这个话题的两期视频的要点。</p>
+      <p class="meta" lang="en">Researched 20 October 2026. Providers change limits often and publish few numbers, so the dollar values here are third-party measurements and estimates, not promises. New to token pricing? Start with <a href="index.html">API pricing</a>.</p>
+      <p class="meta" lang="zh-CN">资料整理于 2026 年 10 月 20 日。服务商经常调整限额，公布的数字也很少，所以这里的金额都是第三方的实测和估算，并非官方承诺。还不了解按 token 计费？先看 <a href="index.html">API 定价</a>。</p>
     </div>
 
     <section id="basics">
-      <h2>What a subscription buys</h2>
-      <p>A subscription doesn't give you a dollar budget. It gives you an <b>allowance</b>: a share of the provider's capacity that refills on a schedule. The provider decides how much of it each request uses, based on the model, the number of tokens and the speed setting.</p>
-      <p>To compare plans, people price the usage a plan allows at API rates. That's its <b>API-equivalent value</b>: what the same tokens would have cost if you'd paid per token. A plan that lets you use $7,000 of tokens a month for $200 is worth 35× its price in those terms.</p>
-      <p>It's a useful yardstick with two big weaknesses:</p>
-      <ul class="plain">
+      <h2 lang="en">What a subscription buys</h2>
+      <h2 lang="zh-CN">订阅买到的是什么</h2>
+      <p lang="en">A subscription doesn't give you a dollar budget. It gives you an <b>allowance</b>: a share of the provider's capacity that refills on a schedule. The provider decides how much of it each request uses, based on the model, the number of tokens and the speed setting.</p>
+      <p lang="zh-CN">订阅给你的不是一笔美元预算，而是一份<b>额度</b>：服务商算力中的一份，按固定周期恢复。每个请求消耗多少额度由服务商决定，取决于所用的模型、token 数量和速度设置。</p>
+      <p lang="en">To compare plans, people price the usage a plan allows at API rates. That's its <b>API-equivalent value</b>: what the same tokens would have cost if you'd paid per token. A plan that lets you use $7,000 of tokens a month for $200 is worth 35× its price in those terms.</p>
+      <p lang="zh-CN">为了比较套餐，人们会把一个套餐允许的用量按 API 价格折算成钱，这就是它的 <b>API 等价价值</b>：同样的 token 如果按量付费要花多少钱。一个月费 $200、每月能用掉价值 $7,000 token 的套餐，按这个算法就值它价格的 35 倍。</p>
+      <p lang="en">It's a useful yardstick with two big weaknesses:</p>
+      <p lang="zh-CN">这是个有用的衡量标准，但有两大缺陷：</p>
+      <ul class="plain" lang="en">
         <li><b>API prices aren't the provider's cost.</b> They include a large margin, so the provider spends far less than the "value" figure to serve you. See <a href="#why-cheap">why plans are so cheap</a>.</li>
         <li><b>Dollars don't measure work.</b> A cheaper model can finish the same task for a small fraction of the cost, so a plan worth fewer API dollars can still get more done. See <a href="#per-task">value per task</a>.</li>
+      </ul>
+      <ul class="plain" lang="zh-CN">
+        <li><b>API 价格不等于服务商的成本。</b>其中包含很高的利润，服务商为你提供服务的实际花费远低于这个“价值”数字。见<a href="#why-cheap">套餐为什么这么便宜</a>。</li>
+        <li><b>美元衡量不了完成的工作量。</b>便宜的模型可能只用一小部分成本就完成同样的任务，所以折合 API 美元更少的套餐，实际能干的活可能更多。见<a href="#per-task">按任务算价值</a>。</li>
       </ul>
     </section>
 
     <section id="limits">
-      <h2>How the limits work</h2>
-      <ul class="plain">
+      <h2 lang="en">How the limits work</h2>
+      <h2 lang="zh-CN">限额怎么算</h2>
+      <ul class="plain" lang="en">
         <li><b>Two clocks.</b> Most plans have a rolling 5-hour window plus a weekly limit. Claude uses both on every paid plan. ChatGPT Plus has both. ChatGPT Pro currently has no 5-hour window, just a weekly limit.</li>
         <li><b>Bigger models use it up faster.</b> In Codex, GPT-6 Astra costs 5× as much allowance per token as GPT-6.1 Sol. On Claude Max, Fable models can use at most half of the weekly limit.</li>
         <li><b>Speed costs extra.</b> In Codex, Fast mode uses included usage at 2.5× the normal rate and Ultrafast at 8×.</li>
@@ -69,32 +82,51 @@
         <li><b>Going past the limit.</b> Both providers let you keep working by paying: Claude through extra usage and usage credits, ChatGPT through credits.</li>
         <li><b>Claude Max's API credits.</b> Max 5x and Max 20x now include $100 and $200 a month of Claude API credit. It covers the API, Console, Managed Agents and the Agent SDK with an API key. It does <em>not</em> cover interactive Claude Code, and unused credit expires each month.</li>
       </ul>
+      <ul class="plain" lang="zh-CN">
+        <li><b>两套计时。</b>大多数套餐既有滚动 5 小时窗口，又有每周限额。Claude 的所有付费套餐两者都有，ChatGPT Plus 也是。ChatGPT Pro 目前没有 5 小时窗口，只有每周限额。</li>
+        <li><b>越大的模型消耗越快。</b>在 Codex 里，GPT-6 Astra 每个 token 消耗的额度是 GPT-6.1 Sol 的 5 倍。在 Claude Max 上，Fable 系列模型最多只能用掉每周限额的一半。</li>
+        <li><b>速度要额外付出代价。</b>在 Codex 里，快速模式（Fast）消耗套餐内用量的速度是正常的 2.5 倍，超快模式（Ultrafast）是 8 倍。</li>
+        <li><b>能在哪里用。</b>Claude 订阅只能在 Anthropic 自家的应用里用：Claude、Claude Code 和 Cowork。从 2026 年初起，OpenClaw 等第三方智能体工具不能再用订阅账号登录，需要 API 密钥或付费的额外用量。直接运行 Claude Code 本身的应用（比如 T3 Code）仍然可以用订阅。据 Theo 说，Codex 订阅的使用范围要宽得多，只要你不拿它来服务自己的客户。</li>
+        <li><b>超出限额之后。</b>两家都允许你付费继续用：Claude 通过额外用量和用量积分，ChatGPT 通过积分。</li>
+        <li><b>Claude Max 附带的 API 额度。</b>Max 5x 和 Max 20x 现在每月分别附带 $100 和 $200 的 Claude API 额度，可用于 API、Console、Managed Agents，以及用 API 密钥调用的 Agent SDK。它<b>不</b>覆盖交互式使用的 Claude Code，未用完的额度每月清零。</li>
+      </ul>
     </section>
 
     <section id="claude-plans">
-      <h2>Claude plans</h2>
+      <h2 lang="en">Claude plans</h2>
+      <h2 lang="zh-CN">Claude 套餐</h2>
       <div class="table-wrap">
-        <table aria-label="Claude plans">
-          <thead><tr><th>Plan</th><th>Price per month</th><th class="wrap">Usage</th><th class="wrap">Models</th><th class="wrap">Also includes</th></tr></thead>
-          <tbody>
+        <table aria-label="Claude plans" data-zh-aria-label="Claude 套餐">
+          <thead><tr><th><span lang="en">Plan</span><span lang="zh-CN">套餐</span></th><th><span lang="en">Price per month</span><span lang="zh-CN">月费</span></th><th class="wrap"><span lang="en">Usage</span><span lang="zh-CN">用量</span></th><th class="wrap"><span lang="en">Models</span><span lang="zh-CN">模型</span></th><th class="wrap"><span lang="en">Also includes</span><span lang="zh-CN">其他包含</span></th></tr></thead>
+          <tbody lang="en">
             <tr><td>Free</td><td>$0</td><td class="wrap">Base level</td><td class="wrap">Sonnet, Haiku</td><td class="wrap">No Claude Code</td></tr>
             <tr><td>Pro</td><td>$20, or $17 billed yearly</td><td class="wrap">At least 5× Free per 5-hour window, plus a weekly limit</td><td class="wrap">Opus, Sonnet, Haiku. Fable only through paid usage credits</td><td class="wrap">Claude Code</td></tr>
             <tr><td>Max 5x</td><td>$100</td><td class="wrap">5× Pro per 5-hour window, plus a weekly limit</td><td class="wrap">Opus, Sonnet, Haiku. Fable up to 50% of the weekly limit</td><td class="wrap">Claude Code, $100 of API credit a month</td></tr>
             <tr><td>Max 20x</td><td>$200</td><td class="wrap">20× Pro per 5-hour window, plus a weekly limit</td><td class="wrap">Opus, Sonnet, Haiku. Fable up to 50% of the weekly limit</td><td class="wrap">Claude Code, $200 of API credit a month</td></tr>
             <tr><td>Team</td><td>$25 standard, $125 premium per seat ($20 / $100 yearly)</td><td class="wrap">Standard: more than Pro. Premium: 5× standard</td><td class="wrap">Opus, Sonnet, Haiku. Fable on premium seats, up to 50% weekly</td><td class="wrap">Pooled API credit up to $500 a month</td></tr>
           </tbody>
+          <tbody lang="zh-CN">
+            <tr><td>免费版</td><td>$0</td><td class="wrap">基础水平</td><td class="wrap">Sonnet、Haiku</td><td class="wrap">不含 Claude Code</td></tr>
+            <tr><td>Pro</td><td>$20，按年付为 $17</td><td class="wrap">每个 5 小时窗口至少是免费版的 5 倍，另有每周限额</td><td class="wrap">Opus、Sonnet、Haiku。Fable 只能通过付费的用量积分使用</td><td class="wrap">Claude Code</td></tr>
+            <tr><td>Max 5x</td><td>$100</td><td class="wrap">每个 5 小时窗口是 Pro 的 5 倍，另有每周限额</td><td class="wrap">Opus、Sonnet、Haiku。Fable 最多占每周限额的 50%</td><td class="wrap">Claude Code，每月 $100 的 API 额度</td></tr>
+            <tr><td>Max 20x</td><td>$200</td><td class="wrap">每个 5 小时窗口是 Pro 的 20 倍，另有每周限额</td><td class="wrap">Opus、Sonnet、Haiku。Fable 最多占每周限额的 50%</td><td class="wrap">Claude Code，每月 $200 的 API 额度</td></tr>
+            <tr><td>Team</td><td>每席位：标准 $25，高级 $125（按年付为 $20 / $100）</td><td class="wrap">标准席位：多于 Pro。高级席位：标准席位的 5 倍</td><td class="wrap">Opus、Sonnet、Haiku。高级席位可用 Fable，最多占每周限额的 50%</td><td class="wrap">共享 API 额度，每月最多 $500</td></tr>
+          </tbody>
         </table>
       </div>
-      <p>Anthropic publishes the 5-hour multipliers but not the weekly limits, and the weekly gap between tiers is smaller than the names suggest. Wokey's measurements put a Max 20x <b>week</b> at about 9.7× a Pro week, even though a Max 20x 5-hour window is about 15× a Pro window. On 22 September 2026, with the launch of Opus 5.5, Anthropic raised 5-hour limits on Pro, Max and Team.</p>
+      <p lang="en">Anthropic publishes the 5-hour multipliers but not the weekly limits, and the weekly gap between tiers is smaller than the names suggest. Wokey's measurements put a Max 20x <b>week</b> at about 9.7× a Pro week, even though a Max 20x 5-hour window is about 15× a Pro window. On 22 September 2026, with the launch of Opus 5.5, Anthropic raised 5-hour limits on Pro, Max and Team.</p>
+      <p lang="zh-CN">Anthropic 公布了 5 小时窗口的倍数，但没有公布每周限额，而且各档之间每周额度的差距比名字暗示的要小。按 Wokey 的实测，Max 20x 的<b>每周</b>额度约为 Pro 的 9.7 倍，尽管 Max 20x 的 5 小时窗口约为 Pro 的 15 倍。2026 年 9 月 22 日，Anthropic 在发布 Opus 5.5 的同时，提高了 Pro、Max 和 Team 的 5 小时限额。</p>
     </section>
 
     <section id="openai-plans">
-      <h2>ChatGPT and Codex plans</h2>
-      <p>Codex comes with your ChatGPT plan.</p>
+      <h2 lang="en">ChatGPT and Codex plans</h2>
+      <h2 lang="zh-CN">ChatGPT 和 Codex 套餐</h2>
+      <p lang="en">Codex comes with your ChatGPT plan.</p>
+      <p lang="zh-CN">Codex 包含在你的 ChatGPT 套餐里。</p>
       <div class="table-wrap">
-        <table aria-label="ChatGPT and Codex plans">
-          <thead><tr><th>Plan</th><th>Price per month</th><th class="wrap">Usage vs Plus</th><th class="wrap">5-hour window</th><th class="wrap">Notes</th></tr></thead>
-          <tbody>
+        <table aria-label="ChatGPT and Codex plans" data-zh-aria-label="ChatGPT 和 Codex 套餐">
+          <thead><tr><th><span lang="en">Plan</span><span lang="zh-CN">套餐</span></th><th><span lang="en">Price per month</span><span lang="zh-CN">月费</span></th><th class="wrap"><span lang="en">Usage vs Plus</span><span lang="zh-CN">用量（相对 Plus）</span></th><th class="wrap"><span lang="en">5-hour window</span><span lang="zh-CN">5 小时窗口</span></th><th class="wrap"><span lang="en">Notes</span><span lang="zh-CN">备注</span></th></tr></thead>
+          <tbody lang="en">
             <tr><td>Free</td><td>$0</td><td class="wrap">–</td><td class="wrap">–</td><td class="wrap">GPT-6 Luna in the desktop app</td></tr>
             <tr><td>Go</td><td>$8</td><td class="wrap">–</td><td class="wrap">–</td><td class="wrap">GPT-6 Luna in the desktop app</td></tr>
             <tr><td>Plus</td><td>$20</td><td class="wrap">1×</td><td class="wrap">Yes, plus weekly limits</td><td class="wrap">Per 5 hours, roughly 5–45 GPT-6 Astra messages, 15–160 GPT-6.1 Sol or 350–3,000 GPT-6 Luna</td></tr>
@@ -103,116 +135,177 @@
             <tr><td>Pro $500</td><td>$500</td><td class="wrap">25×</td><td class="wrap">No, weekly only</td><td class="wrap">Added 29 September. The only personal plan with Ultrafast</td></tr>
             <tr><td>Business</td><td>$25 per user ($20 yearly)</td><td class="wrap">About Plus per seat</td><td class="wrap">Yes</td><td class="wrap">Can add credits</td></tr>
           </tbody>
+          <tbody lang="zh-CN">
+            <tr><td>免费版</td><td>$0</td><td class="wrap">–</td><td class="wrap">–</td><td class="wrap">桌面应用中可用 GPT-6 Luna</td></tr>
+            <tr><td>Go</td><td>$8</td><td class="wrap">–</td><td class="wrap">–</td><td class="wrap">桌面应用中可用 GPT-6 Luna</td></tr>
+            <tr><td>Plus</td><td>$20</td><td class="wrap">1×</td><td class="wrap">有，另有每周限额</td><td class="wrap">每 5 小时大约可发 5–45 条 GPT-6 Astra 消息、15–160 条 GPT-6.1 Sol 消息或 350–3,000 条 GPT-6 Luna 消息</td></tr>
+            <tr><td>Pro $100</td><td>$100</td><td class="wrap">5×</td><td class="wrap">无，只有每周限额</td><td class="wrap">2026 年 4 月推出</td></tr>
+            <tr><td>Pro $200</td><td>$200</td><td class="wrap">10×（原为 20×）</td><td class="wrap">无，只有每周限额</td><td class="wrap">9 月 29 日起对新订阅者削减。老订阅者 10 月 30 日起改为 10×</td></tr>
+            <tr><td>Pro $500</td><td>$500</td><td class="wrap">25×</td><td class="wrap">无，只有每周限额</td><td class="wrap">9 月 29 日新增。唯一提供超快模式的个人套餐</td></tr>
+            <tr><td>Business</td><td>每用户 $25（按年付为 $20）</td><td class="wrap">每席位约等于 Plus</td><td class="wrap">有</td><td class="wrap">可加购积分</td></tr>
+          </tbody>
         </table>
       </div>
-      <p class="muted" style="font-size:13px">OpenAI's pricing page confirms the prices, the Plus message ranges and Pro's missing 5-hour window. The Pro multipliers come from OpenAI's announcement as reported by the press; the pricing page doesn't list them.</p>
+      <p class="muted" style="font-size:13px" lang="en">OpenAI's pricing page confirms the prices, the Plus message ranges and Pro's missing 5-hour window. The Pro multipliers come from OpenAI's announcement as reported by the press; the pricing page doesn't list them.</p>
+      <p class="muted" style="font-size:13px" lang="zh-CN">OpenAI 的定价页面证实了价格、Plus 的消息条数范围，以及 Pro 没有 5 小时窗口。Pro 的倍数来自媒体报道的 OpenAI 公告，定价页面上没有列出。</p>
     </section>
 
     <section id="value">
-      <h2>What each plan is worth at API prices</h2>
-      <p>Each bar is the plan's monthly API-equivalent value divided by its price, so "36×" means the plan covered 36 dollars of API-priced usage for every dollar paid.</p>
+      <h2 lang="en">What each plan is worth at API prices</h2>
+      <h2 lang="zh-CN">按 API 价格算，各套餐值多少钱</h2>
+      <p lang="en">Each bar is the plan's monthly API-equivalent value divided by its price, so "36×" means the plan covered 36 dollars of API-priced usage for every dollar paid.</p>
+      <p lang="zh-CN">每根条形是套餐每月的 API 等价价值除以月费，所以“36×”表示每付 1 美元，套餐就覆盖了按 API 价格计 36 美元的用量。</p>
       <div class="panel">
         <div class="legend">
-          <span><i class="key-rect" style="background:var(--s1)"></i>Claude (Anthropic)</span>
-          <span><i class="key-rect" style="background:var(--s2)"></i>ChatGPT / Codex (OpenAI)</span>
+          <span><i class="key-rect" style="background:var(--s1)"></i><span lang="en">Claude (Anthropic)</span><span lang="zh-CN">Claude（Anthropic）</span></span>
+          <span><i class="key-rect" style="background:var(--s2)"></i><span lang="en">ChatGPT / Codex (OpenAI)</span><span lang="zh-CN">ChatGPT / Codex（OpenAI）</span></span>
         </div>
-        <p class="panel-title">Measured by Wokey and SemiAnalysis</p>
-        <p class="panel-sub">Monthly value at API prices ÷ plan price. Hover a bar for the dollar figure.</p>
+        <p class="panel-title" lang="en">Measured by Wokey and SemiAnalysis</p>
+        <p class="panel-title" lang="zh-CN">Wokey 和 SemiAnalysis 的实测</p>
+        <p class="panel-sub" lang="en">Monthly value at API prices ÷ plan price. Hover a bar for the dollar figure.</p>
+        <p class="panel-sub" lang="zh-CN">按 API 价格计的每月价值 ÷ 套餐价格。把鼠标悬停在条形上可查看金额。</p>
         <div class="bar-rows" id="value-bars"></div>
-        <p class="panel-title" style="margin-top:20px">Theo's own figures, from his videos</p>
-        <p class="panel-sub">His heavy personal usage, before and after OpenAI's October change.</p>
+        <p class="panel-title" style="margin-top:20px" lang="en">Theo's own figures, from his videos</p>
+        <p class="panel-title" style="margin-top:20px" lang="zh-CN">Theo 在视频中给出的个人数据</p>
+        <p class="panel-sub" lang="en">His heavy personal usage, before and after OpenAI's October change.</p>
+        <p class="panel-sub" lang="zh-CN">他本人的重度使用，OpenAI 10 月调整前后的对比。</p>
         <div class="bar-rows" id="theo-bars"></div>
         <div class="table-wrap">
-          <table aria-label="Plan values at API prices">
-            <thead><tr><th class="wrap">Plan</th><th>Price</th><th>Value per month</th><th>Per $1</th><th class="wrap">Basis</th></tr></thead>
+          <table aria-label="Plan values at API prices" data-zh-aria-label="按 API 价格计的套餐价值">
+            <thead><tr><th class="wrap"><span lang="en">Plan</span><span lang="zh-CN">套餐</span></th><th><span lang="en">Price</span><span lang="zh-CN">价格</span></th><th><span lang="en">Value per month</span><span lang="zh-CN">每月价值</span></th><th><span lang="en">Per $1</span><span lang="zh-CN">每 $1</span></th><th class="wrap"><span lang="en">Basis</span><span lang="zh-CN">依据</span></th></tr></thead>
             <tbody id="value-body"></tbody>
           </table>
         </div>
       </div>
-      <p>What stands out:</p>
-      <ul class="plain">
+      <p lang="en">What stands out:</p>
+      <p lang="zh-CN">值得注意的几点：</p>
+      <ul class="plain" lang="en">
         <li><b>Claude plans cover about 35–40× their price</b> at Anthropic's API prices, and the ratio is similar for Pro and Max 20x.</li>
         <li><b>ChatGPT plans now cover about 13–15× their price</b> when measured in GPT-6 Astra, and since 29 September the three Pro tiers give the same value per dollar. Before the change, the $200 plan gave Theo about 60×.</li>
         <li><b>Model mix moves the numbers.</b> Plus measured about $253 a month on real, mostly Sol-class traffic, but about $162 on Astra alone. A Claude Max 20x account running only Opus 5.5 measured about $11,700 a month.</li>
         <li><b>Max 5x and the new Pro $100 and $200 tiers haven't been measured publicly yet.</b></li>
       </ul>
+      <ul class="plain" lang="zh-CN">
+        <li>按 Anthropic 的 API 价格，<b>Claude 套餐能覆盖约为其价格 35–40 倍的用量</b>，Pro 和 Max 20x 的比例差不多。</li>
+        <li>以 GPT-6 Astra 计，<b>ChatGPT 套餐现在能覆盖约为其价格 13–15 倍的用量</b>。自 9 月 29 日起，三档 Pro 每美元的价值相同。调整之前，$200 套餐给 Theo 带来了约 60 倍的价值。</li>
+        <li><b>模型组合会改变结果。</b>Plus 在以 Sol 级模型为主的真实使用中实测约每月 $253，只用 Astra 时约为 $162。一个只跑 Opus 5.5 的 Claude Max 20x 账号实测约每月 $11,700。</li>
+        <li><b>Max 5x 以及新的 Pro $100 和 $200 档位还没有公开的实测数据。</b></li>
+      </ul>
     </section>
 
     <section id="per-task">
-      <h2>Value per task, not per dollar</h2>
-      <p>The "value" figures above count API dollars. What you actually care about is how much work gets done, and that depends heavily on the model.</p>
+      <h2 lang="en">Value per task, not per dollar</h2>
+      <h2 lang="zh-CN">按任务算价值，而不是按美元</h2>
+      <p lang="en">The "value" figures above count API dollars. What you actually care about is how much work gets done, and that depends heavily on the model.</p>
+      <p lang="zh-CN">上面的“价值”数字算的是 API 美元。你真正关心的是能完成多少工作，而这在很大程度上取决于模型。</p>
       <div class="table-wrap">
-        <table aria-label="API prices of the main subscription models">
-          <thead><tr><th>Model</th><th>Input</th><th>Cache read</th><th>Output</th><th class="wrap">Notes</th></tr></thead>
-          <tbody>
+        <table aria-label="API prices of the main subscription models" data-zh-aria-label="主要订阅模型的 API 价格">
+          <thead><tr><th><span lang="en">Model</span><span lang="zh-CN">模型</span></th><th><span lang="en">Input</span><span lang="zh-CN">输入</span></th><th><span lang="en">Cache read</span><span lang="zh-CN">缓存读取</span></th><th><span lang="en">Output</span><span lang="zh-CN">输出</span></th><th class="wrap"><span lang="en">Notes</span><span lang="zh-CN">备注</span></th></tr></thead>
+          <tbody lang="en">
             <tr><td>Claude Fable 5.1</td><td>$10</td><td>$0.25</td><td>$50</td><td class="wrap">Capped at half the weekly limit on Max</td></tr>
             <tr><td>Claude Opus 5.5</td><td>$4</td><td>$0.20</td><td>$20</td><td class="wrap">Main model on Claude plans</td></tr>
             <tr><td>GPT-6 Astra</td><td>$10</td><td>$1.00</td><td>$50</td><td class="wrap">Double above 272k input tokens</td></tr>
             <tr><td>GPT-6.1 Sol</td><td>$2</td><td>$0.10</td><td>$10</td><td class="wrap">Double above 272k input tokens</td></tr>
             <tr><td>GPT-6 Luna</td><td>$0.10</td><td>$0.01</td><td>$0.50</td><td class="wrap">Free and Go plans</td></tr>
           </tbody>
+          <tbody lang="zh-CN">
+            <tr><td>Claude Fable 5.1</td><td>$10</td><td>$0.25</td><td>$50</td><td class="wrap">在 Max 上最多占每周限额的一半</td></tr>
+            <tr><td>Claude Opus 5.5</td><td>$4</td><td>$0.20</td><td>$20</td><td class="wrap">Claude 套餐的主力模型</td></tr>
+            <tr><td>GPT-6 Astra</td><td>$10</td><td>$1.00</td><td>$50</td><td class="wrap">输入超过 272k token 后价格翻倍</td></tr>
+            <tr><td>GPT-6.1 Sol</td><td>$2</td><td>$0.10</td><td>$10</td><td class="wrap">输入超过 272k token 后价格翻倍</td></tr>
+            <tr><td>GPT-6 Luna</td><td>$0.10</td><td>$0.01</td><td>$0.50</td><td class="wrap">免费版和 Go 套餐</td></tr>
+          </tbody>
         </table>
       </div>
-      <p class="muted" style="font-size:13px">USD per million tokens, standard speed.</p>
-      <p>Theo's numbers show how big the difference gets:</p>
-      <ul class="plain">
+      <p class="muted" style="font-size:13px" lang="en">USD per million tokens, standard speed.</p>
+      <p class="muted" style="font-size:13px" lang="zh-CN">单位为每百万 token 的美元价格，标准速度。</p>
+      <p lang="en">Theo's numbers show how big the difference gets:</p>
+      <p lang="zh-CN">Theo 的数据显示了差距能有多大：</p>
+      <ul class="plain" lang="en">
         <li>On his own Terminal-Bench runs, GPT-6.1 Sol at extra-high effort roughly tied Claude Opus 5.5, at <b>$0.96 per task versus $13.11</b>, about 13× cheaper.</li>
         <li>In one week, about 1,800 GPT-6 Astra responses cost $534 at API prices, while about 1,500 GPT-6.1 Sol responses with a similar amount of output cost <b>$38.27</b>.</li>
       </ul>
-      <p>So a Codex plan worth half as many API dollars as before can still finish several times more tasks, if you use Sol instead of Astra. At those per-task costs, $1,000 of allowance covers about 76 Opus 5.5 tasks or about 1,040 Sol tasks. It's one benchmark, so treat the exact ratio as illustrative.</p>
+      <ul class="plain" lang="zh-CN">
+        <li>在他自己跑的 Terminal-Bench 测试中，推理强度设为超高的 GPT-6.1 Sol 与 Claude Opus 5.5 成绩大致持平，但成本是<b>每个任务 $0.96 对 $13.11</b>，便宜约 13 倍。</li>
+        <li>一周内，约 1,800 次 GPT-6 Astra 回复按 API 价格计花了 $534，而输出量相近的约 1,500 次 GPT-6.1 Sol 回复只花了 <b>$38.27</b>。</li>
+      </ul>
+      <p lang="en">So a Codex plan worth half as many API dollars as before can still finish several times more tasks, if you use Sol instead of Astra. At those per-task costs, $1,000 of allowance covers about 76 Opus 5.5 tasks or about 1,040 Sol tasks. It's one benchmark, so treat the exact ratio as illustrative.</p>
+      <p lang="zh-CN">所以，即使 Codex 套餐折合的 API 美元只有以前的一半，只要你用 Sol 而不是 Astra，能完成的任务仍然可以多出好几倍。按上面的单任务成本，$1,000 的额度大约够完成 76 个 Opus 5.5 任务，或约 1,040 个 Sol 任务。这只是一个基准测试，具体比例仅供参考。</p>
     </section>
 
     <section id="drain">
-      <h2>What drains an allowance fastest</h2>
-      <p>OpenAI publishes how much included usage each model and speed consumes. Relative to GPT-6.1 Sol at normal speed:</p>
+      <h2 lang="en">What drains an allowance fastest</h2>
+      <h2 lang="zh-CN">什么最耗额度</h2>
+      <p lang="en">OpenAI publishes how much included usage each model and speed consumes. Relative to GPT-6.1 Sol at normal speed:</p>
+      <p lang="zh-CN">OpenAI 公布了每种模型和速度消耗套餐内用量的快慢。以正常速度的 GPT-6.1 Sol 为基准：</p>
       <div class="panel">
         <div class="bar-rows" id="drain-bars"></div>
-        <p class="muted" style="font-size:12.5px;margin:10px 0 0">From the credit rates on OpenAI's Codex pricing page (output tokens; input scales the same way) and the Fast (2.5×) and Ultrafast (8×) multipliers for included usage.</p>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0" lang="en">From the credit rates on OpenAI's Codex pricing page (output tokens; input scales the same way) and the Fast (2.5×) and Ultrafast (8×) multipliers for included usage.</p>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0" lang="zh-CN">依据 OpenAI 的 Codex 定价页面上的积分费率（按输出 token 计；输入按同样比例换算），以及套餐内用量的快速（2.5 倍）和超快（8 倍）倍数。</p>
       </div>
-      <p>Astra on Ultrafast uses the allowance about 40× faster than Sol at normal speed. That's why Theo found he could empty a $500 plan's week in about 2.1 hours of Ultrafast generation. On the API, Ultrafast Astra costs $60 per million input tokens and $300 per million output, and two pull-request reviews cost him about $600.</p>
-      <p>Anthropic doesn't publish weights. Wokey's measurements suggest Opus 5.5 uses about 0.6× as much limit per token as older Opus and Fable models, and Fable is capped at half the weekly limit.</p>
+      <p lang="en">Astra on Ultrafast uses the allowance about 40× faster than Sol at normal speed. That's why Theo found he could empty a $500 plan's week in about 2.1 hours of Ultrafast generation. On the API, Ultrafast Astra costs $60 per million input tokens and $300 per million output, and two pull-request reviews cost him about $600.</p>
+      <p lang="zh-CN">超快模式下的 Astra 消耗额度的速度约为正常速度 Sol 的 40 倍。这就是为什么 Theo 发现，用超快模式生成约 2.1 小时就能耗光 $500 套餐一整周的额度。在 API 上，超快模式的 Astra 每百万输入 token $60、每百万输出 token $300，他做两次 PR 审查就花了约 $600。</p>
+      <p lang="en">Anthropic doesn't publish weights. Wokey's measurements suggest Opus 5.5 uses about 0.6× as much limit per token as older Opus and Fable models, and Fable is capped at half the weekly limit.</p>
+      <p lang="zh-CN">Anthropic 没有公布这类权重。Wokey 的实测显示，Opus 5.5 每个 token 消耗的限额约为旧款 Opus 和 Fable 模型的 0.6 倍，而 Fable 最多只能用掉每周限额的一半。</p>
     </section>
 
     <section id="calculator">
-      <h2>Subscription or pay as you go?</h2>
-      <p>Enter how much your usage would cost at API prices each month to see which plans would likely cover it. Tools such as ccusage add this up from Claude Code's local logs.</p>
+      <h2 lang="en">Subscription or pay as you go?</h2>
+      <h2 lang="zh-CN">订阅还是按量付费？</h2>
+      <p lang="en">Enter how much your usage would cost at API prices each month to see which plans would likely cover it. Tools such as ccusage add this up from Claude Code's local logs.</p>
+      <p lang="zh-CN">输入你每月的用量按 API 价格算要花多少钱，看看哪些套餐大概能覆盖。ccusage 等工具可以根据 Claude Code 的本地日志算出这个数。</p>
       <div class="panel">
         <div class="controls">
-          <label>Your usage at API prices <input type="number" id="calc-usage" value="1500" min="0" max="100000" step="100"> $ per month</label>
+          <label><span lang="en">Your usage at API prices</span><span lang="zh-CN">你的用量（按 API 价格）</span> <input type="number" id="calc-usage" value="1500" min="0" max="100000" step="100"> <span lang="en">$ per month</span><span lang="zh-CN">美元/月</span></label>
         </div>
         <div class="table-wrap">
-          <table aria-label="Plans that would cover your usage">
-            <thead><tr><th class="wrap">Option</th><th>Price</th><th>Estimated allowance</th><th class="wrap">Covers your usage?</th><th>You'd pay</th></tr></thead>
+          <table aria-label="Plans that would cover your usage" data-zh-aria-label="能覆盖你用量的套餐">
+            <thead><tr><th class="wrap"><span lang="en">Option</span><span lang="zh-CN">方案</span></th><th><span lang="en">Price</span><span lang="zh-CN">价格</span></th><th><span lang="en">Estimated allowance</span><span lang="zh-CN">估算额度</span></th><th class="wrap"><span lang="en">Covers your usage?</span><span lang="zh-CN">能覆盖你的用量吗？</span></th><th><span lang="en">You'd pay</span><span lang="zh-CN">你需支付</span></th></tr></thead>
             <tbody id="calc-body"></tbody>
           </table>
         </div>
         <p class="muted" style="font-size:12.5px;margin:0" id="calc-note"></p>
       </div>
-      <p>Two things the calculator can't show:</p>
-      <ul class="plain">
+      <p lang="en">Two things the calculator can't show:</p>
+      <p lang="zh-CN">计算器体现不了的两点：</p>
+      <ul class="plain" lang="en">
         <li><b>Where the usage happens.</b> A Claude subscription only covers Anthropic's apps. Usage in other tools, scripts or your own product needs API billing anyway.</li>
         <li><b>How evenly you work.</b> Limits reset every 5 hours and every week. Heavy bursts can hit a limit even when your monthly total looks safely covered.</li>
+      </ul>
+      <ul class="plain" lang="zh-CN">
+        <li><b>用量发生在哪里。</b>Claude 订阅只覆盖 Anthropic 自家的应用。在其他工具、脚本或你自己的产品里产生的用量，无论如何都要走 API 计费。</li>
+        <li><b>你的使用是否均匀。</b>限额每 5 小时和每周各重置一次。即使每月总量看起来完全够用，集中大量使用时也可能撞上限额。</li>
       </ul>
     </section>
 
     <section id="why-cheap">
-      <h2>Why plans are so cheap, and why that's changing</h2>
-      <p>Theo's explanation, from his first video:</p>
-      <ul class="plain">
+      <h2 lang="en">Why plans are so cheap, and why that's changing</h2>
+      <h2 lang="zh-CN">套餐为什么这么便宜，以及为什么这正在改变</h2>
+      <p lang="en">Theo's explanation, from his first video:</p>
+      <p lang="zh-CN">Theo 在第一期视频里的解释：</p>
+      <ul class="plain" lang="en">
         <li><b>API prices are mostly margin.</b> He estimates providers have historically kept around 95% of API revenue over the cost of hardware and energy. On that estimate, serving $100 of tokens costs something like $2–5. In his words, both the subscription number and the API number are "fake."</li>
         <li><b>The $200 plans are marketing.</b> They were introduced to feel unlimited, back when people sent a handful of prompts a day. As models grew more capable and expensive, neither company wanted its top plan to suddenly feel limited, so the subsidy kept growing. The real money comes from cheaper consumer plans and API sales.</li>
         <li><b>Competition is squeezing the margin.</b> Anthropic released Fable 5 at $10/$50 per million tokens. Theo says the same model had been planned at $25/$125 as Mythos Preview, and estimates its margin fell from about 95% to 87.5%, which more than halves the profit per token. OpenAI matched Fable's price with GPT-6 Astra. It then priced GPT-6.1 Sol at $2/$10 with $0.10 cache reads, where Theo guesses margins may be closer to 50%.</li>
         <li><b>So subsidies shrink.</b> Thinner margins leave less room to give usage away. Theo reads Claude's half-limit for Fable and OpenAI's cut to the $200 plan as the start of that. His prediction: plans will cover fewer API dollars over time, but you'll still get more work done on the same plan a year from now, because the models keep getting cheaper and better.</li>
       </ul>
-      <p class="muted" style="font-size:13px">The margins and planned prices are Theo's estimates, not figures published by Anthropic or OpenAI.</p>
+      <ul class="plain" lang="zh-CN">
+        <li><b>API 价格大部分是利润。</b>他估计，扣除硬件和电力成本后，服务商过去大约能留下 API 收入的 95%。按这个估算，提供价值 $100 的 token，成本大约只有 $2–5。用他的话说，订阅的数字和 API 的数字都是“假的”。</li>
+        <li><b>$200 的套餐是营销手段。</b>推出这些套餐时，人们一天只发几条提示词，它们的卖点就是用起来像无限量。随着模型越来越强、越来越贵，两家公司都不想让自己的顶级套餐突然显得有限制，于是补贴越来越多。真正赚钱的是更便宜的消费者套餐和 API 销售。</li>
+        <li><b>竞争在压缩利润。</b>Anthropic 以每百万 token $10/$50 的价格发布了 Fable 5。Theo 说，同一个模型原本计划以 Mythos Preview 的名义定价 $25/$125，他估计其利润率因此从约 95% 降到了 87.5%，每个 token 的利润减少了一半以上。OpenAI 用 GPT-6 Astra 跟进了 Fable 的价格，随后又把 GPT-6.1 Sol 定为 $2/$10、缓存读取 $0.10，Theo 猜测它的利润率可能接近 50%。</li>
+        <li><b>所以补贴会缩水。</b>利润越薄，能白送的用量就越少。Theo 认为，Claude 把 Fable 限制在一半额度、OpenAI 削减 $200 套餐，就是这一趋势的开始。他的预测是：套餐折合的 API 美元会越来越少，但一年后，同样的套餐你仍能完成更多工作，因为模型会越来越便宜、越来越好。</li>
+      </ul>
+      <p class="muted" style="font-size:13px" lang="en">The margins and planned prices are Theo's estimates, not figures published by Anthropic or OpenAI.</p>
+      <p class="muted" style="font-size:13px" lang="zh-CN">利润率和原计划价格都是 Theo 的估计，并非 Anthropic 或 OpenAI 公布的数据。</p>
     </section>
 
     <section id="timeline">
-      <h2>What changed this autumn</h2>
+      <h2 lang="en">What changed this autumn</h2>
+      <h2 lang="zh-CN">今年秋天的变化</h2>
       <div class="table-wrap">
-        <table aria-label="Timeline of plan changes">
-          <thead><tr><th>Date (2026)</th><th class="wrap">What happened</th></tr></thead>
-          <tbody>
+        <table aria-label="Timeline of plan changes" data-zh-aria-label="套餐变化时间线">
+          <thead><tr><th><span lang="en">Date (2026)</span><span lang="zh-CN">日期（2026 年）</span></th><th class="wrap"><span lang="en">What happened</span><span lang="zh-CN">发生了什么</span></th></tr></thead>
+          <tbody lang="en">
             <tr><td>9 April</td><td class="wrap">OpenAI adds a $100 Pro plan at 5× Plus.</td></tr>
             <tr><td>10 September</td><td class="wrap">OpenAI pauses new $200 Pro sign-ups as demand for GPT-6 Astra strains its compute.</td></tr>
             <tr><td>22 September</td><td class="wrap">Anthropic launches Opus 5.5 and raises 5-hour limits on Pro, Max and Team.</td></tr>
@@ -223,15 +316,29 @@
             <tr><td>14 October</td><td class="wrap">GPT-5.5 retires from Codex for ChatGPT sign-ins.</td></tr>
             <tr><td>30 October</td><td class="wrap">Existing $200 Pro subscribers move from 20× to 10× Plus.</td></tr>
           </tbody>
+          <tbody lang="zh-CN">
+            <tr><td>4 月 9 日</td><td class="wrap">OpenAI 新增 $100 的 Pro 套餐，用量为 Plus 的 5 倍。</td></tr>
+            <tr><td>9 月 10 日</td><td class="wrap">GPT-6 Astra 需求激增、算力吃紧，OpenAI 暂停 $200 Pro 套餐的新用户注册。</td></tr>
+            <tr><td>9 月 22 日</td><td class="wrap">Anthropic 发布 Opus 5.5，并提高 Pro、Max 和 Team 的 5 小时限额。</td></tr>
+            <tr><td>9 月 29 日</td><td class="wrap">OpenAI 重新开放 $200 Pro 套餐，但用量从 Plus 的 20 倍降为 10 倍，折合的 API 美元约为以前的一半。同时新增 $500 套餐，用量为 Plus 的 25 倍并提供超快模式；Pro 套餐取消 5 小时窗口。</td></tr>
+            <tr><td>10 月 5 日</td><td class="wrap">SemiAnalysis 发布套餐价值的对照实测。</td></tr>
+            <tr><td>10 月 7 日</td><td class="wrap">Theo 发布视频《$200 的 Codex 套餐现在变差了吗？》</td></tr>
+            <tr><td>10 月 12 日</td><td class="wrap">Theo 发布视频《不是说 AI 会越来越便宜吗？》</td></tr>
+            <tr><td>10 月 14 日</td><td class="wrap">用 ChatGPT 账号登录的 Codex 不再提供 GPT-5.5。</td></tr>
+            <tr><td>10 月 30 日</td><td class="wrap">$200 Pro 的老订阅者从 Plus 的 20 倍降为 10 倍。</td></tr>
+          </tbody>
         </table>
       </div>
-      <p>Anthropic has also started including monthly API credits with Max and Team plans. Separately, Wokey measured ChatGPT Plus's weekly value falling from about $92 to $58 between early and mid October, with no announcement yet to explain it.</p>
+      <p lang="en">Anthropic has also started including monthly API credits with Max and Team plans. Separately, Wokey measured ChatGPT Plus's weekly value falling from about $92 to $58 between early and mid October, with no announcement yet to explain it.</p>
+      <p lang="zh-CN">Anthropic 也开始在 Max 和 Team 套餐中附带每月 API 额度。另外，Wokey 实测发现，ChatGPT Plus 的每周价值在 10 月上旬到中旬之间从约 $92 降到了 $58，目前还没有任何公告解释原因。</p>
     </section>
 
     <section id="theo-codex">
-      <h2>Theo: "Does the $200 Codex plan suck now?"</h2>
-      <p class="muted"><a href="https://www.youtube.com/watch?v=nYA0yASgaZI">Watch on YouTube</a> · 7 October 2026 · 33 minutes. Timestamps link to the moment in the video.</p>
-      <ul class="plain">
+      <h2 lang="en">Theo: "Does the $200 Codex plan suck now?"</h2>
+      <h2 lang="zh-CN">Theo：《$200 的 Codex 套餐现在变差了吗？》</h2>
+      <p class="muted" lang="en"><a href="https://www.youtube.com/watch?v=nYA0yASgaZI">Watch on YouTube</a> · 7 October 2026 · 33 minutes. Timestamps link to the moment in the video.</p>
+      <p class="muted" lang="zh-CN"><a href="https://www.youtube.com/watch?v=nYA0yASgaZI">在 YouTube 上观看</a> · 2026 年 10 月 7 日 · 33 分钟。时间戳链接到视频中的对应位置。</p>
+      <ul class="plain" lang="en">
         <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=0s">0:00</a> <b>How the plans got so generous.</b> A few weeks earlier, the $200 Codex plan could cover up to about $12,000 a month at API prices, and the $200 Claude plan about $8,000. Neither company wanted its top plan to stop feeling unlimited when a pricier model came out, so the subsidies kept growing.</li>
         <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=93s">1:33</a> <b>The cut.</b> OpenAI changed how the $200 plan counts usage, halving its dollar value. Theo measured about $570 of API-priced usage in a week, roughly $2,000–2,500 a month, and drained an account in 29 hours of looping. Counting the frequent early resets, he'd previously been getting up to about $24,000 a month, so for heavy Astra use it was close to a 10× drop.</li>
         <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=230s">3:50</a> <b>Both numbers are made up.</b> API prices carry huge margins, so the "value" of a plan says little about what it costs the provider. See <a href="#why-cheap">why plans are so cheap</a>.</li>
@@ -246,13 +353,31 @@
         <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1519s">25:19</a> <b>Ultrafast burns limits.</b> Astra Ultrafast costs $60 in and $300 out per million tokens, up to $120 and $450 with long context. Two pull-request reviews cost about $600. On the $500 plan he gets about $1,000 of Ultrafast per week, roughly 2.1 hours of generation, or about $4,000 a month.</li>
         <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1886s">31:26</a> <b>How he uses both.</b> Claude writes the code, and Claude calls Codex through T3 Code to review it, since he finds OpenAI's models more thorough reviewers. He also uses Codex for email and computer use. His advice: get the Claude plan to ship serious engineering work, and add Codex if you can.</li>
       </ul>
+      <ul class="plain" lang="zh-CN">
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=0s">0:00</a> <b>套餐是怎么变得这么大方的。</b>几周前，$200 的 Codex 套餐按 API 价格计每月最多能覆盖约 $12,000 的用量，$200 的 Claude 套餐约为 $8,000。每当更贵的模型推出，两家公司都不想让自己的顶级套餐失去“无限量”的感觉，于是补贴越来越多。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=93s">1:33</a> <b>削减。</b>OpenAI 改变了 $200 套餐计算用量的方式，使其折合的美元价值减半。Theo 实测一周用掉了按 API 价格计约 $570 的用量，相当于每月约 $2,000–2,500，循环跑了 29 小时就耗光了一个账号。算上之前频繁的提前重置，他以前每月最多能用到约 $24,000，所以对重度使用 Astra 的人来说，降幅接近 10 倍。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=230s">3:50</a> <b>两个数字都是编出来的。</b>API 价格里有巨大的利润，所以套餐的“价值”很难说明服务商实际付出了多少成本。见<a href="#why-cheap">套餐为什么这么便宜</a>。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=323s">5:23</a> <b>各套餐能在哪里用。</b>Claude 订阅只能在 Claude Code 以及运行 Claude Code 的工具（比如 T3 Code）里使用，Theo 说这是最让他恼火的变化。Codex 订阅几乎在哪里都能用，只要不是转售出去为别人的流量服务。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=416s">6:56</a> <b>大模型的规则不同。</b>Claude 把 Fable 限制在每周额度的一半，OpenAI 则允许 Astra 用满全部限额。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=507s">8:27</a> <b>利润的账。</b>Theo 认为 Fable/Mythos 5 的发布价格远低于原计划，使 Anthropic 每个 token 的利润减少了一半以上。他把这看作大幅补贴走向终结的开始，并把利润减半与 Fable 额度减半联系在一起。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=782s">13:02</a> <b>GPT-6.1 Sol 定价非常低。</b>每百万 token $2/$10、缓存读取 $0.10，他猜 OpenAI 在它上面的利润率大约是 50%。削减 $200 套餐，是为了防止 Sol 的用量把套餐拖垮，同时让它重新有“无限量”的感觉。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1012s">16:52</a> <b>他自己的用量。</b>约 1,800 次 Astra 回复按 API 价格计花了 $534，而输出量相近的约 1,500 次 Sol 回复只花了 $38.27，相差 10 倍以上。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1103s">18:23</a> <b>结论。</b>对于真正交付代码来说，$200 Claude 套餐上 Opus 5.5 的性价比“无可匹敌”。他同时用着六个 Claude 账号，已经不再用 Fable。他还称 GPT-6.1 Sol 是史上性价比最高的模型，并说只有坚持用 Astra，才会觉得 Codex 套餐是在背刺用户。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1240s">20:40</a> <b>重要的是每个任务的成本。</b>在他跑的 Terminal-Bench 测试中，超高推理强度的 Sol 与 Opus 5.5 打成平手，成本是每个任务 $0.96 对 $13.11。订阅折合的美元少了一半，完成的任务仍可能多出好几倍。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1474s">24:34</a> <b>$500 套餐推出的时机不对。</b>一边告诉大家 20 倍的套餐现在变成了 10 倍，一边以 2.5 倍的价格提供 25 倍的用量，看起来就像在逼人加钱。他说大套餐是营销手段，而不是真正的生意。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1519s">25:19</a> <b>超快模式很烧限额。</b>超快模式的 Astra 每百万 token 输入 $60、输出 $300，长上下文时最高达 $120 和 $450。两次 PR 审查就花了约 $600。在 $500 套餐上，他每周大约能用价值 $1,000 的超快模式，约合 2.1 小时的生成时间，也就是每月约 $4,000。</li>
+        <li><a href="https://www.youtube.com/watch?v=nYA0yASgaZI&amp;t=1886s">31:26</a> <b>他怎么同时使用两者。</b>由 Claude 写代码，再由 Claude 通过 T3 Code 调用 Codex 来审查，因为他觉得 OpenAI 的模型审查得更仔细。他还用 Codex 处理邮件和操作电脑。他的建议是：要做正经的工程开发就买 Claude 套餐，有条件的话再加上 Codex。</li>
+      </ul>
     </section>
 
     <section id="theo-cheaper">
-      <h2>Theo: "I thought AI was gonna get cheaper?"</h2>
-      <p class="muted"><a href="https://www.youtube.com/watch?v=vRS2leJLAI0">Watch on YouTube</a> · 12 October 2026 · 18 minutes.</p>
-      <p>The question: Sam Altman promised intelligence would get about 10× cheaper every year, yet bills keep climbing. Theo spent around $800–1,000 on AI in all of 2025, and in 2026 he can spend $1,000 in a single day. His answer is that AI did get much cheaper; we're measuring it wrong.</p>
-      <ul class="plain">
+      <h2 lang="en">Theo: "I thought AI was gonna get cheaper?"</h2>
+      <h2 lang="zh-CN">Theo：《不是说 AI 会越来越便宜吗？》</h2>
+      <p class="muted" lang="en"><a href="https://www.youtube.com/watch?v=vRS2leJLAI0">Watch on YouTube</a> · 12 October 2026 · 18 minutes.</p>
+      <p class="muted" lang="zh-CN"><a href="https://www.youtube.com/watch?v=vRS2leJLAI0">在 YouTube 上观看</a> · 2026 年 10 月 12 日 · 18 分钟。</p>
+      <p lang="en">The question: Sam Altman promised intelligence would get about 10× cheaper every year, yet bills keep climbing. Theo spent around $800–1,000 on AI in all of 2025, and in 2026 he can spend $1,000 in a single day. His answer is that AI did get much cheaper; we're measuring it wrong.</p>
+      <p lang="zh-CN">问题是：Sam Altman 承诺智能每年会便宜约 10 倍，可账单却越来越高。Theo 在 2025 年全年在 AI 上花了大约 $800–1,000，而在 2026 年，他一天就可能花掉 $1,000。他的回答是：AI 确实便宜了很多，只是我们的衡量方式错了。</p>
+      <ul class="plain" lang="en">
         <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=230s">3:50</a> <b>Top-end token prices did rise.</b> GPT-5 cost $1.25 in and $10 out per million tokens. GPT-6 Astra costs $10 in and $50 out.</li>
         <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=275s">4:35</a> <b>But price per token is the wrong measure.</b> He uses four: price per token, tokens needed per task, cost to reach a given level of intelligence, and what kinds of work the model can do. Cheap, capable models have also arrived at the bottom end, such as GLM 5.3 Flash at $0.15 in and $0.50 out.</li>
         <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=322s">5:22</a> <b>Token efficiency matters.</b> A model that's cheap per token but wordy can lose most of its advantage per task. On the Artificial Analysis index, a Gemini Flash model's 10× price advantage over Astra shrank to under 3× per task, and Sonnet 5 cost more per task than Astra.</li>
@@ -262,13 +387,26 @@
         <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=553s">9:13</a> <b>Every level follows the same curve.</b> Artificial Analysis data shows each new level of capability starting expensive and dropping to cents within months. One level fell from about $15 per task in September 2024 to about $0.16 by February 2025.</li>
         <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=786s">13:06</a> <b>Bills rise because use rises.</b> Models now take a screenshot of a bug and land the fix, running for hours instead of seconds. Cheaper, better models get used for much more. That's the Jevons paradox: when coal got cheaper, total coal spending went up.</li>
       </ul>
-      <p>His conclusion: the promised 10× yearly drop happened, and then some, at any fixed level of capability. People spend more because the models can now do far bigger jobs.</p>
-      <p class="muted" style="font-size:13px">Model names and figures in both video summaries are as heard in the videos' auto-generated captions, cross-checked against official prices where possible. Check the videos for exact on-screen numbers.</p>
+      <ul class="plain" lang="zh-CN">
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=230s">3:50</a> <b>顶级模型的 token 价格确实涨了。</b>GPT-5 每百万 token 输入 $1.25、输出 $10，GPT-6 Astra 则是输入 $10、输出 $50。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=275s">4:35</a> <b>但每 token 价格是个错误的衡量标准。</b>他用四个指标：每 token 价格、每个任务需要的 token 数、达到某一智能水平的成本，以及模型能做哪些类型的工作。低端市场也出现了便宜又能干的模型，比如 GLM 5.3 Flash，输入 $0.15、输出 $0.50。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=322s">5:22</a> <b>token 效率很重要。</b>一个每 token 便宜但话多的模型，按任务算可能会失去大部分优势。在 Artificial Analysis 的指数中，某个 Gemini Flash 模型相对 Astra 有 10 倍的价格优势，按任务算却缩小到不足 3 倍，而 Sonnet 5 每个任务的成本比 Astra 还高。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=414s">6:54</a> <b>工作类型决定哪个价格重要。</b>读取 800k token 来做分类，成本全在输入上。智能体编程则取决于缓存、可靠性和 token 效率。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=460s">7:40</a> <b>顶尖水平最贵。</b>在成本与智能水平的对比图上，分数多出几分，每个任务的成本就可能翻三倍。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=505s">8:25</a> <b>同等能力会便宜得多。</b>DeepSeek V4 Flash 的得分与 GPT-5 Codex High 差不多，但输入便宜约 21 倍、输出便宜约 55 倍。即使假设它需要 3 倍的 token，一年内也便宜了大约 20 倍。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=553s">9:13</a> <b>每个水平都沿着同样的曲线下降。</b>Artificial Analysis 的数据显示，每一个新的能力水平起初都很贵，几个月内就降到几美分。其中一个水平从 2024 年 9 月的每个任务约 $15，降到了 2025 年 2 月的约 $0.16。</li>
+        <li><a href="https://www.youtube.com/watch?v=vRS2leJLAI0&amp;t=786s">13:06</a> <b>账单上涨是因为用得更多了。</b>现在的模型能根据一张 bug 截图直接把修复做完，一跑就是几个小时，而不是几秒钟。更便宜、更好的模型被用在了多得多的地方。这就是杰文斯悖论：煤变便宜之后，花在煤上的总支出反而上升了。</li>
+      </ul>
+      <p lang="en">His conclusion: the promised 10× yearly drop happened, and then some, at any fixed level of capability. People spend more because the models can now do far bigger jobs.</p>
+      <p lang="zh-CN">他的结论是：在任何固定的能力水平上，承诺的每年降价 10 倍不仅实现了，而且还超出了。人们花得更多，是因为模型现在能干大得多的活。</p>
+      <p class="muted" style="font-size:13px" lang="en">Model names and figures in both video summaries are as heard in the videos' auto-generated captions, cross-checked against official prices where possible. Check the videos for exact on-screen numbers.</p>
+      <p class="muted" style="font-size:13px" lang="zh-CN">两期视频摘要中的模型名称和数字取自视频的自动生成字幕，并尽可能与官方价格做了核对。准确数字请以视频画面为准。</p>
     </section>
 
     <section id="choosing">
-      <h2>Choosing a plan</h2>
-      <ol class="plain">
+      <h2 lang="en">Choosing a plan</h2>
+      <h2 lang="zh-CN">如何选套餐</h2>
+      <ol class="plain" lang="en">
         <li><b>Estimate your usage at API prices first.</b> If it's under the plan price, pay as you go. If it's above, a subscription is almost always cheaper.</li>
         <li><b>Check where you'll use it.</b> If you rely on third-party agent tools, a Claude subscription won't cover them, but API billing or a Codex subscription can.</li>
         <li><b>Pick the model before the plan.</b> The same allowance does very different amounts of work on Opus 5.5, Fable, Astra or Sol.</li>
@@ -276,11 +414,20 @@
         <li><b>Don't assume the multiplier applies to the whole week.</b> A "20×" Claude plan measured about 10× Pro per week.</li>
         <li><b>Expect the subsidy to shrink.</b> Both companies are already trimming. Judge a plan by tasks finished per month, not by API dollars covered.</li>
       </ol>
+      <ol class="plain" lang="zh-CN">
+        <li><b>先按 API 价格估算你的用量。</b>如果低于套餐价格，就按量付费；如果高于套餐价格，订阅几乎总是更便宜。</li>
+        <li><b>确认你会在哪里用。</b>如果你依赖第三方智能体工具，Claude 订阅覆盖不了它们，但 API 计费或 Codex 订阅可以。</li>
+        <li><b>先选模型，再选套餐。</b>同样的额度，在 Opus 5.5、Fable、Astra 或 Sol 上能完成的工作量差别很大。</li>
+        <li><b>除非真的需要速度，否则订阅时别开速度模式。</b>快速模式消耗额度的速度是 2.5 倍，超快模式是 8 倍。</li>
+        <li><b>别以为倍数适用于整周。</b>“20 倍”的 Claude 套餐，实测每周额度只有 Pro 的约 10 倍。</li>
+        <li><b>做好补贴缩水的准备。</b>两家公司都已经在削减。评判一个套餐，要看每月能完成多少任务，而不是能覆盖多少 API 美元。</li>
+      </ol>
     </section>
 
     <section id="sources">
-      <h2>Sources</h2>
-      <ul class="plain">
+      <h2 lang="en">Sources</h2>
+      <h2 lang="zh-CN">来源</h2>
+      <ul class="plain" lang="en">
         <li>Theo (t3.gg), <a href="https://www.youtube.com/watch?v=nYA0yASgaZI">Does the $200 Codex plan suck now?</a>, 7 October 2026</li>
         <li>Theo (t3.gg), <a href="https://www.youtube.com/watch?v=vRS2leJLAI0">I thought AI was gonna get cheaper?</a>, 12 October 2026</li>
         <li>Anthropic, <a href="https://claude.com/pricing">Claude plans and pricing</a></li>
@@ -296,14 +443,33 @@
         <li>9to5Mac, <a href="https://9to5mac.com/2026/04/09/openai-introduces-100-month-pro-plan-aimed-at-codex-users-heres-what-it-includes/">OpenAI introduces $100/month Pro plan</a>, 9 April 2026</li>
         <li>The Next Web, <a href="https://thenextweb.com/news/anthropic-openclaw-claude-subscription-ban-cost">Anthropic blocks OpenClaw from Claude subscriptions</a></li>
       </ul>
+      <p class="muted" lang="zh-CN">以下来源均为英文。</p>
+      <ul class="plain" lang="zh-CN">
+        <li>Theo（t3.gg），<a href="https://www.youtube.com/watch?v=nYA0yASgaZI">《$200 的 Codex 套餐现在变差了吗？》</a>，2026 年 10 月 7 日</li>
+        <li>Theo（t3.gg），<a href="https://www.youtube.com/watch?v=vRS2leJLAI0">《不是说 AI 会越来越便宜吗？》</a>，2026 年 10 月 12 日</li>
+        <li>Anthropic，<a href="https://claude.com/pricing">Claude 套餐与价格</a></li>
+        <li>Anthropic，<a href="https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-and-team-plans">Max 和 Team 套餐的每月 API 额度</a></li>
+        <li>Anthropic，<a href="https://platform.claude.com/docs/en/about-claude/pricing">API 价格</a></li>
+        <li>OpenAI，<a href="https://learn.chatgpt.com/docs/pricing">Codex 价格</a></li>
+        <li>OpenAI，<a href="https://developers.openai.com/api/docs/pricing">API 价格</a></li>
+        <li>Wokey，<a href="https://wokey.ai/claude-usage-limits">Claude 用量限额实测</a>和 <a href="https://wokey.ai/codex-usage-limits">Codex 用量限额实测</a>（2026 年 10 月 12–19 日那一周，包含 SemiAnalysis 10 月 5 日的数据）</li>
+        <li>The Decoder，<a href="https://the-decoder.com/openai-reopens-its-200-pro-plan-but-cuts-api-credits-in-half-as-it-nudges-users-toward-pay-per-use/">OpenAI 重新开放 $200 Pro 套餐，但 API 额度减半</a></li>
+        <li>OfficeChai，<a href="https://officechai.com/ai/openai-to-decrease-limits-on-pro-plan-from-20-times-to-10-times-of-plus-plan/">OpenAI 将把 Pro 套餐限额从 Plus 的 20 倍降到 10 倍</a></li>
+        <li>Kingy AI，<a href="https://kingy.ai/news/chatgpt-pro-200-usage-cut/">OpenAI 把 Pro 200 从 20 倍削减到 10 倍</a></li>
+        <li>Fortune，<a href="https://fortune.com/2026/09/29/openai-takes-on-metas-muse-with-new-dot-agents-and-unveils-a-potential-google-workspace-competitor/">OpenAI 推出每月 $500 的套餐</a>，2026 年 9 月 29 日</li>
+        <li>9to5Mac，<a href="https://9to5mac.com/2026/04/09/openai-introduces-100-month-pro-plan-aimed-at-codex-users-heres-what-it-includes/">OpenAI 推出每月 $100 的 Pro 套餐</a>，2026 年 4 月 9 日</li>
+        <li>The Next Web，<a href="https://thenextweb.com/news/anthropic-openclaw-claude-subscription-ban-cost">Anthropic 禁止 OpenClaw 使用 Claude 订阅</a></li>
+      </ul>
     </section>
 
     <footer>
-      <p>Researched 20 October 2026. Plan limits change often. Measured values are third-party estimates from real accounts and controlled tests, and Theo's figures reflect his own heavy usage.</p>
+      <p lang="en">Researched 20 October 2026. Plan limits change often. Measured values are third-party estimates from real accounts and controlled tests, and Theo's figures reflect his own heavy usage.</p>
+      <p lang="zh-CN">资料整理于 2026 年 10 月 20 日。套餐限额经常变化。实测价值是第三方根据真实账号和对照测试得出的估算，Theo 的数字反映的是他本人的重度使用。</p>
     </footer>
   </main>
 </div>
 
+<script src="js/lang.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/zoom.js"></script>

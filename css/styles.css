@@ -89,6 +89,14 @@ pre code { background: none; padding: 0; }
 .ink-2 { color: var(--ink-2); }
 .num { font-variant-numeric: tabular-nums; }
 
+/* Language. js/boot.js sets <html lang>; text marked with the other language is hidden. */
+html:not([lang="zh-CN"]) body [lang="zh-CN"],
+html[lang="zh-CN"] body [lang="en"] { display: none !important; }
+html[lang="zh-CN"] {
+  --font: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+html[lang="zh-CN"] body { line-height: 1.75; }
+
 /* Top bar */
 .topbar {
   position: sticky; top: 0; z-index: 20;
@@ -169,7 +177,7 @@ ul.plain li, ol.plain li { margin-bottom: 4px; }
 .seg-btns { display: inline-flex; border: 1px solid var(--axis); border-radius: 8px; overflow: hidden; }
 .seg-btns label { gap: 0; }
 .seg-btns input { position: absolute; opacity: 0; pointer-events: none; }
-.seg-btns span { padding: 4px 10px; cursor: pointer; color: var(--ink-2); }
+.seg-btns label > span { padding: 4px 10px; cursor: pointer; color: var(--ink-2); }
 .seg-btns input:checked + span { background: var(--sunken); color: var(--ink); font-weight: 600; }
 .seg-btns input:focus-visible + span { outline: 2px solid var(--ring); outline-offset: -2px; }
 .checks { display: flex; flex-wrap: wrap; gap: 6px 16px; }
@@ -177,7 +185,7 @@ ul.plain li, ol.plain li { margin-bottom: 4px; }
 
 /* Legend */
 .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; margin: 0 0 12px; }
-.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend > span { display: inline-flex; align-items: center; gap: 7px; }
 .key-rect { width: 12px; height: 12px; border-radius: 3px; display: inline-block; flex: none; }
 .key-line { width: 16px; height: 2px; border-radius: 1px; display: inline-block; flex: none; }
 

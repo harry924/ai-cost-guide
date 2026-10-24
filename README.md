@@ -2,7 +2,7 @@
 
 An interactive guide to what AI models actually cost, in two parts.
 
-**Live site: https://harry924.github.io/ai-cost-guide/**
+**Live site: https://harry924.github.io/ai-cost-guide/** · 简体中文版: https://harry924.github.io/ai-cost-guide/?lang=zh
 
 
 - **API pricing** (`index.html`): how pay-per-token pricing works, using Claude's API prices. Pick a model at the top and every example updates.
@@ -32,6 +32,8 @@ The subscriptions page covers:
 
 Open the [live site](https://harry924.github.io/ai-cost-guide/), or open `index.html` from this folder. There's no build step and nothing to install.
 
+The guide is in English and Simplified Chinese. The 中文 / English button in the top bar switches language, and the choice is remembered on both pages. Browsers set to Chinese open in Chinese. Add `?lang=zh` or `?lang=en` to a link to open it in a particular language.
+
 Zoom with `Ctrl/⌘ +` and `Ctrl/⌘ −`, or the −/100%/+ buttons in the top bar. The guide keeps its own zoom, shared by both pages and every open tab, because Chrome saves its zoom separately for every local file and every `#section` link. `Ctrl/⌘ 0` resets both the guide's zoom and Chrome's.
 
 ## Files
@@ -44,7 +46,8 @@ Zoom with `Ctrl/⌘ +` and `Ctrl/⌘ −`, or the −/100%/+ buttons in the top 
 | `js/app.js` | Calculators and charts on the API pricing page |
 | `js/subscriptions.js` | Plan data, charts and calculator on the subscriptions page |
 | `js/charts.js` | Bar charts, line charts and tooltips |
-| `js/boot.js` | Applies the saved theme and zoom before the page draws, and sets the zoom-aware width classes the layout uses |
+| `js/boot.js` | Applies the saved theme, zoom and language before the page draws, and sets the zoom-aware width classes the layout uses |
+| `js/lang.js` | The English / Simplified Chinese toggle, and `Lang.t("English", "中文")` for text drawn by scripts |
 | `js/zoom.js` | The guide's own zoom: buttons and keyboard shortcuts |
 | `js/theme.js` | Light and dark mode |
 | `css/styles.css` | Styles |
@@ -59,5 +62,7 @@ node tests/check.js
 ```
 
 Subscription values are third-party measurements (Wokey, SemiAnalysis) and Theo's own figures, as of 20 October 2026. They live at the top of `js/subscriptions.js`, and the page lists every source.
+
+Every piece of text exists in both languages. In the HTML, an element marked `lang="en"` sits next to its Chinese twin marked `lang="zh-CN"`, and the stylesheet hides the language not in use. In the scripts, text is written as `t("English", "中文")` or `L("English", "中文")`. When you change the English, change the Chinese next to it too.
 
 The examples are simplified models of real usage. They show how costs behave, not what a bill will be.

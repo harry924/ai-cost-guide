@@ -8,12 +8,13 @@
   const zVal = document.getElementById("zoom-val");
   const zIn = document.getElementById("zoom-in");
   const cur = () => window.AICG_ZOOM || 1;
+  const t = window.Lang.t;
 
   function show() {
     if (!zVal) return;
     const pct = `${Math.round(cur() * 100)}%`;
     zVal.textContent = pct;
-    zVal.setAttribute("aria-label", `Zoom ${pct}. Activate to reset to 100%.`);
+    zVal.setAttribute("aria-label", t(`Zoom ${pct}. Activate to reset to 100%.`, `缩放 ${pct}。点按可恢复为 100%。`));
   }
   // Charts, bar labels and section highlighting re-measure after any zoom change.
   function refit() {
@@ -47,5 +48,6 @@
     window.aicgApplyZoom(parseFloat(e.newValue) || 1);
     refit();
   });
+  window.addEventListener("aicg-lang", show);
   show();
 })();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI cost guide: how AI model pricing works</title>
+<title data-zh="AI 费用指南：AI 模型是怎么收费的">AI cost guide: how AI model pricing works</title>
 <meta name="description" content="An interactive guide to how AI model pricing works, using Claude's API prices: tokens, input and output, prompt caching, conversations, agents, compaction and more.">
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/boot.js"></script>
@@ -11,132 +11,176 @@
 <body>
 
 <header class="topbar">
-  <a class="brand" href="index.html">AI cost guide</a>
-  <nav class="topnav" aria-label="Pages"><a href="index.html" aria-current="page">API pricing</a><a href="subscriptions.html">Subscriptions</a></nav>
-  <label>Model <select id="model-select" aria-label="Model used in every example"></select></label>
-  <div class="tb-zoom" role="group" aria-label="Page zoom, shared by both pages">
-    <button class="icon-btn" id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out (Ctrl/⌘ −)">−</button>
-    <button class="icon-btn zval" id="zoom-val" type="button" title="Reset zoom to 100% (Ctrl/⌘ 0)">100%</button>
-    <button class="icon-btn" id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in (Ctrl/⌘ +)">+</button>
+  <a class="brand" href="index.html"><span lang="en">AI cost guide</span><span lang="zh-CN">AI 费用指南</span></a>
+  <nav class="topnav" aria-label="Pages" data-zh-aria-label="页面"><a href="index.html" aria-current="page"><span lang="en">API pricing</span><span lang="zh-CN">API 定价</span></a><a href="subscriptions.html"><span lang="en">Subscriptions</span><span lang="zh-CN">订阅套餐</span></a></nav>
+  <label><span lang="en">Model</span><span lang="zh-CN">模型</span> <select id="model-select" aria-label="Model used in every example" data-zh-aria-label="所有示例使用的模型"></select></label>
+  <div class="tb-zoom" role="group" aria-label="Page zoom, shared by both pages" data-zh-aria-label="页面缩放，两个页面共用">
+    <button class="icon-btn" id="zoom-out" type="button" aria-label="Zoom out" data-zh-aria-label="缩小" title="Zoom out (Ctrl/⌘ −)" data-zh-title="缩小（Ctrl/⌘ −）">−</button>
+    <button class="icon-btn zval" id="zoom-val" type="button" title="Reset zoom to 100% (Ctrl/⌘ 0)" data-zh-title="恢复为 100%（Ctrl/⌘ 0）">100%</button>
+    <button class="icon-btn" id="zoom-in" type="button" aria-label="Zoom in" data-zh-aria-label="放大" title="Zoom in (Ctrl/⌘ +)" data-zh-title="放大（Ctrl/⌘ +）">+</button>
   </div>
+  <button class="icon-btn" id="lang-btn" type="button">中文</button>
   <button class="icon-btn" id="theme-btn" type="button">Dark mode</button>
 </header>
 
 <div class="layout" id="top">
-  <nav class="toc" aria-label="Sections">
+  <nav class="toc" aria-label="Sections" data-zh-aria-label="章节">
     <ol>
-      <li><a href="#tokens">Tokens</a></li>
-      <li><a href="#input-output">Input and output</a></li>
-      <li><a href="#prices">Price list</a></li>
-      <li><a href="#resend">Every request resends everything</a></li>
-      <li><a href="#caching">Prompt caching</a></li>
-      <li><a href="#calculator">Cost of one request</a></li>
-      <li><a href="#cache-length">5-minute or 1-hour cache</a></li>
-      <li><a href="#conversation">Cost over a conversation</a></li>
-      <li><a href="#agents">Agents</a></li>
-      <li><a href="#compaction">Compaction</a></li>
-      <li><a href="#other-costs">Other things that change the price</a></li>
-      <li><a href="#examples">Example workloads</a></li>
-      <li><a href="#usage">Reading the usage numbers</a></li>
-      <li><a href="#save">Ways to spend less</a></li>
-      <li><a href="#glossary">Glossary</a></li>
+      <li><a href="#tokens"><span lang="en">Tokens</span><span lang="zh-CN">Token</span></a></li>
+      <li><a href="#input-output"><span lang="en">Input and output</span><span lang="zh-CN">输入与输出</span></a></li>
+      <li><a href="#prices"><span lang="en">Price list</span><span lang="zh-CN">价格表</span></a></li>
+      <li><a href="#resend"><span lang="en">Every request resends everything</span><span lang="zh-CN">每次请求都重发全部内容</span></a></li>
+      <li><a href="#caching"><span lang="en">Prompt caching</span><span lang="zh-CN">提示词缓存</span></a></li>
+      <li><a href="#calculator"><span lang="en">Cost of one request</span><span lang="zh-CN">单次请求的费用</span></a></li>
+      <li><a href="#cache-length"><span lang="en">5-minute or 1-hour cache</span><span lang="zh-CN">5 分钟还是 1 小时缓存</span></a></li>
+      <li><a href="#conversation"><span lang="en">Cost over a conversation</span><span lang="zh-CN">一段对话的累计费用</span></a></li>
+      <li><a href="#agents"><span lang="en">Agents</span><span lang="zh-CN">智能体</span></a></li>
+      <li><a href="#compaction"><span lang="en">Compaction</span><span lang="zh-CN">压缩上下文</span></a></li>
+      <li><a href="#other-costs"><span lang="en">Other things that change the price</span><span lang="zh-CN">其他影响价格的因素</span></a></li>
+      <li><a href="#examples"><span lang="en">Example workloads</span><span lang="zh-CN">常见任务示例</span></a></li>
+      <li><a href="#usage"><span lang="en">Reading the usage numbers</span><span lang="zh-CN">看懂用量数字</span></a></li>
+      <li><a href="#save"><span lang="en">Ways to spend less</span><span lang="zh-CN">省钱的办法</span></a></li>
+      <li><a href="#glossary"><span lang="en">Glossary</span><span lang="zh-CN">术语表</span></a></li>
     </ol>
   </nav>
 
   <main>
     <div class="hero">
-      <h1>How AI model pricing works</h1>
-      <p>A practical guide to what you actually pay for when you use a language model, with interactive examples. It uses Claude's API prices, but the same ideas apply to most model providers.</p>
-      <p class="meta">Paying for Claude Pro or Max, or ChatGPT Plus or Pro, instead? See <a href="subscriptions.html">Subscriptions vs API</a>.</p>
-      <p class="meta">Prices checked <span id="checked-date"></span> from <a id="source-link" href="#">Anthropic's pricing page</a>. Prices change, so check the source before relying on them. Pick a model at the top and every example updates.</p>
+      <h1 lang="en">How AI model pricing works</h1>
+      <h1 lang="zh-CN">AI 模型是怎么收费的</h1>
+      <p lang="en">A practical guide to what you actually pay for when you use a language model, with interactive examples. It uses Claude's API prices, but the same ideas apply to most model providers.</p>
+      <p lang="zh-CN">这是一份带交互示例的实用指南，讲清楚使用语言模型时你到底在为什么付费。文中用的是 Claude 的 API 价格，但同样的道理适用于大多数模型服务商。</p>
+      <p class="meta" lang="en">Paying for Claude Pro or Max, or ChatGPT Plus or Pro, instead? See <a href="subscriptions.html">Subscriptions vs API</a>.</p>
+      <p class="meta" lang="zh-CN">用的是 Claude Pro、Max，或 ChatGPT Plus、Pro 这类订阅？请看<a href="subscriptions.html">订阅与 API 对比</a>。</p>
+      <p class="meta" lang="en">Prices checked <span class="checked-date"></span> from <a class="source-link" href="#">Anthropic's pricing page</a>. Prices change, so check the source before relying on them. Pick a model at the top and every example updates.</p>
+      <p class="meta" lang="zh-CN">价格来自 <a class="source-link" href="#">Anthropic 定价页面</a>，核对于 <span class="checked-date"></span>。价格会变动，使用前请先查看原始来源。在顶部选择一个模型，所有示例都会随之更新。</p>
     </div>
 
     <!-- Tokens -->
     <section id="tokens">
-      <h2>Tokens: the unit you pay for</h2>
-      <p>Models read and write text in <b>tokens</b>, which are chunks of a few characters. In English, a token is about 4 characters, or roughly three-quarters of a word. Code, other languages and unusual text use more tokens per character.</p>
-      <p>Prices are quoted <b>per million tokens</b>, often written MTok. "$4 / MTok" means $4 for every million tokens, or $0.000004 per token.</p>
-      <p>The same text can be a different number of tokens on different models. Claude models from 4.7 onward use a newer tokenizer that produces about 30% more tokens for the same text than earlier ones. When you compare models, compare the cost of finishing a task, not just the price per token.</p>
+      <h2 lang="en">Tokens: the unit you pay for</h2>
+      <h2 lang="zh-CN">Token：计费的单位</h2>
+      <p lang="en">Models read and write text in <b>tokens</b>, which are chunks of a few characters. In English, a token is about 4 characters, or roughly three-quarters of a word. Code, other languages and unusual text use more tokens per character.</p>
+      <p lang="zh-CN">模型以 <b>token</b>（也叫“词元”）为单位读写文本，一个 token 就是由几个字符组成的一小段文本。英文里 1 个 token 大约是 4 个字符，约等于四分之三个单词。代码、其他语言和不常见的文本，每个字符要用更多 token：中文大约每个汉字 1 个 token。</p>
+      <p lang="en">Prices are quoted <b>per million tokens</b>, often written MTok. "$4 / MTok" means $4 for every million tokens, or $0.000004 per token.</p>
+      <p lang="zh-CN">价格按<b>每百万 token</b> 计算，常写作 MTok。“$4 / MTok”表示每一百万个 token 收 4 美元，也就是每个 token 0.000004 美元。</p>
+      <p lang="en">The same text can be a different number of tokens on different models. Claude models from 4.7 onward use a newer tokenizer that produces about 30% more tokens for the same text than earlier ones. When you compare models, compare the cost of finishing a task, not just the price per token.</p>
+      <p lang="zh-CN">同样的文本在不同模型上可能是不同数量的 token。Claude 4.7 及之后的模型使用了新的分词器，同样的文本会比以前的模型多出约 30% 的 token。比较模型时，要比较完成一项任务的总费用，而不只是每个 token 的单价。</p>
       <div class="panel">
-        <p class="panel-title">Rough token estimate</p>
-        <p class="panel-sub">Paste some text. This divides the character count by 4, which is only a rough guide. For exact numbers, use the API's token-counting endpoint.</p>
-        <textarea id="tok-text" aria-label="Text to estimate">Every request to a language model is billed by the number of tokens it reads and the number of tokens it writes. Reading is cheaper than writing.</textarea>
+        <p class="panel-title" lang="en">Rough token estimate</p>
+        <p class="panel-title" lang="zh-CN">粗略估算 token 数</p>
+        <p class="panel-sub" lang="en">Paste some text. This counts about 4 characters per token, and 1 token per Chinese, Japanese or Korean character, which is only a rough guide. For exact numbers, use the API's token-counting endpoint.</p>
+        <p class="panel-sub" lang="zh-CN">粘贴一段文本试试。这里按约 4 个字符 1 个 token、每个汉字（或日文、韩文字符）1 个 token 来估算，只能作粗略参考。如需精确数字，请使用 API 的 token 计数接口。</p>
+        <textarea id="tok-text" aria-label="Text to estimate" data-zh-aria-label="要估算的文本" data-zh="每次调用语言模型，都按它读取的 token 数和写出的 token 数计费。读取比写出便宜。">Every request to a language model is billed by the number of tokens it reads and the number of tokens it writes. Reading is cheaper than writing.</textarea>
         <div class="estimate" id="tok-out" aria-live="polite"></div>
       </div>
     </section>
 
     <!-- Input and output -->
     <section id="input-output">
-      <h2>Input and output</h2>
-      <p>Every request has two sides, and each has its own price.</p>
-      <ul class="plain">
+      <h2 lang="en">Input and output</h2>
+      <h2 lang="zh-CN">输入与输出</h2>
+      <p lang="en">Every request has two sides, and each has its own price.</p>
+      <p lang="zh-CN">每次请求都分成两部分，各有各的价格。</p>
+      <ul class="plain" lang="en">
         <li><b>Input</b> is everything the model reads: the system prompt, the list of tools it can use, the conversation so far, your new message, and the results of any tools it ran, such as files it opened or web pages it fetched.</li>
         <li><b>Output</b> is everything the model writes: its reply, any tool calls, and its thinking. Thinking is billed as output even when the app hides it from you.</li>
       </ul>
-      <p>On every Claude model, output costs <b>5× as much per token</b> as input. Writing is more expensive because the model generates output one token at a time, while it can read a whole prompt at once.</p>
-      <p>Tools add input you don't see. The tool definitions are sent with every request, and the API adds a short built-in instruction for tool use (286 tokens on Opus 5.5).</p>
+      <ul class="plain" lang="zh-CN">
+        <li><b>输入</b>是模型读取的所有内容：系统提示词、它能使用的工具列表、之前的对话、你的新消息，以及它运行过的工具返回的结果，比如它打开的文件或抓取的网页。</li>
+        <li><b>输出</b>是模型写出的所有内容：它的回复、工具调用，以及它的思考过程。即使应用把思考过程隐藏起来不给你看，它也按输出计费。</li>
+      </ul>
+      <p lang="en">On every Claude model, output costs <b>5× as much per token</b> as input. Writing is more expensive because the model generates output one token at a time, while it can read a whole prompt at once.</p>
+      <p lang="zh-CN">在所有 Claude 模型上，输出的<b>单价都是输入的 5 倍</b>。写比读贵，是因为模型生成输出时只能一个 token 一个 token 地写，而读取提示词时可以一次读完一整段。</p>
+      <p lang="en">Tools add input you don't see. The tool definitions are sent with every request, and the API adds a short built-in instruction for tool use (286 tokens on Opus 5.5).</p>
+      <p lang="zh-CN">工具还会带来你看不见的输入。每次请求都会附带工具定义，API 还会额外加上一段简短的内置工具使用说明（在 Opus 5.5 上是 286 个 token）。</p>
     </section>
 
     <!-- Prices -->
     <section id="prices">
-      <h2>The price list</h2>
-      <p>Each model has one price for output and four for input. The extra input prices come from <a href="#caching">prompt caching</a>, explained below. The highlighted row is the model you picked at the top.</p>
+      <h2 lang="en">The price list</h2>
+      <h2 lang="zh-CN">价格表</h2>
+      <p lang="en">Each model has one price for output and four for input. The extra input prices come from <a href="#caching">prompt caching</a>, explained below. The highlighted row is the model you picked at the top.</p>
+      <p lang="zh-CN">每个模型有一个输出价格和四个输入价格。多出来的几个输入价格来自<a href="#caching">提示词缓存</a>，下文会解释。高亮的那一行就是你在顶部选择的模型。</p>
       <div class="table-wrap">
-        <table aria-label="Claude API prices per million tokens">
-          <thead><tr><th>Model</th><th>Input</th><th>5-min cache write</th><th>1-hour cache write</th><th>Cache read</th><th>Output</th></tr></thead>
+        <table aria-label="Claude API prices per million tokens" data-zh-aria-label="Claude API 价格（每百万 token）">
+          <thead><tr><th><span lang="en">Model</span><span lang="zh-CN">模型</span></th><th><span lang="en">Input</span><span lang="zh-CN">输入</span></th><th><span lang="en">5-min cache write</span><span lang="zh-CN">5 分钟缓存写入</span></th><th><span lang="en">1-hour cache write</span><span lang="zh-CN">1 小时缓存写入</span></th><th><span lang="en">Cache read</span><span lang="zh-CN">缓存读取</span></th><th><span lang="en">Output</span><span lang="zh-CN">输出</span></th></tr></thead>
           <tbody id="price-body"></tbody>
         </table>
       </div>
-      <p class="muted" style="font-size:13px">USD per million tokens. Claude Haiku 5.5's prices are for prompts up to 100,000 tokens. Longer prompts cost $0.50 input and $2.50 output, with matching cache prices. Fast mode on Opus 5.5 costs $8 input and $40 output, and on Opus 5 and Opus 4.8 it costs $10 and $50.</p>
+      <p class="muted" style="font-size:13px" lang="en">USD per million tokens. Claude Haiku 5.5's prices are for prompts up to 100,000 tokens. Longer prompts cost $0.50 input and $2.50 output, with matching cache prices. Fast mode on Opus 5.5 costs $8 input and $40 output, and on Opus 5 and Opus 4.8 it costs $10 and $50.</p>
+      <p class="muted" style="font-size:13px" lang="zh-CN">单位为美元/每百万 token。Claude Haiku 5.5 的价格适用于 100,000 token 以内的提示词，更长的提示词输入 $0.50、输出 $2.50，缓存价格也相应提高。快速模式在 Opus 5.5 上输入 $8、输出 $40，在 Opus 5 和 Opus 4.8 上为 $10 和 $50。</p>
     </section>
 
     <!-- Resend -->
     <section id="resend">
-      <h2>The model has no memory, so every request resends everything</h2>
-      <p>A model doesn't remember anything between requests. To continue a conversation, the app sends the <b>entire</b> conversation again, plus your new message. Message 30 of a chat costs far more than message 1, even if both are one line long, because message 30 carries the 29 exchanges before it.</p>
+      <h2 lang="en">The model has no memory, so every request resends everything</h2>
+      <h2 lang="zh-CN">模型没有记忆，所以每次请求都要重发全部内容</h2>
+      <p lang="en">A model doesn't remember anything between requests. To continue a conversation, the app sends the <b>entire</b> conversation again, plus your new message. Message 30 of a chat costs far more than message 1, even if both are one line long, because message 30 carries the 29 exchanges before it.</p>
+      <p lang="zh-CN">模型在两次请求之间什么都不记得。要继续一段对话，应用会把<b>整段</b>对话连同你的新消息再发送一遍。所以聊天里的第 30 条消息比第 1 条贵得多，哪怕两条都只有一行字，因为第 30 条消息带着前面 29 轮的往来。</p>
       <div class="panel">
-        <p class="panel-title">What each request sends in a growing chat</p>
-        <p class="panel-sub">10k-token system prompt, 1k-token messages from you, 2k-token replies.</p>
+        <p class="panel-title" lang="en">What each request sends in a growing chat</p>
+        <p class="panel-title" lang="zh-CN">对话越来越长时，每次请求发送了什么</p>
+        <p class="panel-sub" lang="en">10k-token system prompt, 1k-token messages from you, 2k-token replies.</p>
+        <p class="panel-sub" lang="zh-CN">系统提示词 10k token，你的每条消息 1k token，每条回复 2k token。</p>
         <div class="legend">
-          <span><i class="key-rect" style="background:var(--before)"></i>Already sent in an earlier request</span>
-          <span><i class="key-rect" style="background:var(--c-new)"></i>New in this request</span>
+          <span><i class="key-rect" style="background:var(--before)"></i><span lang="en">Already sent in an earlier request</span><span lang="zh-CN">之前的请求已经发送过</span></span>
+          <span><i class="key-rect" style="background:var(--c-new)"></i><span lang="en">New in this request</span><span lang="zh-CN">这次请求新增的</span></span>
         </div>
         <div class="bar-rows" id="resend-bars"></div>
       </div>
-      <p>Without help, you'd pay full input price for the grey part on every request. Prompt caching is what makes that part cheap.</p>
+      <p lang="en">Without help, you'd pay full input price for the grey part on every request. Prompt caching is what makes that part cheap.</p>
+      <p lang="zh-CN">如果什么都不做，每次请求都要为灰色部分付全价的输入费用。提示词缓存就是让这部分变便宜的办法。</p>
     </section>
 
     <!-- Caching -->
     <section id="caching">
-      <h2>Prompt caching</h2>
-      <p>When a request finishes, the provider can keep its processed form of that request for a while. If the next request starts with exactly the same content, the model reuses that work instead of processing it again. The app still sends the full text every time; what's saved is the model's work on it, which is why reusing it is so cheap.</p>
-      <p>This splits input into three prices. Which one a token gets depends on one question: <b>is it already in the cache?</b></p>
+      <h2 lang="en">Prompt caching</h2>
+      <h2 lang="zh-CN">提示词缓存</h2>
+      <p lang="en">When a request finishes, the provider can keep its processed form of that request for a while. If the next request starts with exactly the same content, the model reuses that work instead of processing it again. The app still sends the full text every time; what's saved is the model's work on it, which is why reusing it is so cheap.</p>
+      <p lang="zh-CN">一次请求完成后，服务商可以把这次请求处理后的结果保留一段时间。如果下一次请求的开头内容完全相同，模型就直接复用这些处理结果，不必重新处理。应用每次仍然会发送完整的文本；省下来的是模型处理这些文本的工作，所以复用起来非常便宜。</p>
+      <p lang="en">This splits input into three prices. Which one a token gets depends on one question: <b>is it already in the cache?</b></p>
+      <p lang="zh-CN">这样一来，输入就分成了三种价格。一个 token 按哪种价格计费，只取决于一个问题：<b>它是否已经在缓存里？</b></p>
       <div class="panel">
         <ul class="rules">
-          <li><i class="key-rect" style="background:var(--c-read)"></i><div><b>Cache read</b> <span class="muted num" data-rate="read"></span><br><span class="ink-2">Already in the cache, because an earlier request saved it and it hasn't expired.</span></div></li>
-          <li><i class="key-rect" style="background:var(--c-write)"></i><div><b>Cache write</b> <span class="muted num" data-rate="w1"></span><br><span class="ink-2">Not in the cache yet: new text, or old text whose cache expired. The model processes it and saves it for next time, which costs more than plain input.</span></div></li>
-          <li><i class="key-rect" style="background:var(--c-normal)"></i><div><b>Normal input</b> <span class="muted num" data-rate="input"></span><br><span class="ink-2">Text after the last cache marker, which the app chose not to save.</span></div></li>
+          <li><i class="key-rect" style="background:var(--c-read)"></i><div lang="en"><b>Cache read</b> <span class="muted num" data-rate="read"></span><br><span class="ink-2">Already in the cache, because an earlier request saved it and it hasn't expired.</span></div><div lang="zh-CN"><b>缓存读取</b> <span class="muted num" data-rate="read"></span><br><span class="ink-2">已经在缓存里：之前的请求保存过它，而且还没过期。</span></div></li>
+          <li><i class="key-rect" style="background:var(--c-write)"></i><div lang="en"><b>Cache write</b> <span class="muted num" data-rate="w1"></span><br><span class="ink-2">Not in the cache yet: new text, or old text whose cache expired. The model processes it and saves it for next time, which costs more than plain input.</span></div><div lang="zh-CN"><b>缓存写入</b> <span class="muted num" data-rate="w1"></span><br><span class="ink-2">还不在缓存里：新的文本，或者缓存已经过期的旧文本。模型处理它并保存下来供下次使用，所以比普通输入更贵。</span></div></li>
+          <li><i class="key-rect" style="background:var(--c-normal)"></i><div lang="en"><b>Normal input</b> <span class="muted num" data-rate="input"></span><br><span class="ink-2">Text after the last cache marker, which the app chose not to save.</span></div><div lang="zh-CN"><b>普通输入</b> <span class="muted num" data-rate="input"></span><br><span class="ink-2">最后一个缓存标记之后的文本，应用选择不保存这部分。</span></div></li>
         </ul>
       </div>
-      <p>Some details matter:</p>
-      <ul class="plain">
+      <p lang="en">Some details matter:</p>
+      <p lang="zh-CN">有几个细节很重要：</p>
+      <ul class="plain" lang="en">
         <li><b>The match runs from the start.</b> The cache matches the beginning of the request exactly. Change anything early, like the system prompt or the tool list, and everything after the change misses. Adding new messages at the end is fine, which is why conversations cache well.</li>
         <li><b>The app chooses what to save</b> by placing a cache marker (<code>cache_control</code>). Coding tools like Claude Code put it at the very end of each request, so they save everything and normal input is close to zero.</li>
         <li><b>Entries expire</b> after 5 minutes or 1 hour, depending on which the app asks for. Every read restarts the timer for free, so a cache that's used often never expires.</li>
         <li><b>Very short prompts can't be cached.</b> Below a minimum size, caching quietly doesn't happen.</li>
         <li><b>Caches are private.</b> They're never shared between organizations.</li>
       </ul>
-      <div class="callout">
+      <ul class="plain" lang="zh-CN">
+        <li><b>从开头开始匹配。</b>缓存要求请求的开头部分完全一致。只要前面有任何改动，比如改了系统提示词或工具列表，改动之后的所有内容都无法命中缓存。在末尾追加新消息没有问题，所以对话的缓存效果很好。</li>
+        <li><b>由应用决定保存什么</b>，方法是放置一个缓存标记（<code>cache_control</code>）。像 Claude Code 这样的编程工具会把它放在每次请求的最末尾，所以会保存全部内容，普通输入几乎为零。</li>
+        <li><b>缓存会过期</b>，过期时间是 5 分钟或 1 小时，取决于应用选择哪一种。每次读取都会免费重新计时，所以经常使用的缓存永远不会过期。</li>
+        <li><b>太短的提示词无法缓存。</b>低于最小长度时，缓存会悄悄地不生效。</li>
+        <li><b>缓存是私有的。</b>不同组织之间从不共享缓存。</li>
+      </ul>
+      <div class="callout" lang="en">
         <strong>The most common mistake</strong>
         Your new message is never a cache read, because nothing has saved it yet. With caching turned on it's a cache write. The model's previous reply is also written on your next request: it came back as output, so it wasn't part of anything saved before.
       </div>
+      <div class="callout" lang="zh-CN">
+        <strong>最常见的误解</strong>
+        你的新消息永远不会是缓存读取，因为还没有任何请求保存过它。开启缓存后，它算作缓存写入。模型的上一条回复也会在你下一次请求时被写入缓存：它是作为输出返回的，所以不在之前保存过的任何内容里。
+      </div>
       <div class="panel">
-        <p class="panel-title">One message with a 200k-token history and 10k tokens of new text</p>
-        <p class="panel-sub">1-hour cache. Hover or tab onto a bar segment for details.</p>
+        <p class="panel-title" lang="en">One message with a 200k-token history and 10k tokens of new text</p>
+        <p class="panel-title" lang="zh-CN">一条消息：200k token 的历史记录，加上 10k token 的新文本</p>
+        <p class="panel-sub" lang="en">1-hour cache. Hover or tab onto a bar segment for details.</p>
+        <p class="panel-sub" lang="zh-CN">1 小时缓存。把鼠标移到条形的某一段上（或用 Tab 键选中）可查看详情。</p>
         <div class="bar-rows" id="scenario-bars"></div>
         <div class="table-wrap">
-          <table aria-label="Token split and cost per scenario">
-            <thead><tr><th>Scenario</th><th>Cache read</th><th>Cache write</th><th>Normal input</th><th>Input cost</th></tr></thead>
+          <table aria-label="Token split and cost per scenario" data-zh-aria-label="各场景的 token 构成和费用">
+            <thead><tr><th><span lang="en">Scenario</span><span lang="zh-CN">场景</span></th><th><span lang="en">Cache read</span><span lang="zh-CN">缓存读取</span></th><th><span lang="en">Cache write</span><span lang="zh-CN">缓存写入</span></th><th><span lang="en">Normal input</span><span lang="zh-CN">普通输入</span></th><th><span lang="en">Input cost</span><span lang="zh-CN">输入费用</span></th></tr></thead>
             <tbody id="scenario-body"></tbody>
           </table>
         </div>
@@ -145,168 +189,199 @@
 
     <!-- Calculator -->
     <section id="calculator">
-      <h2>Work out the cost of one request</h2>
-      <p>Put in the sizes and the cache state to see how a single request is billed.</p>
+      <h2 lang="en">Work out the cost of one request</h2>
+      <h2 lang="zh-CN">算一算单次请求的费用</h2>
+      <p lang="en">Put in the sizes and the cache state to see how a single request is billed.</p>
+      <p lang="zh-CN">填入各部分的大小和缓存状态，看看一次请求是怎么计费的。</p>
       <div class="panel">
         <div class="controls">
-          <label>History <input type="number" id="calc-history" value="130" min="0" max="1000" step="10"> k</label>
-          <label>New input <input type="number" id="calc-new" value="5" min="0" max="1000" step="1"> k</label>
-          <label>Not cached <input type="number" id="calc-tail" value="0" min="0" max="1000" step="1"> k</label>
-          <label>Output <input type="number" id="calc-output" value="3" min="0" max="128" step="1"> k</label>
+          <label><span lang="en">History</span><span lang="zh-CN">历史记录</span> <input type="number" id="calc-history" value="130" min="0" max="1000" step="10"> k</label>
+          <label><span lang="en">New input</span><span lang="zh-CN">新输入</span> <input type="number" id="calc-new" value="5" min="0" max="1000" step="1"> k</label>
+          <label><span lang="en">Not cached</span><span lang="zh-CN">不缓存</span> <input type="number" id="calc-tail" value="0" min="0" max="1000" step="1"> k</label>
+          <label><span lang="en">Output</span><span lang="zh-CN">输出</span> <input type="number" id="calc-output" value="3" min="0" max="128" step="1"> k</label>
         </div>
         <div class="controls">
-          <fieldset><legend>Cache</legend>
+          <fieldset><legend><span lang="en">Cache</span><span lang="zh-CN">缓存</span></legend>
             <span class="seg-btns">
-              <label><input type="radio" name="calc-state" value="warm" checked><span>Warm</span></label>
-              <label><input type="radio" name="calc-state" value="expired"><span>Expired</span></label>
-              <label><input type="radio" name="calc-state" value="none"><span>Not used</span></label>
+              <label><input type="radio" name="calc-state" value="warm" checked><span><span lang="en">Warm</span><span lang="zh-CN">有效</span></span></label>
+              <label><input type="radio" name="calc-state" value="expired"><span><span lang="en">Expired</span><span lang="zh-CN">已过期</span></span></label>
+              <label><input type="radio" name="calc-state" value="none"><span><span lang="en">Not used</span><span lang="zh-CN">不使用</span></span></label>
             </span>
           </fieldset>
-          <fieldset><legend>Length</legend>
+          <fieldset><legend><span lang="en">Length</span><span lang="zh-CN">时长</span></legend>
             <span class="seg-btns">
-              <label><input type="radio" name="calc-ttl" value="1h" checked><span>1 hour</span></label>
-              <label><input type="radio" name="calc-ttl" value="5m"><span>5 minutes</span></label>
+              <label><input type="radio" name="calc-ttl" value="1h" checked><span><span lang="en">1 hour</span><span lang="zh-CN">1 小时</span></span></label>
+              <label><input type="radio" name="calc-ttl" value="5m"><span><span lang="en">5 minutes</span><span lang="zh-CN">5 分钟</span></span></label>
             </span>
           </fieldset>
         </div>
         <div class="controls checks">
-          <label><input type="checkbox" id="calc-batch"> Batch API</label>
-          <label><input type="checkbox" id="calc-fast"> Fast mode</label>
-          <label><input type="checkbox" id="calc-us"> US-only inference</label>
+          <label><input type="checkbox" id="calc-batch"> <span lang="en">Batch API</span><span lang="zh-CN">批处理 API</span></label>
+          <label><input type="checkbox" id="calc-fast"> <span lang="en">Fast mode</span><span lang="zh-CN">快速模式</span></label>
+          <label><input type="checkbox" id="calc-us"> <span lang="en">US-only inference</span><span lang="zh-CN">仅在美国推理</span></label>
         </div>
         <div class="result"><span class="big num" id="calc-total"></span><span class="big-label" id="calc-label"></span></div>
         <div id="calc-bar"></div>
         <div class="table-wrap">
-          <table aria-label="Cost breakdown">
-            <thead><tr><th>Part</th><th>Tokens</th><th>Price per million</th><th>Cost</th></tr></thead>
+          <table aria-label="Cost breakdown" data-zh-aria-label="费用明细">
+            <thead><tr><th><span lang="en">Part</span><span lang="zh-CN">部分</span></th><th><span lang="en">Tokens</span><span lang="zh-CN">Token 数</span></th><th><span lang="en">Price per million</span><span lang="zh-CN">每百万价格</span></th><th><span lang="en">Cost</span><span lang="zh-CN">费用</span></th></tr></thead>
             <tbody id="calc-body"></tbody>
           </table>
         </div>
         <ul class="notes" id="calc-notes"></ul>
-        <p class="muted" style="font-size:12.5px;margin:10px 0 0">"History" is what an earlier request already sent. "New input" is your message plus anything else added since then, including the model's last reply. "Not cached" is text placed after the cache marker. "Output" includes thinking.</p>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0" lang="en">"History" is what an earlier request already sent. "New input" is your message plus anything else added since then, including the model's last reply. "Not cached" is text placed after the cache marker. "Output" includes thinking.</p>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0" lang="zh-CN">“历史记录”是之前的请求已经发送过的内容。“新输入”是你的消息以及此后新增的其他内容，包括模型的上一条回复。“不缓存”是放在缓存标记之后的文本。“输出”包含思考内容。</p>
       </div>
     </section>
 
     <!-- Cache length -->
     <section id="cache-length">
-      <h2>5-minute or 1-hour cache?</h2>
-      <p>The two options differ in only one way: what a <b>write</b> costs. A 5-minute write costs 1.25× normal input and a 1-hour write costs 2×. Reads cost the same with either. Which one is cheaper depends on how long you wait between requests.</p>
+      <h2 lang="en">5-minute or 1-hour cache?</h2>
+      <h2 lang="zh-CN">选 5 分钟缓存还是 1 小时缓存？</h2>
+      <p lang="en">The two options differ in only one way: what a <b>write</b> costs. A 5-minute write costs 1.25× normal input and a 1-hour write costs 2×. Reads cost the same with either. Which one is cheaper depends on how long you wait between requests.</p>
+      <p lang="zh-CN">两种选项只有一个区别：<b>写入</b>的价格。5 分钟缓存的写入价格是普通输入的 1.25 倍，1 小时缓存是 2 倍。两者的读取价格相同。哪个更便宜，取决于你两次请求之间隔多久。</p>
       <div class="table-wrap">
-        <table aria-label="Cost by gap between messages">
-          <thead><tr><th>Gap before the next message (200k history + 10k new)</th><th>5-minute cache</th><th>1-hour cache</th></tr></thead>
+        <table aria-label="Cost by gap between messages" data-zh-aria-label="按消息间隔计算的费用">
+          <thead><tr><th><span lang="en">Gap before the next message (200k history + 10k new)</span><span lang="zh-CN">距下一条消息的间隔（200k 历史记录 + 10k 新内容）</span></th><th><span lang="en">5-minute cache</span><span lang="zh-CN">5 分钟缓存</span></th><th><span lang="en">1-hour cache</span><span lang="zh-CN">1 小时缓存</span></th></tr></thead>
           <tbody id="gap-body"></tbody>
         </table>
       </div>
-      <h3>When does caching pay off?</h3>
-      <p>Saving text costs extra the first time, and each later send is cheap. Caching only pays off if the same text is sent enough times before the cache expires.</p>
+      <h3 lang="en">When does caching pay off?</h3>
+      <h3 lang="zh-CN">缓存什么时候才划算？</h3>
+      <p lang="en">Saving text costs extra the first time, and each later send is cheap. Caching only pays off if the same text is sent enough times before the cache expires.</p>
+      <p lang="zh-CN">第一次保存文本要多花钱，之后每次发送都很便宜。只有在缓存过期前把同样的文本发送足够多次，缓存才划算。</p>
       <div class="table-wrap">
-        <table aria-label="Cost of sending the same million tokens several times">
-          <thead><tr><th>Times the same 1M tokens are sent</th><th>No caching</th><th>5-minute cache</th><th>1-hour cache</th></tr></thead>
+        <table aria-label="Cost of sending the same million tokens several times" data-zh-aria-label="同样的一百万 token 发送多次的费用">
+          <thead><tr><th><span lang="en">Times the same 1M tokens are sent</span><span lang="zh-CN">同样的 1M token 发送次数</span></th><th><span lang="en">No caching</span><span lang="zh-CN">不缓存</span></th><th><span lang="en">5-minute cache</span><span lang="zh-CN">5 分钟缓存</span></th><th><span lang="en">1-hour cache</span><span lang="zh-CN">1 小时缓存</span></th></tr></thead>
           <tbody id="breakeven-body"></tbody>
         </table>
       </div>
       <p id="breakeven-text"></p>
-      <p>A 1-hour cache suits people, who stop to read and think. Agents usually send their next request within seconds, so a 5-minute cache would do there, except for the occasional long wait. See <a href="#agents">Agents</a>.</p>
+      <p lang="en">A 1-hour cache suits people, who stop to read and think. Agents usually send their next request within seconds, so a 5-minute cache would do there, except for the occasional long wait. See <a href="#agents">Agents</a>.</p>
+      <p lang="zh-CN">1 小时缓存适合人来用，因为人会停下来阅读和思考。智能体通常几秒内就会发出下一个请求，所以用 5 分钟缓存就够了，除非偶尔有很长的等待。参见<a href="#agents">智能体</a>。</p>
     </section>
 
     <!-- Conversation -->
     <section id="conversation">
-      <h2>How cost grows over a conversation</h2>
-      <p>Each line is the running total for one caching option. Each chart is a different reply habit. All four charts use the same scale.</p>
+      <h2 lang="en">How cost grows over a conversation</h2>
+      <h2 lang="zh-CN">一段对话的费用是怎么增长的</h2>
+      <p lang="en">Each line is the running total for one caching option. Each chart is a different reply habit. All four charts use the same scale.</p>
+      <p lang="zh-CN">每条线是一种缓存选项的累计费用，每张图代表一种回复习惯。四张图使用相同的刻度。</p>
       <div class="panel">
         <div class="controls">
-          <label>Starting context <input type="number" id="conv-start" value="20" min="0" max="900" step="5"> k</label>
-          <label>Your message <input type="number" id="conv-user" value="2" min="0.1" max="100" step="1"> k</label>
-          <label>Reply <input type="number" id="conv-reply" value="3" min="0.1" max="100" step="1"> k</label>
-          <label>Messages <input type="number" id="conv-n" value="30" min="2" max="200" step="5"></label>
+          <label><span lang="en">Starting context</span><span lang="zh-CN">初始上下文</span> <input type="number" id="conv-start" value="20" min="0" max="900" step="5"> k</label>
+          <label><span lang="en">Your message</span><span lang="zh-CN">你的消息</span> <input type="number" id="conv-user" value="2" min="0.1" max="100" step="1"> k</label>
+          <label><span lang="en">Reply</span><span lang="zh-CN">回复</span> <input type="number" id="conv-reply" value="3" min="0.1" max="100" step="1"> k</label>
+          <label><span lang="en">Messages</span><span lang="zh-CN">消息数</span> <input type="number" id="conv-n" value="30" min="2" max="200" step="5"></label>
         </div>
         <div class="legend">
-          <span><i class="key-line" style="background:var(--c-h1)"></i>1-hour cache</span>
-          <span><i class="key-line" style="background:var(--c-m5)"></i>5-minute cache</span>
-          <span><i class="key-line" style="background:var(--c-none)"></i>No caching</span>
+          <span><i class="key-line" style="background:var(--c-h1)"></i><span lang="en">1-hour cache</span><span lang="zh-CN">1 小时缓存</span></span>
+          <span><i class="key-line" style="background:var(--c-m5)"></i><span lang="en">5-minute cache</span><span lang="zh-CN">5 分钟缓存</span></span>
+          <span><i class="key-line" style="background:var(--c-none)"></i><span lang="en">No caching</span><span lang="zh-CN">不缓存</span></span>
         </div>
         <div class="multiples" id="conv-charts"></div>
         <h3 id="conv-sum-h" style="font-size:14px"></h3>
         <div class="table-wrap">
           <table aria-labelledby="conv-sum-h">
-            <thead><tr><th>How often you reply</th><th>1-hour cache</th><th>5-minute cache</th><th>No caching</th></tr></thead>
+            <thead><tr><th><span lang="en">How often you reply</span><span lang="zh-CN">回复频率</span></th><th><span lang="en">1-hour cache</span><span lang="zh-CN">1 小时缓存</span></th><th><span lang="en">5-minute cache</span><span lang="zh-CN">5 分钟缓存</span></th><th><span lang="en">No caching</span><span lang="zh-CN">不缓存</span></th></tr></thead>
             <tbody id="conv-body"></tbody>
           </table>
         </div>
-        <details><summary>Every message, as tables</summary><div id="conv-detail"></div></details>
+        <details><summary><span lang="en">Every message, as tables</span><span lang="zh-CN">每条消息的明细表</span></summary><div id="conv-detail"></div></details>
       </div>
-      <p class="muted" style="font-size:13px">Assumes one request per message, every message and reply the same size, and the reply staying in the context. Output costs the same on all three lines.</p>
+      <p class="muted" style="font-size:13px" lang="en">Assumes one request per message, every message and reply the same size, and the reply staying in the context. Output costs the same on all three lines.</p>
+      <p class="muted" style="font-size:13px" lang="zh-CN">假设每条消息对应一次请求，每条消息和每条回复大小都相同，并且回复会留在上下文中。三条线的输出费用相同。</p>
     </section>
 
     <!-- Agents -->
     <section id="agents">
-      <h2>Agents that work for hours</h2>
-      <p>An agent loop sends a new request for every tool call. The model asks for a tool, the tool runs, and its result goes back in the next request. Those requests usually come seconds apart. Each one reads the whole context and restarts the cache timer, so the cache stays warm for hours even though nobody types anything.</p>
-      <p>Two things follow from that:</p>
-      <ul class="plain">
+      <h2 lang="en">Agents that work for hours</h2>
+      <h2 lang="zh-CN">连续工作几个小时的智能体</h2>
+      <p lang="en">An agent loop sends a new request for every tool call. The model asks for a tool, the tool runs, and its result goes back in the next request. Those requests usually come seconds apart. Each one reads the whole context and restarts the cache timer, so the cache stays warm for hours even though nobody types anything.</p>
+      <p lang="zh-CN">智能体（Agent）循环每调用一次工具就发送一次新请求：模型要求调用某个工具，工具运行，结果放进下一次请求里发回去。这些请求通常只隔几秒。每次请求都会读取整个上下文并重新开始缓存计时，所以即使没有人打字，缓存也能连续几个小时保持有效。</p>
+      <p lang="en">Two things follow from that:</p>
+      <p lang="zh-CN">由此可以得出两点：</p>
+      <ul class="plain" lang="en">
         <li><b>Caching is what makes agents affordable.</b> Without it, every step pays full input price to reread the whole context.</li>
         <li><b>Reads become the biggest cost.</b> Each read is cheap, but there are hundreds of them and the context keeps growing.</li>
       </ul>
-      <p>The cache length matters only for steps with a long wait in between, such as a slow test suite or build, waiting on a sub-agent or background task, or a long generation. The timer counts from the start of a request, so a 4-minute response leaves only 1 minute before a 5-minute cache expires. With a 5-minute cache, each of those waits means rewriting the whole context.</p>
+      <ul class="plain" lang="zh-CN">
+        <li><b>有了缓存，智能体才用得起。</b>没有缓存，每一步都要按全价重新读取整个上下文。</li>
+        <li><b>读取会成为最大的开销。</b>每次读取都很便宜，但要读上几百次，而且上下文还在不断变长。</li>
+      </ul>
+      <p lang="en">The cache length matters only for steps with a long wait in between, such as a slow test suite or build, waiting on a sub-agent or background task, or a long generation. The timer counts from the start of a request, so a 4-minute response leaves only 1 minute before a 5-minute cache expires. With a 5-minute cache, each of those waits means rewriting the whole context.</p>
+      <p lang="zh-CN">缓存时长只对中间有长时间等待的步骤有影响，比如运行很慢的测试或构建、等待子智能体或后台任务，或者生成很长的内容。计时从请求开始时算起，所以一次耗时 4 分钟的响应结束后，5 分钟缓存只剩 1 分钟就会过期。用 5 分钟缓存时，每遇到一次这样的等待，就要把整个上下文重新写入一遍。</p>
       <div class="panel">
-        <p class="panel-title">Agent session</p>
-        <p class="panel-sub">Steps without a long wait come 30 seconds apart. Long waits are 20 minutes, spread evenly through the run.</p>
+        <p class="panel-title" lang="en">Agent session</p>
+        <p class="panel-title" lang="zh-CN">智能体会话</p>
+        <p class="panel-sub" lang="en">Steps without a long wait come 30 seconds apart. Long waits are 20 minutes, spread evenly through the run.</p>
+        <p class="panel-sub" lang="zh-CN">没有长时间等待的步骤之间隔 30 秒。长时间等待每次 20 分钟，均匀分布在整个运行过程中。</p>
         <div class="controls">
-          <label>Starting context <input type="number" id="ag-start" value="20" min="0" max="900" step="5"> k</label>
-          <label>Steps <input type="number" id="ag-steps" value="200" min="2" max="2000" step="10"></label>
-          <label>Added per step <input type="number" id="ag-add" value="1.5" min="0" max="100" step="0.5"> k</label>
-          <label>Output per step <input type="number" id="ag-out" value="0.5" min="0" max="64" step="0.5"> k</label>
-          <label>Long waits <input type="number" id="ag-waits" value="0" min="0" max="500" step="1"></label>
+          <label><span lang="en">Starting context</span><span lang="zh-CN">初始上下文</span> <input type="number" id="ag-start" value="20" min="0" max="900" step="5"> k</label>
+          <label><span lang="en">Steps</span><span lang="zh-CN">步数</span> <input type="number" id="ag-steps" value="200" min="2" max="2000" step="10"></label>
+          <label><span lang="en">Added per step</span><span lang="zh-CN">每步新增</span> <input type="number" id="ag-add" value="1.5" min="0" max="100" step="0.5"> k</label>
+          <label><span lang="en">Output per step</span><span lang="zh-CN">每步输出</span> <input type="number" id="ag-out" value="0.5" min="0" max="64" step="0.5"> k</label>
+          <label><span lang="en">Long waits</span><span lang="zh-CN">长时间等待次数</span> <input type="number" id="ag-waits" value="0" min="0" max="500" step="1"></label>
         </div>
         <div class="legend">
-          <span><i class="key-rect" style="background:var(--c-read)"></i>Cache read</span>
-          <span><i class="key-rect" style="background:var(--c-write)"></i>Cache write</span>
-          <span><i class="key-rect" style="background:var(--c-normal)"></i>Normal input</span>
-          <span><i class="key-rect" style="background:var(--c-output)"></i>Output</span>
+          <span><i class="key-rect" style="background:var(--c-read)"></i><span lang="en">Cache read</span><span lang="zh-CN">缓存读取</span></span>
+          <span><i class="key-rect" style="background:var(--c-write)"></i><span lang="en">Cache write</span><span lang="zh-CN">缓存写入</span></span>
+          <span><i class="key-rect" style="background:var(--c-normal)"></i><span lang="en">Normal input</span><span lang="zh-CN">普通输入</span></span>
+          <span><i class="key-rect" style="background:var(--c-output)"></i><span lang="en">Output</span><span lang="zh-CN">输出</span></span>
         </div>
         <div class="bar-rows" id="agent-bars"></div>
         <div class="table-wrap">
-          <table aria-label="Agent session cost by caching option">
-            <thead><tr><th>Caching</th><th>Cache read</th><th>Cache write</th><th>Normal input</th><th>Output</th><th>Total</th></tr></thead>
+          <table aria-label="Agent session cost by caching option" data-zh-aria-label="不同缓存选项下的智能体会话费用">
+            <thead><tr><th><span lang="en">Caching</span><span lang="zh-CN">缓存方式</span></th><th><span lang="en">Cache read</span><span lang="zh-CN">缓存读取</span></th><th><span lang="en">Cache write</span><span lang="zh-CN">缓存写入</span></th><th><span lang="en">Normal input</span><span lang="zh-CN">普通输入</span></th><th><span lang="en">Output</span><span lang="zh-CN">输出</span></th><th><span lang="en">Total</span><span lang="zh-CN">总计</span></th></tr></thead>
             <tbody id="agent-body"></tbody>
           </table>
         </div>
         <p class="muted" style="font-size:12.5px;margin:0" id="agent-note"></p>
       </div>
-      <p>Because every step rereads the whole context, the best way to cut an agent's cost is to keep its context small: compact it from time to time, and hand reading-heavy work to sub-agents, which do the reading in their own context and pass back only a summary.</p>
+      <p lang="en">Because every step rereads the whole context, the best way to cut an agent's cost is to keep its context small: compact it from time to time, and hand reading-heavy work to sub-agents, which do the reading in their own context and pass back only a summary.</p>
+      <p lang="zh-CN">因为每一步都要重新读取整个上下文，降低智能体费用最好的办法就是让上下文保持精简：时不时压缩一下，并把需要大量阅读的工作交给子智能体。子智能体在自己的上下文里完成阅读，只把摘要传回来。</p>
     </section>
 
     <!-- Compaction -->
     <section id="compaction">
-      <h2>Compaction</h2>
-      <p>Compaction replaces a long conversation with a summary written by the model. Later requests carry the short summary instead of the full history, so each one costs much less. It has two costs:</p>
-      <ul class="plain">
+      <h2 lang="en">Compaction</h2>
+      <h2 lang="zh-CN">压缩上下文</h2>
+      <p lang="en">Compaction replaces a long conversation with a summary written by the model. Later requests carry the short summary instead of the full history, so each one costs much less. It has two costs:</p>
+      <p lang="zh-CN">压缩（compaction）就是用模型写的一份摘要替换掉一段很长的对话。之后的请求只需带上简短的摘要，而不是完整的历史记录，所以每次请求都便宜得多。它有两项代价：</p>
+      <ul class="plain" lang="en">
         <li><b>The compaction itself.</b> The model has to read the whole history once and write the summary as output.</li>
         <li><b>Lost detail.</b> A summary can't keep everything. If you later need an exact error message or line of code from early in the conversation, it may be gone.</li>
       </ul>
-      <p>Some apps offer to compact when you come back to a long thread after the cache has expired. That's when continuing is most expensive, because the whole history has to be written to the cache again.</p>
+      <ul class="plain" lang="zh-CN">
+        <li><b>压缩本身的费用。</b>模型要把整段历史读一遍，并把摘要作为输出写出来。</li>
+        <li><b>细节会丢失。</b>摘要不可能保留所有内容。如果你之后需要对话早期某条确切的错误信息或某行代码，它可能已经没了。</li>
+      </ul>
+      <p lang="en">Some apps offer to compact when you come back to a long thread after the cache has expired. That's when continuing is most expensive, because the whole history has to be written to the cache again.</p>
+      <p lang="zh-CN">有些应用会在你隔了很久、缓存已经过期后回到一段很长的对话时，提议先压缩。这正是继续对话最贵的时候，因为整段历史都要重新写入缓存。</p>
       <div class="panel">
-        <p class="panel-title">Keep the full history or compact first?</p>
-        <p class="panel-sub">1-hour cache. Assumes the compaction request bills the history as a cache write when the cache has expired, which is the most expensive case.</p>
+        <p class="panel-title" lang="en">Keep the full history or compact first?</p>
+        <p class="panel-title" lang="zh-CN">保留完整历史，还是先压缩？</p>
+        <p class="panel-sub" lang="en">1-hour cache. Assumes the compaction request bills the history as a cache write when the cache has expired, which is the most expensive case.</p>
+        <p class="panel-sub" lang="zh-CN">1 小时缓存。假设缓存已过期时，压缩请求把历史记录按缓存写入计费，这是最贵的情况。</p>
         <div class="controls">
-          <label>Current context <input type="number" id="cp-history" value="130" min="1" max="1000" step="10"> k</label>
-          <label>After compacting <input type="number" id="cp-after" value="20" min="1" max="500" step="5"> k</label>
-          <label>Summary length <input type="number" id="cp-summary" value="8" min="0" max="64" step="1"> k</label>
-          <label>Messages after <input type="number" id="cp-n" value="10" min="1" max="200" step="1"></label>
-          <label>Your message <input type="number" id="cp-user" value="2" min="0.1" max="100" step="1"> k</label>
-          <label>Reply <input type="number" id="cp-reply" value="3" min="0.1" max="100" step="1"> k</label>
+          <label><span lang="en">Current context</span><span lang="zh-CN">当前上下文</span> <input type="number" id="cp-history" value="130" min="1" max="1000" step="10"> k</label>
+          <label><span lang="en">After compacting</span><span lang="zh-CN">压缩后</span> <input type="number" id="cp-after" value="20" min="1" max="500" step="5"> k</label>
+          <label><span lang="en">Summary length</span><span lang="zh-CN">摘要长度</span> <input type="number" id="cp-summary" value="8" min="0" max="64" step="1"> k</label>
+          <label><span lang="en">Messages after</span><span lang="zh-CN">之后的消息数</span> <input type="number" id="cp-n" value="10" min="1" max="200" step="1"></label>
+          <label><span lang="en">Your message</span><span lang="zh-CN">你的消息</span> <input type="number" id="cp-user" value="2" min="0.1" max="100" step="1"> k</label>
+          <label><span lang="en">Reply</span><span lang="zh-CN">回复</span> <input type="number" id="cp-reply" value="3" min="0.1" max="100" step="1"> k</label>
         </div>
         <div class="controls">
-          <fieldset><legend>Cache when you return</legend>
+          <fieldset><legend><span lang="en">Cache when you return</span><span lang="zh-CN">回来时的缓存</span></legend>
             <span class="seg-btns">
-              <label><input type="radio" name="cp-state" value="expired" checked><span>Expired</span></label>
-              <label><input type="radio" name="cp-state" value="warm"><span>Warm</span></label>
+              <label><input type="radio" name="cp-state" value="expired" checked><span><span lang="en">Expired</span><span lang="zh-CN">已过期</span></span></label>
+              <label><input type="radio" name="cp-state" value="warm"><span><span lang="en">Warm</span><span lang="zh-CN">有效</span></span></label>
             </span>
           </fieldset>
         </div>
         <div class="legend">
-          <span><i class="key-line" style="background:var(--c-keep)"></i>Keep the full history</span>
-          <span><i class="key-line" style="background:var(--c-compact)"></i>Compact first</span>
+          <span><i class="key-line" style="background:var(--c-keep)"></i><span lang="en">Keep the full history</span><span lang="zh-CN">保留完整历史</span></span>
+          <span><i class="key-line" style="background:var(--c-compact)"></i><span lang="en">Compact first</span><span lang="zh-CN">先压缩</span></span>
         </div>
         <div class="plot" id="cp-chart"></div>
         <p id="cp-text" style="margin-top:12px"></p>
@@ -315,33 +390,53 @@
 
     <!-- Other costs -->
     <section id="other-costs">
-      <h2>Other things that change the price</h2>
-      <h3>Batch API: half price if you can wait</h3>
-      <p>Requests sent through the Batch API run in the background instead of immediately, and both input and output cost 50% less. It suits work nobody is waiting on, like classifying a large dataset overnight. The batch discount stacks with prompt caching.</p>
-      <h3>Fast mode: faster output at a premium</h3>
-      <p>Fast mode runs the same model with much faster output for double the price: $8 input and $40 output on Opus 5.5. Cache prices scale up with it. It's only available on some Opus models, through Anthropic's own API, and not with the Batch API.</p>
-      <h3>Long prompts</h3>
-      <p>Claude 4.6 and later models charge the same per-token rate across the whole 1M-token context window, so a 900k-token request costs the same per token as a 9k one. Claude Haiku 5.5 is the exception: once a request's prompt passes 100,000 tokens, including cached parts, the whole request costs 5× more per token.</p>
-      <h3>Where the model runs</h3>
-      <p>Asking for US-only processing (the <code>inference_geo</code> setting) multiplies every price by 1.1. Cloud platforms such as Amazon Bedrock and Google Cloud set their own prices.</p>
-      <h3>Tools</h3>
-      <ul class="plain">
+      <h2 lang="en">Other things that change the price</h2>
+      <h2 lang="zh-CN">其他影响价格的因素</h2>
+      <h3 lang="en">Batch API: half price if you can wait</h3>
+      <h3 lang="zh-CN">批处理 API：愿意等，就打五折</h3>
+      <p lang="en">Requests sent through the Batch API run in the background instead of immediately, and both input and output cost 50% less. It suits work nobody is waiting on, like classifying a large dataset overnight. The batch discount stacks with prompt caching.</p>
+      <p lang="zh-CN">通过批处理 API（Batch API）发送的请求会在后台运行，而不是立即执行，输入和输出都便宜 50%。它适合没人急着等结果的工作，比如连夜给一个大数据集做分类。批处理折扣可以和提示词缓存叠加。</p>
+      <h3 lang="en">Fast mode: faster output at a premium</h3>
+      <h3 lang="zh-CN">快速模式：加钱换更快的输出</h3>
+      <p lang="en">Fast mode runs the same model with much faster output for double the price: $8 input and $40 output on Opus 5.5. Cache prices scale up with it. It's only available on some Opus models, through Anthropic's own API, and not with the Batch API.</p>
+      <p lang="zh-CN">快速模式运行的是同一个模型，输出快得多，价格翻倍：在 Opus 5.5 上输入 $8、输出 $40。缓存价格也随之上调。它只在部分 Opus 模型上提供，只能通过 Anthropic 自己的 API 使用，而且不能和批处理 API 一起用。</p>
+      <h3 lang="en">Long prompts</h3>
+      <h3 lang="zh-CN">超长提示词</h3>
+      <p lang="en">Claude 4.6 and later models charge the same per-token rate across the whole 1M-token context window, so a 900k-token request costs the same per token as a 9k one. Claude Haiku 5.5 is the exception: once a request's prompt passes 100,000 tokens, including cached parts, the whole request costs 5× more per token.</p>
+      <p lang="zh-CN">Claude 4.6 及之后的模型在整个 100 万 token 的上下文窗口内都按同一单价计费，所以 900k token 的请求和 9k token 的请求，每个 token 的价格是一样的。Claude Haiku 5.5 是例外：一旦请求的提示词超过 100,000 token（缓存部分也算在内），整个请求每个 token 的价格都会变成 5 倍。</p>
+      <h3 lang="en">Where the model runs</h3>
+      <h3 lang="zh-CN">模型在哪里运行</h3>
+      <p lang="en">Asking for US-only processing (the <code>inference_geo</code> setting) multiplies every price by 1.1. Cloud platforms such as Amazon Bedrock and Google Cloud set their own prices.</p>
+      <p lang="zh-CN">要求只在美国境内处理（<code>inference_geo</code> 设置）会让所有价格乘以 1.1。Amazon Bedrock、Google Cloud 等云平台则各自定价。</p>
+      <h3 lang="en">Tools</h3>
+      <h3 lang="zh-CN">工具</h3>
+      <ul class="plain" lang="en">
         <li><b>All tools:</b> tool definitions, tool calls and tool results are billed as ordinary input and output tokens.</li>
         <li><b>Web search:</b> $10 per 1,000 searches, plus the search results as input tokens. They stay in the context, so later requests read them again.</li>
         <li><b>Web fetch:</b> no extra charge beyond the tokens of the fetched page. A typical web page is about 2,500 tokens, and a large PDF can be over 100,000.</li>
         <li><b>Code execution:</b> free when used with web search or web fetch. Otherwise each organization gets 1,550 free hours a month, then it's $0.05 per hour per container.</li>
       </ul>
-      <h3>Subscriptions vs paying per token</h3>
-      <p>On a subscription plan, such as using Claude Code with a Claude Pro or Max login, you aren't billed per token. Usage counts toward your plan's limits instead. Cost figures shown by the app are estimates at API list prices, which are still a good guide to which requests are heavy. Settings that cost extra, like fast mode, may need extra usage turned on before they actually take effect, so check that a setting applied rather than trusting the menu label.</p>
+      <ul class="plain" lang="zh-CN">
+        <li><b>所有工具：</b>工具定义、工具调用和工具结果都按普通的输入和输出 token 计费。</li>
+        <li><b>网页搜索：</b>每 1,000 次搜索 $10，搜索结果另按输入 token 计费。这些结果会留在上下文里，所以之后的请求还会再读一遍。</li>
+        <li><b>网页抓取：</b>除了抓取页面本身的 token 外不额外收费。一个普通网页大约 2,500 个 token，一份大型 PDF 可能超过 100,000 个。</li>
+        <li><b>代码执行：</b>和网页搜索或网页抓取一起使用时免费。否则每个组织每月有 1,550 小时的免费额度，超出后每个容器每小时 $0.05。</li>
+      </ul>
+      <h3 lang="en">Subscriptions vs paying per token</h3>
+      <h3 lang="zh-CN">订阅与按 token 付费</h3>
+      <p lang="en">On a subscription plan, such as using Claude Code with a Claude Pro or Max login, you aren't billed per token. Usage counts toward your plan's limits instead. Cost figures shown by the app are estimates at API list prices, which are still a good guide to which requests are heavy. Settings that cost extra, like fast mode, may need extra usage turned on before they actually take effect, so check that a setting applied rather than trusting the menu label.</p>
+      <p lang="zh-CN">使用订阅套餐时，比如用 Claude Pro 或 Max 账号登录 Claude Code，不会按 token 收费，用量会计入套餐的限额。应用里显示的费用数字是按 API 标价估算的，但仍然能很好地反映哪些请求比较“重”。有些需要额外付费的设置（比如快速模式）可能要先开启额外用量才会真正生效，所以要确认设置确实生效了，别只看菜单上的标签。</p>
     </section>
 
     <!-- Examples -->
     <section id="examples">
-      <h2>Example workloads</h2>
-      <p>What some common jobs cost on the model you picked, with and without the trick that suits them.</p>
+      <h2 lang="en">Example workloads</h2>
+      <h2 lang="zh-CN">常见任务示例</h2>
+      <p lang="en">What some common jobs cost on the model you picked, with and without the trick that suits them.</p>
+      <p lang="zh-CN">在你选择的模型上，几种常见任务分别要花多少钱：不用省钱技巧时，以及用上最适合它的技巧时。</p>
       <div class="table-wrap">
-        <table aria-label="Example workload costs">
-          <thead><tr><th class="wrap">Workload</th><th>Plain</th><th>With the trick</th><th>Saving</th></tr></thead>
+        <table aria-label="Example workload costs" data-zh-aria-label="常见任务的费用">
+          <thead><tr><th class="wrap"><span lang="en">Workload</span><span lang="zh-CN">任务</span></th><th><span lang="en">Plain</span><span lang="zh-CN">不用技巧</span></th><th><span lang="en">With the trick</span><span lang="zh-CN">使用技巧</span></th><th><span lang="en">Saving</span><span lang="zh-CN">节省</span></th></tr></thead>
           <tbody id="examples-body"></tbody>
         </table>
       </div>
@@ -349,24 +444,35 @@
 
     <!-- Usage -->
     <section id="usage">
-      <h2>Reading the usage numbers</h2>
-      <p>Every API response reports what it used. These fields map directly onto the prices:</p>
+      <h2 lang="en">Reading the usage numbers</h2>
+      <h2 lang="zh-CN">看懂用量数字</h2>
+      <p lang="en">Every API response reports what it used. These fields map directly onto the prices:</p>
+      <p lang="zh-CN">每个 API 响应都会报告它用了多少。这些字段和价格一一对应：</p>
       <pre><code id="usage-json"></code></pre>
-      <ul class="plain" style="margin-top:12px">
+      <ul class="plain" style="margin-top:12px" lang="en">
         <li><code>input_tokens</code>: normal input, after the last cache marker.</li>
         <li><code>cache_creation_input_tokens</code>: cache writes. The <code>cache_creation</code> object splits them into 5-minute and 1-hour writes.</li>
         <li><code>cache_read_input_tokens</code>: cache reads.</li>
         <li><code>output_tokens</code>: everything the model wrote, including thinking.</li>
       </ul>
-      <p>The full prompt size is <code>input_tokens + cache_creation_input_tokens + cache_read_input_tokens</code>. A tiny <code>input_tokens</code> doesn't mean the request was small; the rest came from the cache.</p>
+      <ul class="plain" style="margin-top:12px" lang="zh-CN">
+        <li><code>input_tokens</code>：普通输入，即最后一个缓存标记之后的部分。</li>
+        <li><code>cache_creation_input_tokens</code>：缓存写入。<code>cache_creation</code> 对象会把它拆分成 5 分钟写入和 1 小时写入。</li>
+        <li><code>cache_read_input_tokens</code>：缓存读取。</li>
+        <li><code>output_tokens</code>：模型写出的所有内容，包括思考。</li>
+      </ul>
+      <p lang="en">The full prompt size is <code>input_tokens + cache_creation_input_tokens + cache_read_input_tokens</code>. A tiny <code>input_tokens</code> doesn't mean the request was small; the rest came from the cache.</p>
+      <p lang="zh-CN">完整的提示词大小是 <code>input_tokens + cache_creation_input_tokens + cache_read_input_tokens</code>。<code>input_tokens</code> 很小并不代表请求很小，其余部分来自缓存。</p>
       <p id="usage-math"></p>
-      <p>If <code>cache_read_input_tokens</code> stays at zero across requests that should share a beginning, something early in the request is changing each time, such as a timestamp in the system prompt or a tool list in a different order.</p>
+      <p lang="en">If <code>cache_read_input_tokens</code> stays at zero across requests that should share a beginning, something early in the request is changing each time, such as a timestamp in the system prompt or a tool list in a different order.</p>
+      <p lang="zh-CN">如果几次本应开头相同的请求里，<code>cache_read_input_tokens</code> 一直是零，说明请求靠前的部分每次都有变化，比如系统提示词里有时间戳，或者工具列表的顺序不一样。</p>
     </section>
 
     <!-- Save -->
     <section id="save">
-      <h2>Ways to spend less</h2>
-      <ol class="plain">
+      <h2 lang="en">Ways to spend less</h2>
+      <h2 lang="zh-CN">省钱的办法</h2>
+      <ol class="plain" lang="en">
         <li><b>Turn on caching</b> for anything sent more than twice, and keep the start of every request identical: system prompt first, then tools, with no timestamps or random IDs near the top.</li>
         <li><b>Match the cache length to your gaps.</b> Use 5 minutes for steady traffic and fast agent loops, and 1 hour when people pause to read.</li>
         <li><b>Keep the context small.</b> Every token in it is reread on every request. Start new threads for new topics, compact long ones, and use sub-agents for heavy reading.</li>
@@ -375,12 +481,22 @@
         <li><b>Watch the usage fields.</b> They're the only reliable sign that caching is working.</li>
         <li><b>Judge cost per finished task.</b> A cheaper model that needs three attempts isn't cheaper.</li>
       </ol>
+      <ol class="plain" lang="zh-CN">
+        <li><b>开启缓存：</b>凡是会发送两次以上的内容都要缓存，并让每次请求的开头保持完全一致：先放系统提示词，再放工具，开头附近不要有时间戳或随机 ID。</li>
+        <li><b>让缓存时长匹配你的间隔。</b>请求稳定、智能体循环很快时用 5 分钟；有人会停下来阅读时用 1 小时。</li>
+        <li><b>保持上下文精简。</b>上下文里的每个 token 在每次请求时都要重新读取。新话题就开新对话，长对话要压缩，大量阅读的工作交给子智能体。</li>
+        <li><b>选能把事情做好的最小模型，</b>以及能保证质量的最低推理强度（effort）。推理强度越低，思考越少，而思考按输出计费。</li>
+        <li><b>不急着要答案的任务，</b>都用批处理 API。</li>
+        <li><b>留意用量字段。</b>只有它们能可靠地告诉你缓存是否在起作用。</li>
+        <li><b>按完成一项任务的总费用来衡量。</b>便宜的模型如果要试三次才成功，其实并不便宜。</li>
+      </ol>
     </section>
 
     <!-- Glossary -->
     <section id="glossary">
-      <h2>Glossary</h2>
-      <dl class="glossary">
+      <h2 lang="en">Glossary</h2>
+      <h2 lang="zh-CN">术语表</h2>
+      <dl class="glossary" lang="en">
         <dt>Token</dt><dd>A chunk of text, about 4 characters of English. The unit models read, write and bill by.</dd>
         <dt>MTok</dt><dd>One million tokens. Prices are quoted per MTok.</dd>
         <dt>Context</dt><dd>Everything sent in one request: system prompt, tools, conversation history and the new message.</dd>
@@ -397,14 +513,33 @@
         <dt>Fast mode</dt><dd>Faster output on some Opus models at double the price.</dd>
         <dt>Agent loop</dt><dd>A run where the model calls tools again and again, one request per step, without waiting for a person.</dd>
       </dl>
+      <dl class="glossary" lang="zh-CN">
+        <dt>Token（词元）</dt><dd>一小段文本，大约 4 个英文字符，或大约 1 个汉字。模型按它来读、写和计费。</dd>
+        <dt>MTok</dt><dd>一百万个 token。价格按每 MTok 报价。</dd>
+        <dt>上下文（Context）</dt><dd>一次请求里发送的全部内容：系统提示词、工具、对话历史和新消息。</dd>
+        <dt>上下文窗口</dt><dd>模型在一次请求中最多能接收的 token 数。目前大多数 Claude 模型是 100 万。</dd>
+        <dt>输入 / 输出</dt><dd>模型读取的内容 / 写出的内容。在 Claude 模型上，输出价格是输入的 5 倍。</dd>
+        <dt>思考（Thinking）</dt><dd>模型在回答前进行的推理。按输出计费，即使被隐藏也一样。</dd>
+        <dt>提示词缓存</dt><dd>保留请求开头部分的处理结果，让下一次以同样内容开头的请求更便宜。</dd>
+        <dt>缓存标记</dt><dd>请求中的一个位置（<code>cache_control</code>），服务商会保存到这个位置为止的内容。</dd>
+        <dt>缓存写入</dt><dd>还没有缓存的输入，经过处理并保存下来。5 分钟缓存为输入价格的 1.25 倍，1 小时缓存为 2 倍。</dd>
+        <dt>缓存读取</dt><dd>已经缓存过的输入。在大多数模型上是输入价格的 0.1 倍，部分模型更低。</dd>
+        <dt>缓存时长（TTL）</dt><dd>缓存在不被使用的情况下能保留多久：5 分钟或 1 小时。每次读取都会重新计时。</dd>
+        <dt>压缩（Compaction）</dt><dd>用模型写的摘要替换很长的历史记录，让之后的请求更便宜。</dd>
+        <dt>批处理 API</dt><dd>在后台处理、按半价计费的请求。</dd>
+        <dt>快速模式</dt><dd>部分 Opus 模型提供的更快输出，价格翻倍。</dd>
+        <dt>智能体循环</dt><dd>模型一次又一次地调用工具、每一步发送一次请求、不用等人来操作的运行过程。</dd>
+      </dl>
     </section>
 
     <footer>
-      <p>Prices from <a id="footer-source" href="#">Anthropic's pricing page</a>, checked <span id="footer-date"></span>. Examples are simplified models of real usage. They're meant to show how costs behave, not to predict a bill.</p>
+      <p lang="en">Prices from <a class="source-link" href="#">Anthropic's pricing page</a>, checked <span class="checked-date"></span>. Examples are simplified models of real usage. They're meant to show how costs behave, not to predict a bill.</p>
+      <p lang="zh-CN">价格来自 <a class="source-link" href="#">Anthropic 定价页面</a>，核对于 <span class="checked-date"></span>。示例是对真实使用情况的简化模拟，目的是展示费用如何变化，而不是预测你的账单。</p>
     </footer>
   </main>
 </div>
 
+<script src="js/lang.js"></script>
 <script src="js/pricing.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/theme.js"></script>

@@ -73,7 +73,7 @@
       seg.style.width = `${(s.size / max) * 100}%`;
       seg.style.background = s.color;
       seg.tabIndex = 0;
-      seg.setAttribute("aria-label", `${s.name}: ${s.value}`);
+      seg.setAttribute("aria-label", window.Lang.t(`${s.name}: ${s.value}`, `${s.name}：${s.value}`));
       seg.append(el("span", "seg-label", s.short));
       const rows = [{ color: s.color, value: s.value, name: s.name }];
       seg.addEventListener("pointermove", e => showTip(null, rows, e.clientX, e.clientY));
@@ -123,7 +123,7 @@
     const x = k => m.l + (o.n === 1 ? 0 : ((k - 1) / (o.n - 1)) * iw);
     const y = v => m.t + ih - (v / o.yt.top) * ih;
     const svg = sv("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, tabindex: 0, role: "img",
-      "aria-label": `${o.ariaLabel}. Use the arrow keys to step through it.` });
+      "aria-label": window.Lang.t(`${o.ariaLabel}. Use the arrow keys to step through it.`, `${o.ariaLabel}。可用左右方向键逐条查看。`) });
 
     for (const v of o.yt.arr) {
       svg.append(sv("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: v === 0 ? "axis" : "gridline" }));
